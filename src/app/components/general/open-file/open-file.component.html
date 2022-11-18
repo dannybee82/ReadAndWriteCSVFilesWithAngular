@@ -1,0 +1,17 @@
+<div class="open-file-container">
+    <input 
+        type="file" 
+        class="file-input"
+        (change)="onFileSelected($event)" 
+        accept=".csv"
+        #openFile 
+        id="open-file"   
+        name="open-file"
+    >
+    <button 
+        class="button"
+        (click)="openFile.click()"        
+    >
+        <img src="{{ this.imageSource }}" title="{{ this.imageText }}" alt="{{ this.imageText }}" /> 
+    </button>
+</div>

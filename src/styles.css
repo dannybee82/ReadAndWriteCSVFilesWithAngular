@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+button {
+    border: none;
+    padding: 5px;
+    background-color: transparent;
+    border-radius: 5px;
+}
+
+button:hover:enabled {
+    background-color: #a4c0f4;
+    border-radius: 5px;
+}

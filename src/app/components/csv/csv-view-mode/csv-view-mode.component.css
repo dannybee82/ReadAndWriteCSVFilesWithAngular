@@ -1,0 +1,15 @@
+.csvViewModeContainer {
+    position: relative;
+    float:left;
+    margin-left: 50px;
+}
+
+.csvViewModeItem {
+    position: relative;
+    float: left;
+    margin-left:25px;
+}
+
+.is-view-mode-selected {
+    border: 2px solid yellow;
+}

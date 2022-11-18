@@ -1,0 +1,9 @@
+
+.file-input {
+    display: none;
+  }
+
+  .open-file-container {
+    position: relative;
+    float: left;
+  }

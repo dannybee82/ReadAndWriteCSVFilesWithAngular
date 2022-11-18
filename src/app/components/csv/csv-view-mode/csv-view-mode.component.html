@@ -1,0 +1,16 @@
+<div class="csvViewModeContainer">
+    <div class="csvViewModeItem" [class.is-view-mode-selected]="this.isGridMode">
+        <app-button-with-image
+            imageSource="assets/images/grid.png"
+            imageText="Use Grid/Table Mode"
+            (buttonAction)="SetViewMode(true)"
+        ></app-button-with-image>
+    </div>   
+    <div class="csvViewModeItem" [class.is-view-mode-selected]="!this.isGridMode">
+        <app-button-with-image
+            imageSource="assets/images/list.png"
+            imageText="Use List Mode"
+            (buttonAction)="SetViewMode(false)"
+        ></app-button-with-image>
+    </div>   
+</div>

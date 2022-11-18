@@ -1,0 +1,62 @@
+.csvSettingsContainer {
+    position: relative;
+    float: left;
+}
+
+.csvSettingsButton {
+    position: relative;
+    float: left;
+    clear: both;
+}
+
+.csvSettingsMenu {
+    position: absolute;
+    float: left;   
+    background: linear-gradient(to bottom, lightblue, cornflowerblue);
+    padding: 25px;
+    z-index: 25;
+    margin-top:60px;    
+    width: 300px;
+    border-radius: 5px;
+    border:1px solid #000;
+}
+
+.csvSettingsMenuVisible {
+    visibility: visible;
+    display: block;
+}
+
+.csvSettingsMenuHidden {
+    visibility: hidden;
+    display: none;
+}
+
+.csvSettingsItem {
+    position: relative;
+    float: left;  
+    clear: both;
+    margin-bottom: 15px; 
+    width: 100%;   
+}
+
+.csvSettingsItem input[type=text] {
+    width: 25px;
+    margin-left: 25px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.csvSettingsItem label {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.csvItemLeft {
+    position: relative;
+    float: left;
+}
+
+.csvItemRight {
+    position: relative;
+    float: right;
+}

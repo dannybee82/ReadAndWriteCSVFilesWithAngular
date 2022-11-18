@@ -1,0 +1,29 @@
+<div class="csvMenuPrevNextContainer">
+    <div class="prevButton" [class.is-button-disabled]="this.disabledPrevButton">        
+        <app-button-with-image
+            imageText="Previous Record"
+            imageSource="assets/images/previous.png"
+            (buttonAction)="CallBackMethod(true)"
+            [isDisabled]="this.disabledPrevButton"
+        >
+        </app-button-with-image>
+    </div>
+    <div class="spaceBetweenButtons">
+        <div class="currentItem">
+            {{this.currentItem}}
+        </div>
+        <div class="someSpacer">OF:</div>    
+        <div class="totalItems">
+            {{this.totalItems}}
+        </div>
+    </div>
+    <div class="nextButton" [class.is-button-disabled]="this.disabledNextButton">
+        <app-button-with-image
+            imageText="Next Record"
+            imageSource="assets/images/next.png"
+            (buttonAction)="CallBackMethod(false)"
+            [isDisabled]="this.disabledNextButton"
+        >
+        </app-button-with-image>
+    </div>
+</div>
