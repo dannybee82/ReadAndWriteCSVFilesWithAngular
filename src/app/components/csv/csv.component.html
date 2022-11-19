@@ -21,12 +21,12 @@
             >
             </app-csv-settings>
         </div>
-        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvLoaded">
+        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.csvLoadServiceService.isCsvLoadedSuccesfully()">
             <app-button-with-image
                 imageText="Save CSV File"
                 imageSource="/assets/images/save.png"
                 (buttonAction)="SaveCsvFile($event)"
-                [isDisabled]="!this.isCsvLoaded"
+                [isDisabled]="!this.csvLoadServiceService.isCsvLoadedSuccesfully()"
             >        
             </app-button-with-image> 
         </div>
@@ -36,25 +36,12 @@
         >
         </app-csv-view-mode>
     </div>
-    <div class="csvContent" *ngIf="this.isCsvLoaded && !this.isCsvErrors">
-        <app-csv-content 
-            [showCsvData]="this.isCsvLoaded" 
-            [csvHeaders]="this.csvHeaders" 
-            [csvColumns]="this.csvColumns" 
-            [csvColumnsDefault]="this.csvColumnsDefault"
-            [csvtotalLines]="this.csvtotalLines"
-            [csvUseLength]="this.csvUseLength"
-            [csvFilename]="this.csvFilename"
-            [requestToSaveCsv]="this.requestToSaveCsv"
-            (csvObject)="CreateCsV($event)"
+    <div class="csvContent">
+        <app-csv-content
             [useGridMode]="this.isGridModeSelected"
             (gridModeChanged)="SetGridMode($event)"
             [requestToReloadData]="this.requestToReloadData"
         >
         </app-csv-content>
-    </div>
-    <div class="csvErrors" *ngIf="!this.isCsvLoaded && this.isCsvErrors">
-        <h1>Error occured during parsing CSV:</h1>
-        <p *ngFor="let error of this.csvErrorsSummary">{{error}}</p>
-    </div>
+    </div>    
 </div>

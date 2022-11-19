@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, Injectable } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { Subject } from 'rxjs';
-import { CsvData } from '../../../models/csv-data';
 import { CsvChangeData } from '../../../models/csv-change-data'
+import { CsvLoadServiceService } from '../../../services/csv-load-service.service'
 
 @Component({
   selector: 'app-csv-content',
@@ -10,18 +10,21 @@ import { CsvChangeData } from '../../../models/csv-change-data'
   styleUrls: ['./csv-content.component.css']
 })
 
+@Injectable()
+
 export class CsvContentComponent {
-  @Input() csvHeaders: string[] | null = [];
-  @Input() csvColumns: string[] = [];
-  @Input() csvColumnsDefault: string[] = [];  
-  @Input() csvtotalLines: number = -1;
-  @Input() csvUseLength: number = -1;
-  @Input() csvFilename: string = '';
-  
-  @Input() showCsvData: boolean = false;
+  public csvIsLoaded: boolean = false;
+  public csvNoErrors: boolean = true;
+  public csvHeaders: string[] | null = [];
+  public csvColumns: string[] = [];
+  public csvColumnsDefault: string[] = [];  
+  public csvtotalLines: number = -1;
+  public csvUseColumnLength: number = -1;
+  public csvFilename: string = '';
+  public csvErrors: string[] = [];
+
   @Input() currentPageIndex: number = 0;
 
-  @Input() requestToSaveCsv: Subject<boolean> = new Subject<boolean>();
   @Input() requestToReloadData: Subject<boolean> = new Subject<boolean>();
 
   @Input() useGridMode: boolean = true;
@@ -29,7 +32,6 @@ export class CsvContentComponent {
   @Output() isPrevButtonEnabled: boolean = true;
   @Output() isNextButtonEnabled: boolean = true;
 
-  @Output() csvObject: EventEmitter<CsvData> = new EventEmitter<CsvData>();
   @Output() gridModeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @Output() isPopupVisible: boolean = false;
@@ -39,24 +41,28 @@ export class CsvContentComponent {
   @Output() changeDataColumn: string = '';
   @Output() changeDataColumnDefault: string = ''; 
 
-  constructor() { }
+  constructor(public csvLoadServiceService: CsvLoadServiceService) {}
 
-  ngOnInit(): void {  
-    this.requestToSaveCsv.subscribe(v => {
-      let csvData: CsvData = new CsvData(this.csvHeaders, this.csvColumns, this.csvUseLength, this.csvFilename);     
-      this.csvObject.emit(csvData);
-    }); 
-
+  ngOnInit(): void {
     this.requestToReloadData.subscribe(v => { 
       this.currentPageIndex = 0;
+      this.csvIsLoaded = this.csvLoadServiceService.isCsvLoadedSuccesfully();
+      this.csvNoErrors = this.csvLoadServiceService.isColumnLengthOk();
+      this.csvFilename = this.csvLoadServiceService.getFileName();
+      this.csvHeaders = this.csvLoadServiceService.getHeaders();
+      this.csvColumns = this.csvLoadServiceService.getColumns();
+      this.csvColumnsDefault = this.csvLoadServiceService.getColumnsDefault();
+      this.csvtotalLines = this.csvLoadServiceService.getTotalLines();
+      this.csvUseColumnLength = this.csvLoadServiceService.getColumnLength();
+      this.csvErrors = this.csvLoadServiceService.getErrors();
     }); 
   }
 
   GetCurrentData() : string[] {
     let currentData: string[] = [];
 
-    let start: number  = (this.currentPageIndex * this.csvUseLength);
-    let end: number = (this.currentPageIndex * this.csvUseLength) + this.csvUseLength;
+    let start: number  = (this.currentPageIndex * this.csvUseColumnLength);
+    let end: number = (this.currentPageIndex * this.csvUseColumnLength) + this.csvUseColumnLength;
     let index: number = 0;
 
     for(let i = start; i < end; i++) {
@@ -70,8 +76,8 @@ export class CsvContentComponent {
   GetDefaultData() : string[] {
     let defaultData: string[] = [];
 
-    let start: number  = (this.currentPageIndex * this.csvUseLength);
-    let end: number = (this.currentPageIndex * this.csvUseLength) + this.csvUseLength;
+    let start: number  = (this.currentPageIndex * this.csvUseColumnLength);
+    let end: number = (this.currentPageIndex * this.csvUseColumnLength) + this.csvUseColumnLength;
     let index: number = 0;
 
     for(let i = start; i < end; i++) {
@@ -88,7 +94,7 @@ export class CsvContentComponent {
     let currentData: string[] = this.GetCurrentData();
     let defaultData: string[] = this.GetDefaultData();
 
-    let startIndex: number  = (this.currentPageIndex * this.csvUseLength);
+    let startIndex: number  = (this.currentPageIndex * this.csvUseColumnLength);
 
     for(let i = 0; i < currentData.length; i++) { 
         let headerValue = (this.csvHeaders != null) ? this.csvHeaders[i] : "";   
@@ -115,8 +121,8 @@ export class CsvContentComponent {
   GetCellsToGenerate(row: number): string[] {
     let cells: string[] = [];
 
-    let start: number  = (row * this.csvUseLength);
-    let end: number = (row * this.csvUseLength) + this.csvUseLength;
+    let start: number  = (row * this.csvUseColumnLength);
+    let end: number = (row * this.csvUseColumnLength) + this.csvUseColumnLength;
     let index: number = 0;
 
     for(let i = start; i < end; i++) {
@@ -180,7 +186,7 @@ export class CsvContentComponent {
   }
 
   TestDataChanged(row: number, column: number) : boolean {
-    let index: number = (row * this.csvUseLength) + column;
+    let index: number = (row * this.csvUseColumnLength) + column;
 
     if(this.csvColumns[index] !== this.csvColumnsDefault[index]) {
       return true;

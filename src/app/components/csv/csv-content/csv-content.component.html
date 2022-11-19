@@ -1,4 +1,4 @@
-<div *ngIf="this.showCsvData" class="csvContainer">
+<div *ngIf="this.csvIsLoaded && !this.csvNoErrors" class="csvContainer">
     <div *ngIf="this.useGridMode" class="GridMode">
         <table>
             <thead *ngIf="this.csvHeaders != null">
@@ -32,25 +32,29 @@
             </div>
         </div>
     </div>
+    <div *ngIf="this.csvIsLoaded && !this.useGridMode">
+        <app-csv-menu-next-prev 
+            [currentItem]="this.currentPageIndex + 1" 
+            [totalItems]="this.csvtotalLines"
+            [disabledPrevButton]="this.isPrevButtonEnabled" 
+            [disabledNextButton]="this.isNextButtonEnabled" 
+            (previousButton)="UpdatePageIndex($event)"
+            (nextButton)="UpdatePageIndex($event)"
+        >        
+        </app-csv-menu-next-prev>
+    </div>
+    <app-csv-change-popup 
+        [isPopupVisible]="this.isPopupVisible" 
+        (callBackPopupIsClosed)="ChangePopupVisibility($event)"
+        [csvValueId]="this.changeDataId"
+        [csvHeaderToApplyChangeOn]="this.changeDataHeader"
+        [csvValueToChange]="this.changeDataColumn"
+        [csvValueDefault]="this.changeDataColumnDefault"
+        (callBackValueChanged)="this.ChangeData($event)"
+    >
+    </app-csv-change-popup>
 </div>
-<div *ngIf="this.showCsvData && !this.useGridMode">
-    <app-csv-menu-next-prev 
-        [currentItem]="this.currentPageIndex + 1" 
-        [totalItems]="this.csvtotalLines"
-        [disabledPrevButton]="this.isPrevButtonEnabled" 
-        [disabledNextButton]="this.isNextButtonEnabled" 
-        (previousButton)="UpdatePageIndex($event)"
-        (nextButton)="UpdatePageIndex($event)"
-    >        
-    </app-csv-menu-next-prev>
+<div class="csvErrors" *ngIf="!this.csvIsLoaded && this.csvNoErrors && this.csvErrors.length > 0">
+    <h1>Error occured during parsing CSV:</h1>
+    <p *ngFor="let error of this.csvErrors">{{error}}</p>
 </div>
-<app-csv-change-popup 
-    [isPopupVisible]="this.isPopupVisible" 
-    (callBackPopupIsClosed)="ChangePopupVisibility($event)"
-    [csvValueId]="this.changeDataId"
-    [csvHeaderToApplyChangeOn]="this.changeDataHeader"
-    [csvValueToChange]="this.changeDataColumn"
-    [csvValueDefault]="this.changeDataColumnDefault"
-    (callBackValueChanged)="this.ChangeData($event)"
->
-</app-csv-change-popup>
