@@ -1,7 +1,7 @@
 import { CsvErrors } from '../models/csv-errors';
 
 export class LoadCsv {
-  public GetFile(file: File, isUtf8: boolean): Promise<string> {
+  public getFile(file: File, isUtf8: boolean): Promise<string> {
     return new Promise((resolve) => {      
       let fileReader: FileReader = new FileReader();
       
@@ -18,7 +18,7 @@ export class LoadCsv {
     });
   }
 
-  public GetCsvHeaders(content: string, separator: string) : string[] {
+  public getCsvHeaders(content: string, separator: string) : string[] {
     let allTextLines = content.split(/\r|\n|\r/);
     let firstLine = allTextLines[0];
     
@@ -27,7 +27,7 @@ export class LoadCsv {
     return allHeaders;
   }
 
-  public GetAmountOfLines(content: string) : number {
+  public getAmountOfLines(content: string) : number {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
     let count: number = 0;
 
@@ -40,7 +40,7 @@ export class LoadCsv {
      return count;
   }
 
-  public GetFirstLineLength(content: string, separator: string) : number {
+  public getFirstLineLength(content: string, separator: string) : number {
     let allTextLines = content.split(/\r|\n|\r/);
     let firstLine = allTextLines[0];
     
@@ -49,7 +49,7 @@ export class LoadCsv {
     return lineSplitted.length;
   }
 
-  public GetCsvData(content: string, separator: string, enclosing: string) : string[] {
+  public getCsvData(content: string, separator: string, enclosing: string) : string[] {
     let allTextLines = content.split(/\r|\n|\r/);
     allTextLines.pop();
 
@@ -58,9 +58,9 @@ export class LoadCsv {
     //Note: start here at index 1.
     for(let i = 1; i < allTextLines.length; i++) {
       let currentLine: string = allTextLines[i];
-      let indices: number[] = this.GetIndicesOfSeparator(currentLine, separator, enclosing);
+      let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
        
-      let columns: string[] = this.GetDataFromStringAsArray(currentLine, indices, enclosing);
+      let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
       
       for(let j = 0; j < columns.length; j++) {
         allData.push(columns[j]);
@@ -70,7 +70,7 @@ export class LoadCsv {
     return allData;
   }
 
-  public CheckCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
+  public checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
     let errors: string[] = [];
 
     let allTextLines = content.split(/\r|\n|\r/);
@@ -80,9 +80,9 @@ export class LoadCsv {
 
     for(let i = 1; i < allTextLines.length; i++) {
       let currentLine: string = allTextLines[i];
-      let indices: number[] = this.GetIndicesOfSeparator(currentLine, separator, enclosing);
+      let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
        
-      let columns: string[] = this.GetDataFromStringAsArray(currentLine, indices, enclosing);
+      let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
 
       if(columns.length < expectedLength) {
         errors.push("TOO FEW COLUMNS AT LINE: " + (i + 1) + " -> " + currentLine);
@@ -100,7 +100,7 @@ export class LoadCsv {
     return new CsvErrors(false, errors);
   }
 
-  private GetIndicesOfSeparator(currentLine: string, separator: string, enclosing: string) : number[] {
+  private getIndicesOfSeparator(currentLine: string, separator: string, enclosing: string) : number[] {
     let indices: number[] = [];
     indices.push(0);
      let ignoreCommas: boolean = false;  
@@ -138,7 +138,7 @@ export class LoadCsv {
     return indices;
   }
   
-  private GetDataFromStringAsArray(currentLine: string, indices: number[], enclosing: string) : string[] {
+  private getDataFromStringAsArray(currentLine: string, indices: number[], enclosing: string) : string[] {
     let columns: string[] = [];
     
     for(let i = 0; i < indices.length - 1; i++) {
@@ -154,10 +154,10 @@ export class LoadCsv {
       }                
     }
 
-    return this.RemoveEnclosingFromData(columns, enclosing);
+    return this.removeEnclosingFromData(columns, enclosing);
   }
 
-  private RemoveEnclosingFromData(data: string[], enclosing: string) : string[]  {
+  private removeEnclosingFromData(data: string[], enclosing: string) : string[]  {
     for(let i = 0; i < data.length - 1; i++) {
       let currentLine: string = data[i];
       

@@ -1,6 +1,6 @@
 export class CreateCsv {
 
-    Create(headers: string[] | null, columns: string[], useLength: number, separator: string, enclosing: string, firstRowIsHeader: boolean) : string {
+    create(headers: string[] | null, columns: string[], useLength: number, separator: string, enclosing: string, firstRowIsHeader: boolean) : string {
         let headerLength = useLength;
 
         let output: string = '';

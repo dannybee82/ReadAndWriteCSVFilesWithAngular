@@ -25,25 +25,25 @@ export class CsvComponent implements OnInit {
   ngOnInit(): void {}
 
   GetSelectedFile(file: File) {   
-    this._loadCsv.GetFile(file, this.csvSettings.isUtf8).then(testResult => {      
+    this._loadCsv.getFile(file, this.csvSettings.isUtf8).then(testResult => {      
       this.csvLoadServiceService.setFileName(file.name);
-      this.csvLoadServiceService.setTotalLines(this._loadCsv.GetAmountOfLines(testResult));
+      this.csvLoadServiceService.setTotalLines(this._loadCsv.getAmountOfLines(testResult));
 
       if(this.csvSettings.firstRowIsHeader) {
-        this.csvLoadServiceService.setHeaders(this._loadCsv.GetCsvHeaders(testResult, this.csvSettings.separator));
+        this.csvLoadServiceService.setHeaders(this._loadCsv.getCsvHeaders(testResult, this.csvSettings.separator));
       }
       
-      this.csvLoadServiceService.setColumns(this._loadCsv.GetCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
-      this.csvLoadServiceService.setColumnsDefault(this._loadCsv.GetCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
+      this.csvLoadServiceService.setColumns(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
+      this.csvLoadServiceService.setColumnsDefault(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
 
       if(this.csvSettings.firstRowIsHeader) { 
         this.csvLoadServiceService.setColumnLength(true, -1);
       } else {
-        this.csvLoadServiceService.setColumnLength(false, this._loadCsv.GetFirstLineLength(testResult, this.csvSettings.separator));
+        this.csvLoadServiceService.setColumnLength(false, this._loadCsv.getFirstLineLength(testResult, this.csvSettings.separator));
       }
 
       let columnLength = this.csvLoadServiceService.getColumnLength();
-      this.csvLoadServiceService.setErrors(this._loadCsv.CheckCsvData(testResult, columnLength, this.csvSettings.separator, this.csvSettings.enclosing));
+      this.csvLoadServiceService.setErrors(this._loadCsv.checkCsvData(testResult, columnLength, this.csvSettings.separator, this.csvSettings.enclosing));
 
       this.requestToReloadData.next(true);
     });
@@ -70,7 +70,7 @@ export class CsvComponent implements OnInit {
   }
 
   SaveCsvFile(value: any) : void {
-    let output: string = this._createCsv.Create(this.csvLoadServiceService.getHeaders(),
+    let output: string = this._createCsv.create(this.csvLoadServiceService.getHeaders(),
                                                 this.csvLoadServiceService.getColumns(),
                                                 this.csvLoadServiceService.getColumnLength(),
                                                 this.csvSettings.separator, 
