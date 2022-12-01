@@ -25,16 +25,18 @@ export class CsvComponent implements OnInit {
   ngOnInit(): void {}
 
   GetSelectedFile(file: File) {   
-    this._loadCsv.getFile(file, this.csvSettings.isUtf8).then(testResult => {      
+    this._loadCsv.getFile(file, this.csvSettings.isUtf8).then(testResult => {
       this.csvLoadServiceService.setFileName(file.name);
-      this.csvLoadServiceService.setTotalLines(this._loadCsv.getAmountOfLines(testResult));
+      this.csvLoadServiceService.setTotalLines(this._loadCsv.getAmountOfLines(testResult, this.csvSettings.firstRowIsHeader));
 
       if(this.csvSettings.firstRowIsHeader) {
         this.csvLoadServiceService.setHeaders(this._loadCsv.getCsvHeaders(testResult, this.csvSettings.separator));
+      } else {
+        this.csvLoadServiceService.setHeaders(null);
       }
       
-      this.csvLoadServiceService.setColumns(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
-      this.csvLoadServiceService.setColumnsDefault(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing));
+      this.csvLoadServiceService.setColumns(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing, this.csvSettings.firstRowIsHeader));
+      this.csvLoadServiceService.setColumnsDefault(this._loadCsv.getCsvData(testResult, this.csvSettings.separator, this.csvSettings.enclosing, this.csvSettings.firstRowIsHeader));
 
       if(this.csvSettings.firstRowIsHeader) { 
         this.csvLoadServiceService.setColumnLength(true, -1);

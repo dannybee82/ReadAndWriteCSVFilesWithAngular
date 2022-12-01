@@ -3,6 +3,7 @@ import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { Subject } from 'rxjs';
 import { CsvChangeData } from '../../../models/csv-change-data'
 import { CsvLoadServiceService } from '../../../services/csv-load-service.service'
+import { CsvSettings } from '../../../models/csv-settings';
 
 @Component({
   selector: 'app-csv-content',
@@ -22,6 +23,7 @@ export class CsvContentComponent {
   public csvUseColumnLength: number = -1;
   public csvFilename: string = '';
   public csvErrors: string[] = [];
+  private csvSettings?: CsvSettings;
 
   @Input() currentPageIndex: number = 0;
 
@@ -44,12 +46,12 @@ export class CsvContentComponent {
   constructor(public csvLoadServiceService: CsvLoadServiceService) {}
 
   ngOnInit(): void {
-    this.requestToReloadData.subscribe(v => { 
+    this.requestToReloadData.subscribe(v => {
       this.currentPageIndex = 0;
       this.csvIsLoaded = this.csvLoadServiceService.isCsvLoadedSuccesfully();
       this.csvNoErrors = this.csvLoadServiceService.isColumnLengthOk();
       this.csvFilename = this.csvLoadServiceService.getFileName();
-      this.csvHeaders = this.csvLoadServiceService.getHeaders();
+      this.csvHeaders = this.csvLoadServiceService.getHeaders();      
       this.csvColumns = this.csvLoadServiceService.getColumns();
       this.csvColumnsDefault = this.csvLoadServiceService.getColumnsDefault();
       this.csvtotalLines = this.csvLoadServiceService.getTotalLines();

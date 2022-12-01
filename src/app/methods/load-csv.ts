@@ -27,11 +27,13 @@ export class LoadCsv {
     return allHeaders;
   }
 
-  public getAmountOfLines(content: string) : number {
+  public getAmountOfLines(content: string, firstRowIsHeader: boolean) : number {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
+
+    let startIndex: number = (firstRowIsHeader) ? 1 : 0;
     let count: number = 0;
 
-    for(let i = 1; i < allTextLines.length; i++) {
+    for(let i = startIndex; i < allTextLines.length; i++) {
       if(allTextLines[i].trim() !== '') {
         count++;
       }
@@ -49,21 +51,24 @@ export class LoadCsv {
     return lineSplitted.length;
   }
 
-  public getCsvData(content: string, separator: string, enclosing: string) : string[] {
-    let allTextLines = content.split(/\r|\n|\r/);
-    allTextLines.pop();
+  public getCsvData(content: string, separator: string, enclosing: string, firstLineIsHeader: boolean) : string[] {
+    let allTextLines: string[] = content.split(/\r|\n|\r/);
+
+    let startIndex: number = (firstLineIsHeader) ? 1 : 0;
 
     const allData: string[] = [];
 
-    //Note: start here at index 1.
-    for(let i = 1; i < allTextLines.length; i++) {
+    for(let i = startIndex; i < allTextLines.length; i++) {
       let currentLine: string = allTextLines[i];
-      let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
-       
-      let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
-      
-      for(let j = 0; j < columns.length; j++) {
-        allData.push(columns[j]);
+
+      if(currentLine.trim() !== "") {
+        let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
+
+        let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
+
+        for(let j = 0; j < columns.length; j++) {
+          allData.push(columns[j]);
+        }
       }
     }
 
@@ -80,16 +85,19 @@ export class LoadCsv {
 
     for(let i = 1; i < allTextLines.length; i++) {
       let currentLine: string = allTextLines[i];
-      let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
-       
-      let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
 
-      if(columns.length < expectedLength) {
-        errors.push("TOO FEW COLUMNS AT LINE: " + (i + 1) + " -> " + currentLine);
-        errorFound++;
-      } else if(columns.length > expectedLength) {
-        errors.push("TOO MANY COLUMNS AT LINE: " + (i + 1) + " -> " + currentLine);
-        errorFound++
+      if(currentLine.trim() !== "") {
+        let indices: number[] = this.getIndicesOfSeparator(currentLine, separator, enclosing);
+        
+        let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
+
+        if(columns.length < expectedLength) {
+          errors.push("TOO FEW COLUMNS AT LINE: " + (i + 1) + " -> " + currentLine);
+          errorFound++;
+        } else if(columns.length > expectedLength) {
+          errors.push("TOO MANY COLUMNS AT LINE: " + (i + 1) + " -> " + currentLine);
+          errorFound++
+        }
       }
     }
 

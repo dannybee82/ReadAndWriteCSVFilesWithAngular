@@ -89,7 +89,7 @@ export class CsvLoadServiceService {
   }
 
   checkForErrors() : void {
-    let total: number = this._csvColumnLength  * this._csvTotalLines;
+    let total: number = (this._csvColumnLength * this._csvTotalLines);
 
     if(total == this._csvColumns.length && !this._csvErrors.hasErrors) {
       this._csvLoadedSuccesfully = true;
@@ -107,5 +107,6 @@ export class CsvLoadServiceService {
   isColumnLengthOk() {
     return this._csvNoErrorWithColumnLength;
   }
+
 
 }
