@@ -8,26 +8,26 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of this.GetRowsToGenerate()">
+                <tr *ngFor="let row of this.getRowsToGenerate()">
                     <td>
                         <app-button-with-image
                             imageText="Go To Record"
                             imageSource="assets/images/goto_record.png"
-                            (buttonAction)="GotoPage(row)"
+                            (buttonAction)="gotoPage(row)"
                         >
                         </app-button-with-image>
                     </td>
-                    <td *ngFor="let cell of this.GetCellsToGenerate(row);let i = index" title="{{cell}}" [class.data-is-changed]="this.TestDataChanged(row, i)">{{ this.LimitStringLength(cell)}}</td>                    
+                    <td *ngFor="let cell of this.getCellsToGenerate(row);let i = index" title="{{cell}}" [class.data-is-changed]="this.testDataChanged(row, i)">{{ this.limitStringLength(cell)}}</td>                    
                 </tr>
             </tbody>
         </table>
     </div>    
     <div *ngIf="!this.useGridMode" class="ListMode">
-        <div class="csvDataList" *ngFor="let data of this.GetDataPairs()">
+        <div class="csvDataList" *ngFor="let data of this.getDataPairs()">
             <div class="csvDataBlockHeader" *ngIf="this.csvHeaders != null">
                 {{ data.header }}
             </div>
-            <div class="csvDataBlockData" (click)="ShowPopupWithDetails(data.id, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
+            <div class="csvDataBlockData" (click)="showPopupWithDetails(data.id, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
                 {{ data.column }}
             </div>
         </div>
@@ -38,19 +38,25 @@
             [totalItems]="this.csvtotalLines"
             [disabledPrevButton]="this.isPrevButtonEnabled" 
             [disabledNextButton]="this.isNextButtonEnabled" 
-            (previousButton)="UpdatePageIndex($event)"
-            (nextButton)="UpdatePageIndex($event)"
+            [disabledFirstButton]="this.isFirstButtonEnabled"
+            [disabledLastButton]="this.isLastButtonEnabled"
+            [disabledJumpToButton]="this.isJumpToButtonEnabled"
+            (previousButton)="previousOrNextRecord($event)"
+            (nextButton)="previousOrNextRecord($event)"
+            (firstButton)="firstOrLastRecord($event)"
+            (lastButton)="firstOrLastRecord($event)"
+            (jumpToIndex)="gotoPage($event)"
         >        
         </app-csv-menu-next-prev>
     </div>
     <app-csv-change-popup 
         [isPopupVisible]="this.isPopupVisible" 
-        (callBackPopupIsClosed)="ChangePopupVisibility($event)"
+        (callBackPopupIsClosed)="changePopupVisibility($event)"
         [csvValueId]="this.changeDataId"
         [csvHeaderToApplyChangeOn]="this.changeDataHeader"
         [csvValueToChange]="this.changeDataColumn"
         [csvValueDefault]="this.changeDataColumnDefault"
-        (callBackValueChanged)="this.ChangeData($event)"
+        (callBackValueChanged)="this.changeData($event)"
     >
     </app-csv-change-popup>
 </div>

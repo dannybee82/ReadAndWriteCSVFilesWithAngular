@@ -1,9 +1,18 @@
-<div class="csvMenuPrevNextContainer">
+<div class="csvMenuPrevNextContainer">    
+    <div class="prevButton" [class.is-button-disabled]="this.disabledFirstButton">        
+        <app-button-with-image
+            imageText="First Record"
+            imageSource="assets/images/first.png"
+            (buttonAction)="firstOrLast(true)"
+            [isDisabled]="this.disabledFirstButton"
+        >
+        </app-button-with-image>
+    </div>
     <div class="prevButton" [class.is-button-disabled]="this.disabledPrevButton">        
         <app-button-with-image
             imageText="Previous Record"
             imageSource="assets/images/previous.png"
-            (buttonAction)="CallBackMethod(true)"
+            (buttonAction)="previousOrNext(true)"
             [isDisabled]="this.disabledPrevButton"
         >
         </app-button-with-image>
@@ -21,9 +30,32 @@
         <app-button-with-image
             imageText="Next Record"
             imageSource="assets/images/next.png"
-            (buttonAction)="CallBackMethod(false)"
+            (buttonAction)="previousOrNext(false)"
             [isDisabled]="this.disabledNextButton"
         >
         </app-button-with-image>
+    </div>
+    <div class="nextButton" [class.is-button-disabled]="this.disabledLastButton">
+        <app-button-with-image
+            imageText="Last Record"
+            imageSource="assets/images/last.png"
+            (buttonAction)="firstOrLast(false)"
+            [isDisabled]="this.disabledLastButton"
+        >
+        </app-button-with-image>
+    </div>
+    <div class="jumpToContainer">
+        <div class="jumpToIndex">
+            <input type="number" [value]="1" [min]="1" [max]="this.totalItems" #currentValue />
+        </div>
+        <div class="jumpToButton" [class.is-button-disabled]="this.disabledJumpToButton">
+                <app-button-with-image
+                imageText="Jump to Record"
+                imageSource="assets/images/jump_to.png"
+                (buttonAction)="jumpToRecord(currentValue.value)"
+                [isDisabled]="this.disabledJumpToButton"
+            >
+            </app-button-with-image>
+        </div>
     </div>
 </div>

@@ -54,3 +54,31 @@
 .is-button-disabled {
     background-color: darkgrey;
 }
+
+.jumpToContainer {
+    position: relative;
+    float: left;
+    clear: both;
+    margin-top: 25px;
+}
+
+.jumpToIndex {
+    position: relative;
+    float: left;
+    padding-top: 15px;
+}
+
+.jumpToIndex input[type=number] {
+   height: 30px; 
+   font-size: 18px;
+   -moz-appearance: textfield;
+   appearance: textfield;
+   margin: 0; 
+   text-align: center;
+}
+
+.jumpToButton {
+    position: relative;
+    float: right;
+    margin-left: 25px;
+}
