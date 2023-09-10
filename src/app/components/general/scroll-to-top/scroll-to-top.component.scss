@@ -1,0 +1,18 @@
+.clearFix {
+    clear: both;
+}
+
+.scroll-to-top {
+    position: fixed;
+    float: right;
+    bottom: 2%;
+    right: 2%;
+    padding: 3px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.scroll-to-top:hover {
+    background-color: lightgrey;
+    cursor: pointer;
+}

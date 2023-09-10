@@ -2,13 +2,15 @@ import { CsvErrors } from '../models/csv-errors';
 
 export class LoadCsv {
   public getFile(file: File, isUtf8: boolean): Promise<string> {
-    return new Promise((resolve) => {      
+    return new Promise((resolve, reject) => {      
       let fileReader: FileReader = new FileReader();
       
       fileReader.onloadend = (e) => {
         const testResult: any = fileReader.result?.toString();
         resolve(testResult);
       }
+
+      fileReader.onerror = reject;
       
       if(isUtf8) {
         fileReader.readAsText(file, "UTF-8");

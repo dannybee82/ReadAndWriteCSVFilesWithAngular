@@ -1,9 +1,12 @@
-
 .file-input {
-    display: none;
-  }
+  display: none;
+}
 
-  .open-file-container {
-    position: relative;
-    float: left;
-  }
+.open-file-container {
+  position: relative;
+  float: left;
+}
+
+.button:hover {
+  cursor: pointer;
+}

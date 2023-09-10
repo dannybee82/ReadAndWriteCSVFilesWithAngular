@@ -19,7 +19,8 @@ export class CreateCsv {
         }
 
         for(let i = 0; i < columns.length; i++) {
-            let currentColumn = columns[i].toString();
+            let currentColumn =  (columns[i] != null) ? columns[i].toString() : 'null';
+            currentColumn = this.removeLineBreaks(currentColumn);
 
             if(currentColumn.indexOf(separator) > -1) {
                 output += enclosing + currentColumn + enclosing;
@@ -40,6 +41,10 @@ export class CreateCsv {
         }
 
         return output;
+    }
+
+    private removeLineBreaks(subject: string) : string {
+        return subject.replace(/\n|\r/g, " ");
     }
 
 }
