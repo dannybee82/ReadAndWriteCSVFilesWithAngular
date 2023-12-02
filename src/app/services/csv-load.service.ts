@@ -5,7 +5,7 @@ import { CsvErrors } from '../models/csv-errors';
   providedIn: 'root'
 })
 
-export class CsvLoadServiceService {
+export class CsvLoadService {
   private _csvFileName: string = '';  
 
   private _csvTotalLines: number = -1;
@@ -100,13 +100,12 @@ export class CsvLoadServiceService {
     }
   }
 
-  isCsvLoadedSuccesfully() : boolean {
+  isCsvLoadedSuccessfully() : boolean {
     return this._csvLoadedSuccesfully;
   }
 
-  isColumnLengthOk() {
+  isColumnLengthOk() : boolean {
     return this._csvNoErrorWithColumnLength;
   }
-
 
 }

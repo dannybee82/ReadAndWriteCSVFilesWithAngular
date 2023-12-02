@@ -1,6 +1,7 @@
 import { CsvErrors } from '../models/csv-errors';
 
 export class LoadCsv {
+  
   public getFile(file: File, isUtf8: boolean): Promise<string> {
     return new Promise((resolve, reject) => {      
       let fileReader: FileReader = new FileReader();

@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, Injectable } from '@angular/cor
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { Subject } from 'rxjs';
 import { CsvChangeData } from '../../../models/csv-change-data'
-import { CsvLoadServiceService } from '../../../services/csv-load-service.service'
+import { CsvLoadService } from '../../../services/csv-load.service'
 
 @Component({
   selector: 'app-csv-content',
@@ -44,20 +44,20 @@ export class CsvContentComponent {
   @Output() changeDataColumn: string = '';
   @Output() changeDataColumnDefault: string = ''; 
 
-  constructor(public csvLoadServiceService: CsvLoadServiceService) {}
+  constructor(public csvLoadService: CsvLoadService) {}
 
   ngOnInit(): void {
     this.requestToReloadData.subscribe(v => {
       this.currentPageIndex = 0;
-      this.csvIsLoaded = this.csvLoadServiceService.isCsvLoadedSuccesfully();
-      this.csvNoErrors = this.csvLoadServiceService.isColumnLengthOk();
-      this.csvFilename = this.csvLoadServiceService.getFileName();
-      this.csvHeaders = this.csvLoadServiceService.getHeaders();      
-      this.csvColumns = this.csvLoadServiceService.getColumns();
-      this.csvColumnsDefault = this.csvLoadServiceService.getColumnsDefault();
-      this.csvtotalLines = this.csvLoadServiceService.getTotalLines();
-      this.csvUseColumnLength = this.csvLoadServiceService.getColumnLength();
-      this.csvErrors = this.csvLoadServiceService.getErrors();
+      this.csvIsLoaded = this.csvLoadService.isCsvLoadedSuccessfully();
+      this.csvNoErrors = this.csvLoadService.isColumnLengthOk();
+      this.csvFilename = this.csvLoadService.getFileName();
+      this.csvHeaders = this.csvLoadService.getHeaders();      
+      this.csvColumns = this.csvLoadService.getColumns();
+      this.csvColumnsDefault = this.csvLoadService.getColumnsDefault();
+      this.csvtotalLines = this.csvLoadService.getTotalLines();
+      this.csvUseColumnLength = this.csvLoadService.getColumnLength();
+      this.csvErrors = this.csvLoadService.getErrors();
     }); 
   }
 

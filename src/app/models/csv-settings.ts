@@ -5,6 +5,6 @@ export class CsvSettings {
         public enclosing: string = '"', 
         public firstRowIsHeader: boolean = true,  
         public isUtf8: boolean = true
-    ) { }
+    ) {}
 
 }

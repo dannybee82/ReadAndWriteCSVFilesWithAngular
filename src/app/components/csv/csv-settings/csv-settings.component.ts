@@ -24,11 +24,11 @@ export class CsvSettingsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  ShowMenu() : void {
+  showMenu() : void {
     this.isMenuVisible = !this.isMenuVisible;
   }
 
-  ChangeString(id: number, value: string) : void {
+  changeString(id: number, value: string) : void {
     if(id == 0) {
       this.csvSeparatorChanged.emit(value);
     } else {
@@ -36,7 +36,7 @@ export class CsvSettingsComponent implements OnInit {
     }
   }
 
-  ChangeBoolean(id: number, value: boolean) : void {
+  changeBoolean(id: number, value: boolean) : void {
     if(id == 0) {
       this.csvFirstRowIsHeaderChanged.emit(value);
     } else {

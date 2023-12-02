@@ -12,6 +12,7 @@ import { CsvSettingsComponent } from './components/csv/csv-settings/csv-settings
 import { CsvChangePopupComponent } from './components/csv/csv-change-popup/csv-change-popup.component';
 import { CsvViewModeComponent } from './components/csv/csv-view-mode/csv-view-mode.component';
 import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
+import { CsvLoadService } from './services/csv-load.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    CsvLoadService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

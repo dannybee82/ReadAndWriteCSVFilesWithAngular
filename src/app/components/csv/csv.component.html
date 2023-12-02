@@ -21,12 +21,12 @@
             >
             </app-csv-settings>
         </div>
-        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.csvLoadServiceService.isCsvLoadedSuccesfully()">
+        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvLoadedSuccessfully()">
             <app-button-with-image
                 imageText="Save CSV File"
                 imageSource="/assets/images/save.png"
                 (buttonAction)="SaveCsvFile($event)"
-                [isDisabled]="!this.csvLoadServiceService.isCsvLoadedSuccesfully()"
+                [isDisabled]="!this.isCsvLoadedSuccessfully()"
             >        
             </app-button-with-image> 
         </div>
