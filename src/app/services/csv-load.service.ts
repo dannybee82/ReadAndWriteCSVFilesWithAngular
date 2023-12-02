@@ -23,7 +23,7 @@ export class CsvLoadService {
   private _csvLoadedSuccesfully: boolean = false;
   private _csvNoErrorWithColumnLength: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
   setFileName(csvFileName: string) : void {
     this._csvFileName = csvFileName;
@@ -78,9 +78,7 @@ export class CsvLoadService {
   }
 
   setErrors(errors: CsvErrors) : void {
-
     this._csvErrors = errors;
-
     this.checkForErrors();
   }
 

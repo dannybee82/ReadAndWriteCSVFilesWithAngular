@@ -12,7 +12,7 @@ export class OpenFileComponent {
   
   @Output() selectedFile: EventEmitter<File> = new EventEmitter<File>();
 
-  constructor() { }
+  constructor() {}
 
   onFileSelected(event: any) {
     const file:File = event.target.files[0];

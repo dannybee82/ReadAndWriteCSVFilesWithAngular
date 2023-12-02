@@ -13,9 +13,8 @@ export class ButtonWithImageComponent implements OnInit {
 
   @Output() buttonAction = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

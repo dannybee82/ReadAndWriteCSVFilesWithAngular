@@ -1,7 +1,3 @@
-<button     
-    (click)="buttonAction.emit()"
-    class="button"
-    [disabled]="this.isDisabled"
-    >
-        <img src="{{ this.imageSource }}" title="{{ this.imageText }}" alt="{{ this.imageText }}" />            
+<button (click)="buttonAction.emit()" class="button" [disabled]="this.isDisabled">
+    <img src="{{ this.imageSource }}" title="{{ this.imageText }}" alt="{{ this.imageText }}" />            
 </button>

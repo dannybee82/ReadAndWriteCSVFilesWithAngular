@@ -1,9 +1,10 @@
-import { Component, OnInit, Output} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoadCsv } from '../../methods/load-csv'
 import { CreateCsv } from '../../methods/create-csv';
 import { CsvSettings } from '../../models/csv-settings';
-import { Subject } from 'rxjs';
 import { CsvLoadService } from '../../services/csv-load.service'
+import { CsvApplicationService } from 'src/app/services/csv-application.service';
+import { ShowCsvData } from 'src/app/methods/show-csv-data';
 
 @Component({
   selector: 'app-csv',
@@ -14,17 +15,17 @@ import { CsvLoadService } from '../../services/csv-load.service'
 export class CsvComponent implements OnInit {
   private _loadCsv: LoadCsv = new LoadCsv();
   private _createCsv: CreateCsv = new CreateCsv();
+  private _showCsvData: ShowCsvData = new ShowCsvData();
   public csvSettings: CsvSettings = new CsvSettings();
- 
-  @Output() requestToReloadData: Subject<boolean> = new Subject<boolean>();
-  
-  @Output() isGridModeSelected: boolean = true;
 
-  constructor(private csvLoadService: CsvLoadService) {}
+  constructor(
+    private csvLoadService: CsvLoadService,
+    private csvApplicationService: CsvApplicationService
+  ) {}
 
   ngOnInit(): void {}
 
-  GetSelectedFile(file: File) {   
+  getSelectedFile(file: File) : void {
     this._loadCsv.getFile(file, this.csvSettings.isUtf8).then(testResult => {
       this.csvLoadService.setFileName(file.name);
       this.csvLoadService.setTotalLines(this._loadCsv.getAmountOfLines(testResult, this.csvSettings.firstRowIsHeader));
@@ -47,33 +48,50 @@ export class CsvComponent implements OnInit {
       let columnLength = this.csvLoadService.getColumnLength();
       this.csvLoadService.setErrors(this._loadCsv.checkCsvData(testResult, columnLength, this.csvSettings.separator, this.csvSettings.enclosing));
 
-      this.requestToReloadData.next(true);
+      this.csvApplicationService.setCurrentMode(true);
+      
+      if(this.csvLoadService.getErrors().length == 0) {
+        this.csvApplicationService.setCurrentLoadedData(
+            this._showCsvData.prepare(
+            this.csvLoadService.getHeaders(),
+            this.csvLoadService.getColumns(),
+            this.csvLoadService.getTotalLines(),
+            this.csvLoadService.getColumnLength()
+          )
+        );
+
+        this.csvApplicationService.setErrors([]);
+      } else {
+        this.csvApplicationService.setErrors(this.csvLoadService.getErrors());
+      }
+      
+      this.csvApplicationService.setCurrentData([]);
     });
   }
 
-  SetGridMode(value: boolean) {
-    this.isGridModeSelected = value;
-  }
-
-  OnSeparatorChanged(separator: string) {
+  onSeparatorChanged(separator: string) : void {
     this.csvSettings.separator = separator;
   }
 
-  OnEnclosingChanged(enclosing: string) {
+  onEnclosingChanged(enclosing: string) : void {
     this.csvSettings.enclosing = enclosing;
   }
 
-  OnFirstRowHeaderChanged(firstRowIsHeader: boolean) {
+  onFirstRowHeaderChanged(firstRowIsHeader: boolean) : void {
     this.csvSettings.firstRowIsHeader = firstRowIsHeader;
   }
 
-  OnIsUtf8Changed(isUtf8: boolean) {
+  onIsUtf8Changed(isUtf8: boolean) : void {
     this.csvSettings.isUtf8 = isUtf8;
   }
 
-  SaveCsvFile(value: any) : void {
+  saveCsvFile(value: any) : void {
+    this.csvApplicationService.setRequestCurrentData(true);
+
+    let columns: string[] = this._showCsvData.getColumnsFromData( this.csvApplicationService.getCurrentData() );
+
     let output: string = this._createCsv.create(this.csvLoadService.getHeaders(),
-                                                this.csvLoadService.getColumns(),
+                                                columns,
                                                 this.csvLoadService.getColumnLength(),
                                                 this.csvSettings.separator, 
                                                 this.csvSettings.enclosing, 
@@ -97,6 +115,8 @@ export class CsvComponent implements OnInit {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);  
     }, 0);
+
+    this.csvApplicationService.setCurrentData([]);
   }
 
   isCsvLoadedSuccessfully() : boolean {

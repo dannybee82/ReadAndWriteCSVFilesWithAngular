@@ -4,7 +4,7 @@
             <app-open-file 
                 imageText="Open CSV File"
                 imageSource="assets/images/csv.png" 
-                (selectedFile)="GetSelectedFile($event)"
+                (selectedFile)="getSelectedFile($event)"
             >
             </app-open-file>  
         </div>  
@@ -14,10 +14,10 @@
                 [csvEnclosing]="this.csvSettings.enclosing"
                 [csvFirstRowIsHeader]="this.csvSettings.firstRowIsHeader"
                 [csvIsUtf8]="this.csvSettings.isUtf8"        
-                (csvSeparatorChanged)="OnSeparatorChanged($event)"
-                (csvEnclosingChanged)="OnEnclosingChanged($event)"
-                (csvFirstRowIsHeaderChanged)="OnFirstRowHeaderChanged($event)"
-                (csvIsUtf8Changed)="OnIsUtf8Changed($event)"
+                (csvSeparatorChanged)="onSeparatorChanged($event)"
+                (csvEnclosingChanged)="onEnclosingChanged($event)"
+                (csvFirstRowIsHeaderChanged)="onFirstRowHeaderChanged($event)"
+                (csvIsUtf8Changed)="onIsUtf8Changed($event)"
             >
             </app-csv-settings>
         </div>
@@ -25,24 +25,15 @@
             <app-button-with-image
                 imageText="Save CSV File"
                 imageSource="/assets/images/save.png"
-                (buttonAction)="SaveCsvFile($event)"
+                (buttonAction)="saveCsvFile($event)"
                 [isDisabled]="!this.isCsvLoadedSuccessfully()"
             >        
             </app-button-with-image> 
         </div>
-        <app-csv-view-mode 
-            [isGridMode]="this.isGridModeSelected"
-            (getIsGridMode)="SetGridMode($event)"
-        >
-        </app-csv-view-mode>
+        <app-csv-view-mode></app-csv-view-mode>
     </div>
     <div class="csvContent">
-        <app-csv-content
-            [useGridMode]="this.isGridModeSelected"
-            (gridModeChanged)="SetGridMode($event)"
-            [requestToReloadData]="this.requestToReloadData"
-        >
-        </app-csv-content>
+        <app-csv-content></app-csv-content>
     </div>    
 </div>
 <app-scroll-to-top></app-scroll-to-top>

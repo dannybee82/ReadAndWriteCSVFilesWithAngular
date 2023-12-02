@@ -1,7 +1,3 @@
-<button 
-    [ngStyle]="{ 'background-color': backgroundColor, 'color:': foregroundColor  }"
-    (click)="buttonAction.emit()"
-    class="button"
->
+<button [ngStyle]="{ 'background-color': backgroundColor, 'color:': foregroundColor  }" (click)="buttonAction.emit()" class="button">
     {{ text }}
 </button>

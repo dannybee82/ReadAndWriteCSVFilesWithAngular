@@ -1,6 +1,12 @@
+//Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+//Services
+import { CsvLoadService } from './services/csv-load.service';
+import { CsvApplicationService } from './services/csv-application.service';
+
+//Components
 import { AppComponent } from './app.component';
 import { ButtonComponent } from './components/general/button/button.component';
 import { ButtonWithImageComponent } from './components/general/button-with-image/button-with-image.component';
@@ -12,7 +18,6 @@ import { CsvSettingsComponent } from './components/csv/csv-settings/csv-settings
 import { CsvChangePopupComponent } from './components/csv/csv-change-popup/csv-change-popup.component';
 import { CsvViewModeComponent } from './components/csv/csv-view-mode/csv-view-mode.component';
 import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
-import { CsvLoadService } from './services/csv-load.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,8 @@ import { CsvLoadService } from './services/csv-load.service';
     BrowserModule
   ],
   providers: [
-    CsvLoadService
+    CsvLoadService,
+    CsvApplicationService
   ],
   bootstrap: [AppComponent]
 })

@@ -18,14 +18,12 @@ export class CsvChangePopupComponent implements OnInit {
   @Output() callBackPopupIsClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() callBackValueChanged: EventEmitter<CsvChangeData> = new EventEmitter<CsvChangeData>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public ShowPopup(value: boolean) {
     this.isPopupVisible = value;
-
     this.callBackPopupIsClosed.emit(value);
   }
 

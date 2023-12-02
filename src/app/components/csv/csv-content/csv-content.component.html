@@ -1,66 +1,89 @@
-<div *ngIf="this.csvIsLoaded && !this.csvNoErrors" class="csvContainer">
-    <div *ngIf="this.useGridMode" class="GridMode">
+@if(isCsvLoaded()) {
+  <div class="csvContainer">
+    @if(isGridMode()) {
+      <div class="GridMode">
         <table>
-            <thead *ngIf="this.csvHeaders != null">
-                <tr>
-                    <th></th>
-                    <th *ngFor="let header of this.csvHeaders">{{ header }}</th>
-                </tr>
+          @if (this.csvHeaders != null) {
+            <thead>
+              <tr>
+                <th></th>
+                @for (header of this.csvHeaders; track header) {
+                  <th>{{ header }}</th>
+                }
+              </tr>
             </thead>
-            <tbody>
-                <tr *ngFor="let row of this.getRowsToGenerate()">
-                    <td>
-                        <app-button-with-image
-                            imageText="Go To Record"
-                            imageSource="assets/images/goto_record.png"
-                            (buttonAction)="gotoPage(row)"
-                        >
-                        </app-button-with-image>
-                    </td>
-                    <td *ngFor="let cell of this.getCellsToGenerate(row);let i = index" title="{{cell}}" [class.data-is-changed]="this.testDataChanged(row, i)">{{ this.limitStringLength(cell)}}</td>                    
-                </tr>
-            </tbody>
+          }
+          <tbody>
+            @for (row of this.getRowsToGenerate(); track row) {
+              <tr>
+                <td>
+                  <app-button-with-image
+                    imageText="Go To Record"
+                    imageSource="assets/images/goto_record.png"
+                    (buttonAction)="gotoPage(row)"
+                    >
+                  </app-button-with-image>
+                </td>
+                @for (cell of this.getCellsToGenerate(row); track cell; let i = $index) {
+                  <td title="{{cell}}" [class.data-is-changed]="this.testDataChanged(row, i)">{{ this.limitStringLength(cell) }}</td>
+                }
+              </tr>
+            }
+          </tbody>
         </table>
-    </div>    
-    <div *ngIf="!this.useGridMode" class="ListMode">
-        <div class="csvDataList" *ngFor="let data of this.getDataPairs()">
-            <div class="csvDataBlockHeader" *ngIf="this.csvHeaders != null">
+      </div>
+    } @else {
+      <div class="ListMode">
+        @for (data of this.getCurrentDataPair(); track data; let index = $index) {
+          <div class="csvDataList">
+            @if (this.csvHeaders != null) {
+              <div class="csvDataBlockHeader">
                 {{ data.header }}
-            </div>
-            <div class="csvDataBlockData" (click)="showPopupWithDetails(data.id, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
+              </div>
+            }
+            @if(showValues()) {
+              <div class="csvDataBlockData" (click)="showPopupWithDetails(index, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
                 {{ data.column }}
-            </div>
-        </div>
-    </div>
-    <div *ngIf="this.csvIsLoaded && !this.useGridMode">
-        <app-csv-menu-next-prev 
-            [currentItem]="this.currentPageIndex + 1" 
-            [totalItems]="this.csvtotalLines"
-            [disabledPrevButton]="this.isPrevButtonEnabled" 
-            [disabledNextButton]="this.isNextButtonEnabled" 
-            [disabledFirstButton]="this.isFirstButtonEnabled"
-            [disabledLastButton]="this.isLastButtonEnabled"
-            [disabledJumpToButton]="this.isJumpToButtonEnabled"
-            (previousButton)="previousOrNextRecord($event)"
-            (nextButton)="previousOrNextRecord($event)"
-            (firstButton)="firstOrLastRecord($event)"
-            (lastButton)="firstOrLastRecord($event)"
-            (jumpToIndex)="gotoPage($event)"
-        >        
+              </div>
+            }           
+          </div>
+        }        
+      </div>
+      <div>
+        <app-csv-menu-next-prev
+          [currentItem]="this.currentPageIndex + 1"
+          [totalItems]="this.totalAmountOfLines"
+          [disabledPrevButton]="this.isPrevButtonEnabled"
+          [disabledNextButton]="this.isNextButtonEnabled"
+          [disabledFirstButton]="this.isFirstButtonEnabled"
+          [disabledLastButton]="this.isLastButtonEnabled"
+          [disabledJumpToButton]="this.isJumpToButtonEnabled"
+          (previousButton)="previousOrNextRecord($event)"
+          (nextButton)="previousOrNextRecord($event)"
+          (firstButton)="firstOrLastRecord($event)"
+          (lastButton)="firstOrLastRecord($event)"
+          (jumpToIndex)="gotoPage($event)"
+          >
         </app-csv-menu-next-prev>
-    </div>
-    <app-csv-change-popup 
-        [isPopupVisible]="this.isPopupVisible" 
-        (callBackPopupIsClosed)="changePopupVisibility($event)"
-        [csvValueId]="this.changeDataId"
-        [csvHeaderToApplyChangeOn]="this.changeDataHeader"
-        [csvValueToChange]="this.changeDataColumn"
-        [csvValueDefault]="this.changeDataColumnDefault"
-        (callBackValueChanged)="this.changeData($event)"
-    >
+      </div>
+    }
+    <app-csv-change-popup
+      [isPopupVisible]="this.isPopupVisible"
+      (callBackPopupIsClosed)="changePopupVisibility($event)"
+      [csvValueId]="this.changeDataId"
+      [csvHeaderToApplyChangeOn]="this.changeDataHeader"
+      [csvValueToChange]="this.changeDataColumn"
+      [csvValueDefault]="this.changeDataColumnDefault"
+      (callBackValueChanged)="this.changeData($event)"
+      >
     </app-csv-change-popup>
-</div>
-<div class="csvErrors" *ngIf="!this.csvIsLoaded && this.csvNoErrors && this.csvErrors.length > 0">
-    <h1>Error occured during parsing CSV:</h1>
-    <p *ngFor="let error of this.csvErrors">{{error}}</p>
-</div>
+  </div>
+}
+@if(errors().length > 0) {
+  <div class="csvErrors">
+    <h1>Error(s) occured during parsing CSV:</h1>
+    @for (error of errors(); track error) {
+      <p>{{error}}</p>
+    }
+  </div>
+}

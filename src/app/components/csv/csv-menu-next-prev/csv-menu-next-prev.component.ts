@@ -21,10 +21,9 @@ export class CsvMenuNextPrevComponent implements OnInit {
   @Output() lastButton: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() jumpToIndex: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   previousOrNext(value: boolean) {
     if(value) {
