@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { LoadCsv } from '../../methods/load-csv'
 import { CreateCsv } from '../../methods/create-csv';
 import { CsvSettings } from '../../models/csv-settings';
@@ -17,6 +17,7 @@ export class CsvComponent implements OnInit {
   private _createCsv: CreateCsv = new CreateCsv();
   private _showCsvData: ShowCsvData = new ShowCsvData();
   public csvSettings: CsvSettings = new CsvSettings();
+  public isCsvFileOpened: WritableSignal<boolean> = signal(false);
 
   constructor(
     private csvLoadService: CsvLoadService,
@@ -61,8 +62,10 @@ export class CsvComponent implements OnInit {
         );
 
         this.csvApplicationService.setErrors([]);
+        this.isCsvFileOpened.set(true);
       } else {
         this.csvApplicationService.setErrors(this.csvLoadService.getErrors());
+        this.isCsvFileOpened.set(false);
       }
       
       this.csvApplicationService.setCurrentData([]);
@@ -121,6 +124,12 @@ export class CsvComponent implements OnInit {
 
   isCsvLoadedSuccessfully() : boolean {
     return this.csvLoadService.isCsvLoadedSuccessfully(); 
+  }
+
+  closeFile($event: any) : void {    
+    this.csvApplicationService.setCurrentLoadedData([]);
+    this.csvApplicationService.setErrors([]);
+    this.isCsvFileOpened.set(false);
   }
 
 }

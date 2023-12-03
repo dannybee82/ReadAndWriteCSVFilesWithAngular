@@ -26,11 +26,19 @@
                 imageText="Save CSV File"
                 imageSource="/assets/images/save.png"
                 (buttonAction)="saveCsvFile($event)"
-                [isDisabled]="!this.isCsvLoadedSuccessfully()"
-            >        
+                [isDisabled]="!this.isCsvLoadedSuccessfully()">        
             </app-button-with-image> 
         </div>
         <app-csv-view-mode></app-csv-view-mode>
+        @if(isCsvFileOpened()) {
+            <div class="csvMenuItem" >
+                <app-button-with-image
+                imageText="Close File"
+                imageSource="/assets/images/close_file.png"
+                (buttonAction)="closeFile($event)">        
+            </app-button-with-image> 
+            </div>
+        }
     </div>
     <div class="csvContent">
         <app-csv-content></app-csv-content>

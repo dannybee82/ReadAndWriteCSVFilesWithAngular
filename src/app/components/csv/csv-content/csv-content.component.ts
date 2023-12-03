@@ -47,11 +47,17 @@ export class CsvContentComponent {
   ngOnInit(): void {
     this.csvApplicationService.getCurrentLoadedData().subscribe({
       next: (result) => {
-        this.allData = result;
-        this.totalAmountOfLines = this.allData.length;
-
-        this.csvHeaders = this.csvLoadService.getHeaders();
-        this.isCsvLoaded.set(true);
+        if(result.length > 0) {
+          this.allData = result;
+          this.totalAmountOfLines = this.allData.length;
+          this.csvHeaders = this.csvLoadService.getHeaders();
+          this.isCsvLoaded.set(true);
+        } else {
+          this.allData = [];
+          this.totalAmountOfLines = 0;
+          this.csvHeaders = null;
+          this.isCsvLoaded.set(false);
+        }        
       }      
     });
 
