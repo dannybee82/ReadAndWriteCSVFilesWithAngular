@@ -1,8 +1,8 @@
 import { Component, Output, Injectable, WritableSignal, signal } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data'
-import { CsvLoadService } from '../../../services/csv-load.service'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
+import { CsvDataInterface } from 'src/app/models/csv-data';
 
 @Component({
   selector: 'app-csv-content',
@@ -22,10 +22,12 @@ export class CsvContentComponent {
 
   public totalAmountOfLines: number = 0;
 
-  public allData: any[] = [];
+  public allColumns: SingleCsvRecord[][] = [];
 
   public currentPageIndex: number = 0;
   
+  private _workData: CsvDataInterface | null = null;
+
   @Output() isPrevButtonEnabled: boolean = true;
   @Output() isNextButtonEnabled: boolean = true;
   @Output() isFirstButtonEnabled: boolean = true;
@@ -40,30 +42,33 @@ export class CsvContentComponent {
   @Output() changeDataColumnDefault: string = ''; 
 
   constructor(
-    private csvLoadService: CsvLoadService,
     private csvApplicationService: CsvApplicationService
   ) {}
 
   ngOnInit(): void {
-    this.csvApplicationService.getCurrentLoadedData().subscribe({
+    this.csvApplicationService.getAllData().subscribe({
       next: (result) => {
-        if(result.length > 0) {
-          this.allData = result;
-          this.totalAmountOfLines = this.allData.length;
-          this.csvHeaders = this.csvLoadService.getHeaders();
+        if(result) {
+          this.setAllColumns(result.columns, result.headers, result.columnLength);
+          this.totalAmountOfLines = result.totalLines;
+          this.csvHeaders = result.headers;
           this.isCsvLoaded.set(true);
+          this._workData = result;
         } else {
-          this.allData = [];
+          this.allColumns = [];
           this.totalAmountOfLines = 0;
           this.csvHeaders = null;
           this.isCsvLoaded.set(false);
-        }        
-      }      
+        }
+      }
     });
 
     this.csvApplicationService.getRequestCurrentData().subscribe({
       next: (result) => {
-        this.csvApplicationService.setCurrentData(this.allData);
+        if(this._workData) {
+          this._workData.columns = this.getAllColumns();
+          this.csvApplicationService.setSaveData(this._workData);
+        }
       }
     });
 
@@ -82,13 +87,13 @@ export class CsvContentComponent {
 
   getCurrentDataPair() : SingleCsvRecord[] {
     this.updateMenu();
-    return this.allData[this.currentPageIndex];
+    return this.allColumns[this.currentPageIndex];
   }
 
   getRowsToGenerate(): number[] {
     let n: number[] = [];
 
-    for(let i = 0; i < this.allData.length; i++) {
+    for(let i = 0; i < this.allColumns.length; i++) {
       n.push(i);
     }
 
@@ -98,7 +103,7 @@ export class CsvContentComponent {
   getCellsToGenerate(index: number): string[] {
     let cells: string[] = [];
 
-    let currentData: SingleCsvRecord[] = this.allData[index];
+    let currentData: SingleCsvRecord[] = this.allColumns[index];
 
     currentData.forEach(item => {
       cells.push(item.column);
@@ -157,7 +162,7 @@ export class CsvContentComponent {
 
   changeData(data: CsvChangeData) {
     let index: number = data.id;
-    let currentData: SingleCsvRecord[] = this.allData[this.currentPageIndex];
+    let currentData: SingleCsvRecord[] = this.allColumns[this.currentPageIndex];
     currentData[index].column = data.changedValue;
   }
 
@@ -170,13 +175,48 @@ export class CsvContentComponent {
   }
 
   testDataChanged(index: number, column: number) : boolean {
-    let currentData: SingleCsvRecord[] = this.allData[index];
+    let currentData: SingleCsvRecord[] = this.allColumns[index];
 
     if(currentData[column].column !== currentData[column].defaultValue) {
       return true;
     }
 
     return false;
+  }
+
+  private setAllColumns(columns: string[], headers: string[] | null, columnLength: number) : void {
+    this.allColumns = [];
+    let index: number = 0;
+    let row: SingleCsvRecord[] = [];
+
+    for(let i = 0; i < columns.length; i++) {
+      if(index == 0) {
+        row = [];
+      }
+
+      let record: SingleCsvRecord = new SingleCsvRecord(index, headers != null ? headers[index] : '', columns[i], columns[i]);
+      row.push(record);
+      index++;
+
+      if(index == columnLength) {
+        index = 0;
+        this.allColumns.push(row);
+      }
+    }
+  }
+
+  private getAllColumns() : string[] {
+    let data: string[] = [];
+
+    this.allColumns.forEach(element => {
+      let currentColumn: SingleCsvRecord[] = element;
+
+      for(let i = 0; i < currentColumn.length; i++) {
+        data.push(currentColumn[i].column);
+      }
+    });
+
+    return data;
   }
 
 }

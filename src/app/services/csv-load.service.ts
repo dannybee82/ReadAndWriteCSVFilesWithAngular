@@ -5,6 +5,7 @@ import { CsvErrors } from '../models/csv-errors';
   providedIn: 'root'
 })
 
+//Remove this service???
 export class CsvLoadService {
   private _csvFileName: string = '';  
 
@@ -65,12 +66,8 @@ export class CsvLoadService {
     return this._csvColumnsDefault;
   }
 
-  setColumnLength(isFirstLineHeader: boolean, useLength: number) : void {
-    if(isFirstLineHeader && this._csvHeaders != null) {
-      this._csvColumnLength = this._csvHeaders.length;
-    } else {
-      this._csvColumnLength = useLength;
-    }
+  setColumnLength(length: number) : void {
+    this._csvColumnLength = length;
   }
 
   getColumnLength() : number {

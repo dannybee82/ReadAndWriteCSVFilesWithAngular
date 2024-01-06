@@ -1,27 +1,51 @@
 import { CsvErrors } from '../models/csv-errors';
+import { Observable, of } from 'rxjs';
+import { CsvDataInterface } from '../models/csv-data';
+import { CsvSettings } from '../models/csv-settings';
 
 export class LoadCsv {
   
-  public getFile(file: File, isUtf8: boolean): Promise<string> {
-    return new Promise((resolve, reject) => {      
-      let fileReader: FileReader = new FileReader();
-      
-      fileReader.onloadend = (e) => {
-        const testResult: any = fileReader.result?.toString();
-        resolve(testResult);
+  public loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvDataInterface | null> {
+    return new Observable<CsvDataInterface | null>(
+      observer => {
+        let fileReader: FileReader = new FileReader();
+   
+        fileReader.onloadend = (e) => {
+          const testResult: any = fileReader.result?.toString();
+          
+          const headers: string[] | null = this.getCsvHeaders(testResult, csvSettings.separator);
+          const columnLength: number = (headers != null) ? headers.length : this.getFirstLineLength(testResult, csvSettings.separator);
+          const columns: string[] = this.getColumns(testResult, csvSettings.separator, csvSettings.enclosing, csvSettings.firstRowIsHeader);
+         
+          const csvData : CsvDataInterface = {
+            fileName: file.name,
+            totalLines: this.getAmountOfLines(testResult, csvSettings.firstRowIsHeader),
+            headers: headers,
+            columns: columns,
+            columnsDefault: columns,
+            columnLength: columnLength,
+            errors: this.checkCsvData(testResult, columnLength, csvSettings.separator, csvSettings.enclosing)
+          };
+    
+          observer.next(csvData);
+          observer.complete();
+        }
+    
+        fileReader.onerror = () => {
+          observer.next(null);
+          observer.complete();
+        }
+    
+        if(csvSettings.isUtf8) {
+          fileReader.readAsText(file, "UTF-8");
+        } else {
+          fileReader.readAsText(file);
+        }
       }
-
-      fileReader.onerror = reject;
-      
-      if(isUtf8) {
-        fileReader.readAsText(file, "UTF-8");
-      } else {
-        fileReader.readAsText(file);
-      }      
-    });
+    );    
   }
 
-  public getCsvHeaders(content: string, separator: string) : string[] {
+  private getCsvHeaders(content: string, separator: string) : string[] {
     let allTextLines = content.split(/\r|\n|\r/);
     let firstLine = allTextLines[0];
     
@@ -30,7 +54,7 @@ export class LoadCsv {
     return allHeaders;
   }
 
-  public getAmountOfLines(content: string, firstRowIsHeader: boolean) : number {
+  private getAmountOfLines(content: string, firstRowIsHeader: boolean) : number {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
 
     let startIndex: number = (firstRowIsHeader) ? 1 : 0;
@@ -45,7 +69,7 @@ export class LoadCsv {
      return count;
   }
 
-  public getFirstLineLength(content: string, separator: string) : number {
+  private getFirstLineLength(content: string, separator: string) : number {
     let allTextLines = content.split(/\r|\n|\r/);
     let firstLine = allTextLines[0];
     
@@ -54,12 +78,12 @@ export class LoadCsv {
     return lineSplitted.length;
   }
 
-  public getCsvData(content: string, separator: string, enclosing: string, firstLineIsHeader: boolean) : string[] {
+  private getColumns(content: string, separator: string, enclosing: string, firstLineIsHeader: boolean) : string[] {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
 
     let startIndex: number = (firstLineIsHeader) ? 1 : 0;
 
-    const allData: string[] = [];
+    const allCoumns: string[] = [];
 
     for(let i = startIndex; i < allTextLines.length; i++) {
       let currentLine: string = allTextLines[i];
@@ -70,15 +94,15 @@ export class LoadCsv {
         let columns: string[] = this.getDataFromStringAsArray(currentLine, indices, enclosing);
 
         for(let j = 0; j < columns.length; j++) {
-          allData.push(columns[j]);
+          allCoumns.push(columns[j]);
         }
       }
     }
 
-    return allData;
+    return allCoumns;
   }
 
-  public checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
+  private checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
     let errors: string[] = [];
 
     let allTextLines = content.split(/\r|\n|\r/);
@@ -110,7 +134,7 @@ export class LoadCsv {
 
     return new CsvErrors(false, errors);
   }
-
+  
   private getIndicesOfSeparator(currentLine: string, separator: string, enclosing: string) : number[] {
     let indices: number[] = [];
     indices.push(0);

@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { SingleCsvRecord } from '../models/single-csv-record';
+import { CsvDataInterface } from '../models/csv-data';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CsvApplicationService {
 
-  private _currentData: SingleCsvRecord[] = [];
   private _updateGridOrListMode: Subject<boolean> = new Subject<boolean>();
-  private _updateCurrentLoadedData: Subject<any[]> = new Subject<any[]>();
   private _requestCurrentData: Subject<boolean> = new Subject<boolean>();
   private _errors: Subject<string[]> = new Subject<string[]>();
+
+  private _allData: Subject<CsvDataInterface | null> = new Subject<CsvDataInterface | null>();
+  private _saveData: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
 
   constructor() { }
 
@@ -23,28 +24,28 @@ export class CsvApplicationService {
     return this._updateGridOrListMode;
   }
 
-  setCurrentLoadedData(data: any[]) : void {
-    this._updateCurrentLoadedData.next(data);
+  setAllData(data: CsvDataInterface | null) : void {
+    this._allData.next(data);
+  }
+  
+  getAllData() : Subject<CsvDataInterface | null> {
+    return this._allData;
   }
 
-  getCurrentLoadedData() : Subject<any[]> {
-    return this._updateCurrentLoadedData;
+  setSaveData(data: CsvDataInterface) : void {
+    this._saveData.next(data);
   }
-
+  
+  getSaveData() : Subject<CsvDataInterface> {
+    return this._saveData;
+  }
+  
   setRequestCurrentData(value: boolean) : void {
     this._requestCurrentData.next(value);
   }
 
   getRequestCurrentData() : Subject<boolean> {
     return this._requestCurrentData;
-  }
-
-  setCurrentData(data: SingleCsvRecord[]) : void {
-    this._currentData = data;
-  }  
-
-  getCurrentData() : SingleCsvRecord[] {
-    return this._currentData;
   }
 
   setErrors(errors: string[]) : void {

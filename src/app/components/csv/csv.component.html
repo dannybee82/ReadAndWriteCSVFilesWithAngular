@@ -21,12 +21,12 @@
             >
             </app-csv-settings>
         </div>
-        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvLoadedSuccessfully()">
+        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvFileOpened()">
             <app-button-with-image
                 imageText="Save CSV File"
                 imageSource="/assets/images/save.png"
-                (buttonAction)="saveCsvFile($event)"
-                [isDisabled]="!this.isCsvLoadedSuccessfully()">        
+                (buttonAction)="save()"
+                [isDisabled]="!this.isCsvFileOpened()">        
             </app-button-with-image> 
         </div>
         <app-csv-view-mode></app-csv-view-mode>
@@ -35,7 +35,7 @@
                 <app-button-with-image
                 imageText="Close File"
                 imageSource="/assets/images/close_file.png"
-                (buttonAction)="closeFile($event)">        
+                (buttonAction)="closeFile()">        
             </app-button-with-image> 
             </div>
         }
