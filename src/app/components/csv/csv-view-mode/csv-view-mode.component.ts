@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
 
 @Component({
@@ -7,9 +7,12 @@ import { CsvApplicationService } from 'src/app/services/csv-application.service'
   styleUrls: ['./csv-view-mode.component.css']
 })
 export class CsvViewModeComponent implements OnInit {
+
   public isGridMode: boolean = true;
   
-  constructor(private csvApplicationService: CsvApplicationService) { }
+  constructor(
+    private csvApplicationService: CsvApplicationService
+  ) { }
 
   ngOnInit(): void {
     this.csvApplicationService.getCurrentMode().subscribe({

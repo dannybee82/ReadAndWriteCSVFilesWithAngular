@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { CsvChangeData } from '../../../models/csv-change-data'
 
 @Component({
@@ -7,7 +7,7 @@ import { CsvChangeData } from '../../../models/csv-change-data'
   styleUrls: ['./csv-change-popup.component.css']
 })
 
-export class CsvChangePopupComponent implements OnInit {
+export class CsvChangePopupComponent {
   @Input() isPopupVisible: boolean = false;
 
   @Input() csvValueId: number = -1;
@@ -20,24 +20,18 @@ export class CsvChangePopupComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
-
-  public ShowPopup(value: boolean) {
+  showPopup(value: boolean) : void {
     this.isPopupVisible = value;
     this.callBackPopupIsClosed.emit(value);
   }
 
-  VallueChanged(value: string) {
+  valueChanged(value: string) : void {
     let csvChangeData: CsvChangeData = new CsvChangeData(this.csvValueId, value);
 
     this.callBackValueChanged.emit(csvChangeData);
 
     this.isPopupVisible = false;
     this.callBackPopupIsClosed.emit(false);
-  }
-
-  RestoreDefaultValue() {
-    this.csvValueToChange = this.csvValueDefault;
   }
 
 }

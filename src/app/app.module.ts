@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 //Services
-import { CsvLoadService } from './services/csv-load.service';
 import { CsvApplicationService } from './services/csv-application.service';
 
 //Components
@@ -37,7 +36,6 @@ import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-
     BrowserModule
   ],
   providers: [
-    CsvLoadService,
     CsvApplicationService
   ],
   bootstrap: [AppComponent]

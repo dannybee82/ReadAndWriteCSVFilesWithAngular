@@ -5,7 +5,7 @@
         <app-button-with-image
           imageSource="assets/images/close.png"
           imageText="Close Popup"
-          (buttonAction)="ShowPopup(false)"
+          (buttonAction)="showPopup(false)"
           >
         </app-button-with-image>
       </div>
@@ -18,7 +18,7 @@
           <app-button-with-image
             imageText="OK. Accept Changes."
             imageSource="assets/images/ok.png"
-            (buttonAction)="VallueChanged(currentTextarea.value)"
+            (buttonAction)="valueChanged(currentTextarea.value)"
             >
           </app-button-with-image>
         </div>
@@ -26,7 +26,7 @@
           <app-button-with-image
             imageText="Cancel. Discard/Undo Changes."
             imageSource="assets/images/cancel.png"
-            (buttonAction)="ShowPopup(false)"
+            (buttonAction)="showPopup(false)"
             >
           </app-button-with-image>
         </div>

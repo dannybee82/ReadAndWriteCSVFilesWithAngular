@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-button-with-image',
@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./button-with-image.component.css']
 })
 
-export class ButtonWithImageComponent implements OnInit {  
+export class ButtonWithImageComponent {  
   @Input() imageSource!: string;  
   @Input() imageText?: string = '';
   @Input() isDisabled: boolean = false;
@@ -14,7 +14,5 @@ export class ButtonWithImageComponent implements OnInit {
   @Output() buttonAction = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit(): void {}
 
 }

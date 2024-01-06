@@ -1,17 +1,19 @@
-export class CreateCsv {
+import { CsvSettings } from "../models/csv-settings";
 
-    create(headers: string[] | null, columns: string[], useLength: number, separator: string, enclosing: string, firstRowIsHeader: boolean) : string {
+export class CreateCsv {
+    
+    create(headers: string[] | null, columns: string[], useLength: number, csvSettings: CsvSettings) : string {
         let headerLength = useLength;
 
         let output: string = '';
         let counter: number = 0;
 
-        if(firstRowIsHeader && headers != null) {
+        if(csvSettings.firstRowIsHeader && headers != null) {
             for(let i = 0; i < headerLength; i++) {
                 output += headers[i];
     
                 if(i < headerLength - 1) {
-                    output += separator;
+                    output += csvSettings.separator;
                 }
             }
 
@@ -22,14 +24,14 @@ export class CreateCsv {
             let currentColumn =  (columns[i] != null) ? columns[i].toString() : 'null';
             currentColumn = this.removeLineBreaks(currentColumn);
 
-            if(currentColumn.indexOf(separator) > -1) {
-                output += enclosing + currentColumn + enclosing;
+            if(currentColumn.indexOf(csvSettings.separator) > -1) {
+                output += csvSettings.enclosing + currentColumn + csvSettings.enclosing;
             } else {
                 output += currentColumn;
             }
 
             if(counter < headerLength - 1) {
-                output += separator;
+                output += csvSettings.separator;
             }
 
             counter++;

@@ -1,4 +1,4 @@
-import { Component, Output, Injectable, WritableSignal, signal } from '@angular/core';
+import { Component, Injectable, WritableSignal, signal } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
@@ -13,33 +13,30 @@ import { CsvDataInterface } from 'src/app/models/csv-data';
 @Injectable()
 
 export class CsvContentComponent {
+
   public isCsvLoaded: WritableSignal<boolean> = signal(false);
   public isGridMode: WritableSignal<boolean> = signal(true);
   public errors: WritableSignal<string[]> = signal([]);
-  public showValues: WritableSignal<boolean> = signal(true);
 
   public csvHeaders: string[] | null = [];
-
   public totalAmountOfLines: number = 0;
-
   public allColumns: SingleCsvRecord[][] = [];
-
   public currentPageIndex: number = 0;
   
   private _workData: CsvDataInterface | null = null;
 
-  @Output() isPrevButtonEnabled: boolean = true;
-  @Output() isNextButtonEnabled: boolean = true;
-  @Output() isFirstButtonEnabled: boolean = true;
-  @Output() isLastButtonEnabled: boolean = true;
-  @Output() isJumpToButtonEnabled: boolean = true;
+  public isPrevButtonEnabled: boolean = true;
+  public isNextButtonEnabled: boolean = true;
+  public isFirstButtonEnabled: boolean = true;
+  public isLastButtonEnabled: boolean = true;
+  public isJumpToButtonEnabled: boolean = true;
 
-  @Output() isPopupVisible: boolean = false;
+  public isPopupVisible: boolean = false;
 
-  @Output() changeDataId: number = -1;
-  @Output() changeDataHeader: string = '';
-  @Output() changeDataColumn: string = '';
-  @Output() changeDataColumnDefault: string = ''; 
+  public changeDataId: number = -1;
+  public changeDataHeader: string = '';
+  public changeDataColumn: string = '';
+  public changeDataColumnDefault: string = ''; 
 
   constructor(
     private csvApplicationService: CsvApplicationService
@@ -63,7 +60,7 @@ export class CsvContentComponent {
       }
     });
 
-    this.csvApplicationService.getRequestCurrentData().subscribe({
+    this.csvApplicationService.getRequestDataToSave().subscribe({
       next: (result) => {
         if(this._workData) {
           this._workData.columns = this.getAllColumns();
@@ -112,7 +109,7 @@ export class CsvContentComponent {
     return cells;
   }
 
-  updateMenu() {
+  updateMenu() : void {
     this.isPrevButtonEnabled = (this.currentPageIndex - 1 >= 0) ? false : true;
     this.isNextButtonEnabled = (this.currentPageIndex + 1 < this.totalAmountOfLines) ? false : true;
     this.isFirstButtonEnabled = (this.currentPageIndex - 1 >= 0) ? false : true;
@@ -120,7 +117,7 @@ export class CsvContentComponent {
     this.isJumpToButtonEnabled = (this.totalAmountOfLines == 1) ? true : false;
   }
 
-  previousOrNextRecord(value: boolean) {
+  previousOrNextRecord(value: boolean) : void {
     this.currentPageIndex = (value) ? this.currentPageIndex -= 1 : this.currentPageIndex += 1;
 
     if(this.currentPageIndex < 0) {
@@ -134,20 +131,20 @@ export class CsvContentComponent {
     this.getCurrentDataPair();
   }
 
-  firstOrLastRecord(value: boolean) {
+  firstOrLastRecord(value: boolean) : void {
     this.currentPageIndex = (value) ? 0 : this.totalAmountOfLines - 1;
     this.updateMenu();
     this.getCurrentDataPair();
   }
   
-  gotoPage(pageNumber: number) {    
+  gotoPage(pageNumber: number) : void {    
     this.currentPageIndex = pageNumber;
     this.updateMenu();
     this.getCurrentDataPair();
     this.csvApplicationService.setCurrentMode(false);
   }
 
-  showPopupWithDetails(id: number, header: string, column: string, defaultValue: string) {
+  showPopupWithDetails(id: number, header: string, column: string, defaultValue: string) : void {
     this.changeDataId = id;
     this.changeDataHeader = header;
     this.changeDataColumn = column;
@@ -156,11 +153,11 @@ export class CsvContentComponent {
     this.isPopupVisible = true;
   }
 
-  changePopupVisibility(value: boolean) {
+  changePopupVisibility(value: boolean) : void {
     this.isPopupVisible = value;
   }
 
-  changeData(data: CsvChangeData) {
+  changeData(data: CsvChangeData) : void {
     let index: number = data.id;
     let currentData: SingleCsvRecord[] = this.allColumns[this.currentPageIndex];
     currentData[index].column = data.changedValue;

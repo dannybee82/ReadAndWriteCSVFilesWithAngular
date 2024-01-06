@@ -29,7 +29,7 @@
                 [isDisabled]="!this.isCsvFileOpened()">        
             </app-button-with-image> 
         </div>
-        <app-csv-view-mode></app-csv-view-mode>
+        <app-csv-view-mode *ngIf="this.isCsvFileOpened()"></app-csv-view-mode>
         @if(isCsvFileOpened()) {
             <div class="csvMenuItem" >
                 <app-button-with-image

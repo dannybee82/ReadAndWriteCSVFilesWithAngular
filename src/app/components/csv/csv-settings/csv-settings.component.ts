@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-csv-settings',
@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./csv-settings.component.css']
 })
 
-export class CsvSettingsComponent implements OnInit {
+export class CsvSettingsComponent {
   public isMenuVisible: boolean = false;
   
   @Input() csvSeparator: string = '';
@@ -19,10 +19,7 @@ export class CsvSettingsComponent implements OnInit {
   @Output() csvFirstRowIsHeaderChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() csvIsUtf8Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  constructor() {}
 
   showMenu() : void {
     this.isMenuVisible = !this.isMenuVisible;

@@ -41,11 +41,9 @@
                 {{ data.header }}
               </div>
             }
-            @if(showValues()) {
-              <div class="csvDataBlockData" (click)="showPopupWithDetails(index, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
-                {{ data.column }}
-              </div>
-            }           
+            <div class="csvDataBlockData" (click)="showPopupWithDetails(index, data.header, data.column, data.defaultValue)" [class.data-is-changed]="data.column !== data.defaultValue">
+              {{ data.column }}
+            </div>       
           </div>
         }        
       </div>

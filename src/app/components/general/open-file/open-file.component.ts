@@ -14,11 +14,16 @@ export class OpenFileComponent {
 
   constructor() {}
 
-  onFileSelected(event: any) {
-    const file:File = event.target.files[0];
+  onFileSelected(event: Event) {
+    const element: HTMLInputElement = event.currentTarget as HTMLInputElement;
+    const fileList: FileList | null = element.files;
 
-    if (file) {
+    if(fileList) {
+      const file: File = fileList[0];
+
+      if (file) {
         this.selectedFile.emit(file);
+      }
     }
   }
 

@@ -2,9 +2,7 @@ import { Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { LoadCsv } from '../../methods/load-csv'
 import { CreateCsv } from '../../methods/create-csv';
 import { CsvSettings } from '../../models/csv-settings';
-import { CsvLoadService } from '../../services/csv-load.service'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { ShowCsvData } from 'src/app/methods/show-csv-data';
 import { CsvDataInterface } from 'src/app/models/csv-data';
 
 @Component({
@@ -13,15 +11,16 @@ import { CsvDataInterface } from 'src/app/models/csv-data';
   styleUrls: ['./csv.component.css']
 })
 
-export class CsvComponent implements OnInit {
-  private _loadCsv: LoadCsv = new LoadCsv();
-  private _createCsv: CreateCsv = new CreateCsv();
-  private _showCsvData: ShowCsvData = new ShowCsvData();
-  public csvSettings: CsvSettings = new CsvSettings();
+export class CsvComponent implements OnInit {  
+  
   public isCsvFileOpened: WritableSignal<boolean> = signal(false);
 
+  public csvSettings: CsvSettings = new CsvSettings();
+
+  private _loadCsv: LoadCsv = new LoadCsv();
+  private _createCsv: CreateCsv = new CreateCsv();
+
   constructor(
-    private csvLoadService: CsvLoadService,
     private csvApplicationService: CsvApplicationService
   ) {}
 
@@ -44,7 +43,7 @@ export class CsvComponent implements OnInit {
             this.csvApplicationService.setErrors([]);
             this.isCsvFileOpened.set(true);
           } else {
-            this.csvApplicationService.setErrors(this.csvLoadService.getErrors());
+            this.csvApplicationService.setErrors(csvData.errors.errors);
             this.isCsvFileOpened.set(false);
           }
         } else {
@@ -71,16 +70,11 @@ export class CsvComponent implements OnInit {
   }
 
   save() : void {
-    this.csvApplicationService.setRequestCurrentData(true);
+    this.csvApplicationService.setRequestDataToSave(true);
   }
 
   private saveCsvFile(data: CsvDataInterface) : void {
-    let output: string = this._createCsv.create(data.headers,
-                                                data.columns,
-                                                data.columnLength,
-                                                this.csvSettings.separator, 
-                                                this.csvSettings.enclosing, 
-                                                this.csvSettings.firstRowIsHeader);
+    let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings);
 
     let file: Blob;
 
@@ -96,7 +90,7 @@ export class CsvComponent implements OnInit {
     document.body.appendChild(a);
 
     a.click();
-    setTimeout(function() {
+    setTimeout(() => {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);  
     }, 0);

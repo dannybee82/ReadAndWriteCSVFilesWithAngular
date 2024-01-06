@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-csv-menu-next-prev',
   templateUrl: './csv-menu-next-prev.component.html',
   styleUrls: ['./csv-menu-next-prev.component.css']
 })
-export class CsvMenuNextPrevComponent implements OnInit {
+export class CsvMenuNextPrevComponent {
   @Input() currentItem: number = -1;
   @Input() totalItems: number = -1;
   
@@ -23,9 +23,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
-
-  previousOrNext(value: boolean) {
+  previousOrNext(value: boolean) : void {
     if(value) {
       this.previousButton.emit(value);
     } else {
@@ -33,7 +31,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
     }
   }
 
-  firstOrLast(value: boolean) {
+  firstOrLast(value: boolean) : void {
     if(value) {
       this.firstButton.emit(value);
     } else {
@@ -41,7 +39,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
     }
   }
 
-  jumpToRecord(value: string) {
+  jumpToRecord(value: string) : void {
     let parsed: number = parseInt(value) - 1;
 
     if(parsed >= 0 && parsed <= (this.totalItems - 1)) {

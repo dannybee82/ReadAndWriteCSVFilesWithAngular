@@ -8,7 +8,7 @@ import { CsvDataInterface } from '../models/csv-data';
 export class CsvApplicationService {
 
   private _updateGridOrListMode: Subject<boolean> = new Subject<boolean>();
-  private _requestCurrentData: Subject<boolean> = new Subject<boolean>();
+  private _requestDataToSave: Subject<boolean> = new Subject<boolean>();
   private _errors: Subject<string[]> = new Subject<string[]>();
 
   private _allData: Subject<CsvDataInterface | null> = new Subject<CsvDataInterface | null>();
@@ -40,12 +40,12 @@ export class CsvApplicationService {
     return this._saveData;
   }
   
-  setRequestCurrentData(value: boolean) : void {
-    this._requestCurrentData.next(value);
+  setRequestDataToSave(value: boolean) : void {
+    this._requestDataToSave.next(value);
   }
 
-  getRequestCurrentData() : Subject<boolean> {
-    return this._requestCurrentData;
+  getRequestDataToSave() : Subject<boolean> {
+    return this._requestDataToSave;
   }
 
   setErrors(errors: string[]) : void {
