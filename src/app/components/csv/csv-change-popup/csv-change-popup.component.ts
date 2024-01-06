@@ -20,7 +20,7 @@ export class CsvChangePopupComponent {
 
   constructor() {}
 
-  showPopup(value: boolean) : void {
+  showPopup(value: boolean) : void {    
     this.isPopupVisible = value;
     this.callBackPopupIsClosed.emit(value);
   }

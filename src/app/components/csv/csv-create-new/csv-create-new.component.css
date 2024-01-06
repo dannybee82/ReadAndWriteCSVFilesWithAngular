@@ -1,0 +1,56 @@
+.main-container {
+    width: 100%;
+    position: relative;
+}
+
+.add-header {
+    margin-top: 16px;
+    width: 50%;
+    position: relative;
+    float: left;
+}
+
+.amount-of-records {
+    margin-top: 16px;
+    width: 40%;
+    position: relative;
+    float: left;
+}
+
+.w-33 {
+    width: 33%;
+    position: relative;
+    float: left;
+}
+
+div.w-33 label {
+    margin-right: 4px;
+}
+
+.pt-8 {
+    padding-top: 8px;
+}
+
+.header-container {
+    padding-left: 8px;
+    width: 50%;
+    position: relative;
+    float: left;
+    clear: left;
+}
+
+.row {
+    width: inherit;
+    position: relative;
+}
+
+.ng-invalid .ng-touched {
+    border: 1px solid red;
+}
+
+input {
+    border: 1px dotted darkgrey;
+    border-radius: 5px;
+    padding: 4px;
+    height: 1.25rem;
+}

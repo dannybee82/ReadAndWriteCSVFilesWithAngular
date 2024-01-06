@@ -1,6 +1,8 @@
 //Modules
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 //Services
 import { CsvApplicationService } from './services/csv-application.service';
@@ -17,6 +19,7 @@ import { CsvSettingsComponent } from './components/csv/csv-settings/csv-settings
 import { CsvChangePopupComponent } from './components/csv/csv-change-popup/csv-change-popup.component';
 import { CsvViewModeComponent } from './components/csv/csv-view-mode/csv-view-mode.component';
 import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-to-top.component';
+import { CsvCreateNewComponent } from './components/csv/csv-create-new/csv-create-new.component';
 
 @NgModule({
   declarations: [
@@ -30,10 +33,13 @@ import { ScrollToTopComponent } from './components/general/scroll-to-top/scroll-
     CsvSettingsComponent,
     CsvChangePopupComponent,
     CsvViewModeComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    CsvCreateNewComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     CsvApplicationService

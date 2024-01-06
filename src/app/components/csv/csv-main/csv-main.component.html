@@ -29,6 +29,14 @@
                 [isDisabled]="!this.isCsvFileOpened()">        
             </app-button-with-image> 
         </div>
+        <div class="csvMenuItem">
+            <app-button-with-image
+                imageText="Create new CSV File"
+                imageSource="/assets/images/create_new.png"
+                (buttonAction)="createNew()"
+                [isDisabled]="this.isCsvFileOpened()">        
+            </app-button-with-image> 
+        </div>
         <app-csv-view-mode *ngIf="this.isCsvFileOpened()"></app-csv-view-mode>
         @if(isCsvFileOpened()) {
             <div class="csvMenuItem" >
@@ -42,6 +50,7 @@
     </div>
     <div class="csvContent">
         <app-csv-content></app-csv-content>
+        <app-csv-create-new *ngIf="this.createNewFile()"></app-csv-create-new>
     </div>    
 </div>
 <app-scroll-to-top></app-scroll-to-top>

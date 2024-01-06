@@ -14,6 +14,7 @@ import { CsvDataInterface } from 'src/app/models/csv-data';
 export class CsvMainComponent implements OnInit {  
   
   public isCsvFileOpened: WritableSignal<boolean> = signal(false);
+  public createNewFile: WritableSignal<boolean> = signal(false); 
 
   public csvSettings: CsvSettings = new CsvSettings();
 
@@ -30,12 +31,24 @@ export class CsvMainComponent implements OnInit {
         this.saveCsvFile(data);
       }
     });
+
+    this.csvApplicationService.getCreateNew().subscribe({
+      next: (data) => {
+        this.createNewFile.set(false);
+        this.csvApplicationService.setCurrentMode(true);
+        this.csvApplicationService.setAllData(data);
+        this.csvApplicationService.setErrors([]);
+        this.isCsvFileOpened.set(true);
+      }
+    });
   }
 
   getSelectedFile(file: File) : void {
+    this.createNewFile.set(false);
+
     this._loadCsv.loadCsvFile(file, this.csvSettings).subscribe({
       next: (csvData) => {
-        if(csvData) {
+        if(csvData) {          
           this.csvApplicationService.setCurrentMode(true);
       
           if(!csvData.errors.hasErrors) {
@@ -73,6 +86,16 @@ export class CsvMainComponent implements OnInit {
     this.csvApplicationService.setRequestDataToSave(true);
   }
 
+  closeFile() : void {    
+    this.csvApplicationService.setAllData(null);
+    this.csvApplicationService.setErrors([]);
+    this.isCsvFileOpened.set(false);
+  }
+
+  createNew() : void {
+    this.createNewFile.set(true);    
+  }
+
   private saveCsvFile(data: CsvDataInterface) : void {
     let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings);
 
@@ -94,12 +117,6 @@ export class CsvMainComponent implements OnInit {
         document.body.removeChild(a);
         window.URL.revokeObjectURL(url);  
     }, 0);
-  }
-
-  closeFile() : void {    
-    this.csvApplicationService.setAllData(null);
-    this.csvApplicationService.setErrors([]);
-    this.isCsvFileOpened.set(false);
   }
 
 }

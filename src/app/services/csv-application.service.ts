@@ -10,9 +10,9 @@ export class CsvApplicationService {
   private _updateGridOrListMode: Subject<boolean> = new Subject<boolean>();
   private _requestDataToSave: Subject<boolean> = new Subject<boolean>();
   private _errors: Subject<string[]> = new Subject<string[]>();
-
   private _allData: Subject<CsvDataInterface | null> = new Subject<CsvDataInterface | null>();
   private _saveData: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
+  private _createNew: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
 
   constructor() { }
 
@@ -54,6 +54,14 @@ export class CsvApplicationService {
 
   getErrors() : Subject<string[]> {
     return this._errors;
+  }
+
+  setCreatenew(data: CsvDataInterface) : void {
+    this._createNew.next(data);
+  }
+
+  getCreateNew() : Subject<CsvDataInterface> {
+    return this._createNew;
   }
 
 }
