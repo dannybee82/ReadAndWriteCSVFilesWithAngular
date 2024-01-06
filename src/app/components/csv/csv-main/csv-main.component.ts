@@ -1,17 +1,17 @@
 import { Component, OnInit, WritableSignal, signal } from '@angular/core';
-import { LoadCsv } from '../../methods/load-csv'
-import { CreateCsv } from '../../methods/create-csv';
-import { CsvSettings } from '../../models/csv-settings';
+import { LoadCsv } from '../../../methods/load-csv'
+import { CreateCsv } from '../../../methods/create-csv';
+import { CsvSettings } from '../../../models/csv-settings';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
 import { CsvDataInterface } from 'src/app/models/csv-data';
 
 @Component({
-  selector: 'app-csv',
-  templateUrl: './csv.component.html',
-  styleUrls: ['./csv.component.css']
+  selector: 'app-csv-main',
+  templateUrl: './csv-main.component.html',
+  styleUrls: ['./csv-main.component.css']
 })
 
-export class CsvComponent implements OnInit {  
+export class CsvMainComponent implements OnInit {  
   
   public isCsvFileOpened: WritableSignal<boolean> = signal(false);
 
