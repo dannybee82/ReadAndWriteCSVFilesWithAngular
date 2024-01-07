@@ -3,6 +3,8 @@ import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
 import { CsvDataInterface } from 'src/app/models/csv-data';
+import { CsvRecordsService } from 'src/app/services/csv-records.service';
+import { CsvShowRecord } from 'src/app/models/csv-show-record';
 
 @Component({
   selector: 'app-csv-content',
@@ -22,15 +24,9 @@ export class CsvContentComponent {
   public totalAmountOfLines: number = 0;
   public allColumns: SingleCsvRecord[][] = [];
   public currentPageIndex: number = 0;
-  
+
   private _workData: CsvDataInterface | null = null;
-
-  public isPrevButtonEnabled: boolean = true;
-  public isNextButtonEnabled: boolean = true;
-  public isFirstButtonEnabled: boolean = true;
-  public isLastButtonEnabled: boolean = true;
-  public isJumpToButtonEnabled: boolean = true;
-
+   
   public isPopupVisible: boolean = false;
 
   public changeDataId: number = -1;
@@ -39,7 +35,8 @@ export class CsvContentComponent {
   public changeDataColumnDefault: string = ''; 
 
   constructor(
-    private csvApplicationService: CsvApplicationService
+    private csvApplicationService: CsvApplicationService,
+    private csvRecordsService: CsvRecordsService
   ) {}
 
   ngOnInit(): void {
@@ -51,6 +48,12 @@ export class CsvContentComponent {
           this.csvHeaders = result.headers;
           this.isCsvLoaded.set(true);
           this._workData = result;
+
+          const currentIndex: CsvShowRecord = {
+            currentIndex: this.currentPageIndex,
+            totalItems: result.totalLines
+          }
+          this.csvRecordsService.setCurrentCsvRecords(currentIndex);
         } else {
           this.allColumns = [];
           this.totalAmountOfLines = 0;
@@ -80,10 +83,18 @@ export class CsvContentComponent {
         this.errors.set(result);
       }
     });
+
+    this.csvRecordsService.getChangeCsvRecord().subscribe({
+      next: (data) => {
+        if(data) {
+          this.currentPageIndex = data.currentIndex;
+          this.getCurrentDataPair();
+        }        
+      }
+    });
   }
 
   getCurrentDataPair() : SingleCsvRecord[] {
-    this.updateMenu();
     return this.allColumns[this.currentPageIndex];
   }
 
@@ -108,40 +119,18 @@ export class CsvContentComponent {
 
     return cells;
   }
-
-  updateMenu() : void {
-    this.isPrevButtonEnabled = (this.currentPageIndex - 1 >= 0) ? false : true;
-    this.isNextButtonEnabled = (this.currentPageIndex + 1 < this.totalAmountOfLines) ? false : true;
-    this.isFirstButtonEnabled = (this.currentPageIndex - 1 >= 0) ? false : true;
-    this.isLastButtonEnabled = (this.currentPageIndex + 1 < this.totalAmountOfLines) ? false : true;
-    this.isJumpToButtonEnabled = (this.totalAmountOfLines == 1) ? true : false;
-  }
-
-  previousOrNextRecord(value: boolean) : void {
-    this.currentPageIndex = (value) ? this.currentPageIndex -= 1 : this.currentPageIndex += 1;
-
-    if(this.currentPageIndex < 0) {
-      this.currentPageIndex = 0;
-    }
-
-    if(this.currentPageIndex > this.totalAmountOfLines) {
-      this.currentPageIndex = this.totalAmountOfLines - 1;
-    }
-
-    this.getCurrentDataPair();
-  }
-
-  firstOrLastRecord(value: boolean) : void {
-    this.currentPageIndex = (value) ? 0 : this.totalAmountOfLines - 1;
-    this.updateMenu();
-    this.getCurrentDataPair();
-  }
   
-  gotoPage(pageNumber: number) : void {    
-    this.currentPageIndex = pageNumber;
-    this.updateMenu();
+  gotoRecord(recordNumber: number) : void {    
+    this.currentPageIndex = recordNumber;
     this.getCurrentDataPair();
     this.csvApplicationService.setCurrentMode(false);
+
+    const data: CsvShowRecord = {
+      currentIndex: recordNumber,
+      totalItems: this.totalAmountOfLines
+    };
+    
+    this.csvRecordsService.setCurrentCsvRecords(data);
   }
 
   showPopupWithDetails(id: number, header: string, column: string, defaultValue: string) : void {

@@ -20,7 +20,7 @@
                   <app-button-with-image
                     imageText="Go To Record"
                     imageSource="assets/images/goto_record.png"
-                    (buttonAction)="gotoPage(row)"
+                    (buttonAction)="gotoRecord(row)"
                     >
                   </app-button-with-image>
                 </td>
@@ -48,21 +48,7 @@
         }        
       </div>
       <div>
-        <app-csv-menu-next-prev
-          [currentItem]="this.currentPageIndex + 1"
-          [totalItems]="this.totalAmountOfLines"
-          [disabledPrevButton]="this.isPrevButtonEnabled"
-          [disabledNextButton]="this.isNextButtonEnabled"
-          [disabledFirstButton]="this.isFirstButtonEnabled"
-          [disabledLastButton]="this.isLastButtonEnabled"
-          [disabledJumpToButton]="this.isJumpToButtonEnabled"
-          (previousButton)="previousOrNextRecord($event)"
-          (nextButton)="previousOrNextRecord($event)"
-          (firstButton)="firstOrLastRecord($event)"
-          (lastButton)="firstOrLastRecord($event)"
-          (jumpToIndex)="gotoPage($event)"
-          >
-        </app-csv-menu-next-prev>
+        <app-csv-menu-next-prev></app-csv-menu-next-prev>
       </div>
     }
     <app-csv-change-popup

@@ -19,7 +19,7 @@
     </div>
     <div class="spaceBetweenButtons">
         <div class="currentItem">
-            {{this.currentItem}}
+            {{this.currentIndex + 1}}
         </div>
         <div class="someSpacer">OF:</div>    
         <div class="totalItems">
@@ -46,7 +46,7 @@
     </div>
     <div class="jumpToContainer">
         <div class="jumpToIndex">
-            <input type="number" [value]="1" [min]="1" [max]="this.totalItems" #currentValue />
+            <input type="number" [value]="1" [min]="1" [max]="this.totalItems" #currentValue [disabled]="this.disabledJumpToButton" />
         </div>
         <div class="jumpToButton" [class.is-button-disabled]="this.disabledJumpToButton">
                 <app-button-with-image

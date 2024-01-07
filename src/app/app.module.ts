@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 //Services
 import { CsvApplicationService } from './services/csv-application.service';
+import { CsvRecordsService } from './services/csv-records.service';
 
 //Components
 import { AppComponent } from './app.component';
@@ -42,7 +43,8 @@ import { CsvCreateNewComponent } from './components/csv/csv-create-new/csv-creat
     ReactiveFormsModule
   ],
   providers: [
-    CsvApplicationService
+    CsvApplicationService,
+    CsvRecordsService
   ],
   bootstrap: [AppComponent]
 })

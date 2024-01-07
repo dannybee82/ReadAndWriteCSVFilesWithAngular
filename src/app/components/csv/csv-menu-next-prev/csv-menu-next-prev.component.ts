@@ -1,52 +1,96 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CsvRecordsService } from 'src/app/services/csv-records.service';
+import { CsvShowRecord } from 'src/app/models/csv-show-record';
 
 @Component({
   selector: 'app-csv-menu-next-prev',
   templateUrl: './csv-menu-next-prev.component.html',
   styleUrls: ['./csv-menu-next-prev.component.css']
 })
-export class CsvMenuNextPrevComponent {
-  @Input() currentItem: number = -1;
-  @Input() totalItems: number = -1;
+export class CsvMenuNextPrevComponent implements OnInit {
+  public currentIndex: number = -1;
+  public totalItems: number = -1;
   
-  @Input() disabledPrevButton: boolean = false;
-  @Input() disabledNextButton: boolean = false;  
-  @Input() disabledFirstButton: boolean = false;
-  @Input() disabledLastButton: boolean = false;  
-  @Input() disabledJumpToButton: boolean = false;
+  public disabledPrevButton: boolean = false;
+  public disabledNextButton: boolean = false;  
+  public disabledFirstButton: boolean = false;
+  public disabledLastButton: boolean = false;  
+  public disabledJumpToButton: boolean = false;
 
-  @Output() previousButton: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() nextButton: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() firstButton: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() lastButton: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() jumpToIndex: EventEmitter<number> = new EventEmitter<number>();
+  constructor(
+    private csvRecordsService: CsvRecordsService
+  ) {}
 
-  constructor() {}
-
-  previousOrNext(value: boolean) : void {
-    if(value) {
-      this.previousButton.emit(value);
-    } else {
-      this.nextButton.emit(value);
-    }
+  ngOnInit() : void {
+    this.csvRecordsService.getCurrentCsvRecords().subscribe({
+      next: (data) => {
+        if(data) {
+          this.currentIndex = data.currentIndex;
+          this.totalItems = data.totalItems;
+          this.updateMenu();
+        }        
+      }
+    });
   }
 
-  firstOrLast(value: boolean) : void {
-    if(value) {
-      this.firstButton.emit(value);
+  previousOrNext(isPrevious: boolean) : void {
+    if(isPrevious) {
+      this.currentIndex -= 1;
     } else {
-      this.lastButton.emit(value);
+      this.currentIndex += 1;
     }
+
+    this.updateMenu();
+
+    const data: CsvShowRecord = {
+      currentIndex: this.currentIndex,
+      totalItems: this.totalItems
+    }
+
+    this.csvRecordsService.setChangeCsvRecord(data);
+  }
+
+  firstOrLast(isFirst: boolean) : void {
+    if(isFirst) {
+      this.currentIndex = 0;
+    } else {
+      this.currentIndex = this.totalItems - 1;
+    }
+
+    this.updateMenu();
+
+    const data: CsvShowRecord = {
+      currentIndex: this.currentIndex,
+      totalItems: this.totalItems
+    }
+
+    this.csvRecordsService.setChangeCsvRecord(data);
   }
 
   jumpToRecord(value: string) : void {
     let parsed: number = parseInt(value) - 1;
 
     if(parsed >= 0 && parsed <= (this.totalItems - 1)) {
-      this.jumpToIndex.emit(parsed);
+      this.currentIndex = parsed;
+      this.updateMenu();
+
+      const data: CsvShowRecord = {
+        currentIndex: this.currentIndex,
+        totalItems: this.totalItems
+      }
+  
+      this.csvRecordsService.setChangeCsvRecord(data);
     } else {
       alert("Invalid number specified.");
     }
+  }
+
+  private updateMenu() : void {
+    this.disabledPrevButton = (this.currentIndex - 1 >= 0) ? false : true;
+    this.disabledNextButton = (this.currentIndex + 1 < this.totalItems) ? false : true;
+    this.disabledFirstButton = (this.currentIndex - 1 >= 0) ? false : true;
+    this.disabledLastButton = (this.currentIndex + 1 < this.totalItems) ? false : true;
+    this.disabledJumpToButton = (this.totalItems == 1) ? true : false;
   }
 
 }
