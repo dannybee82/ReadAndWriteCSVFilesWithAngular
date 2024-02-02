@@ -4,8 +4,27 @@ import { CreateCsv } from '../../../methods/create-csv';
 import { CsvSettings } from '../../../models/csv-settings';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
 import { CsvDataInterface } from 'src/app/models/csv-data';
+import { OpenFileComponent } from 'src/app/components/general/open-file/open-file.component';
+import { CsvSettingsComponent } from 'src/app/components/csv/csv-settings/csv-settings.component';
+import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
+import { CsvViewModeComponent } from 'src/app/components/csv/csv-view-mode/csv-view-mode.component';
+import { CsvContentComponent } from 'src/app/components/csv/csv-content/csv-content.component';
+import { CsvCreateNewComponent } from 'src/app/components/csv/csv-create-new/csv-create-new.component';
+import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/scroll-to-top.component';
 
 @Component({
+	standalone: true,
+	imports: [
+		OpenFileComponent,
+		CsvSettingsComponent,
+		ButtonComponent,
+		ButtonWithImageComponent,
+		CsvViewModeComponent,
+		CsvContentComponent,
+		CsvCreateNewComponent,
+		ScrollToTopComponent,
+	],
   selector: 'app-csv-main',
   templateUrl: './csv-main.component.html',
   styleUrls: ['./csv-main.component.css']

@@ -1,43 +1,49 @@
 <div class="main-container">
-    <div class="add-header">
-        <h3>Create Headers:</h3>
-        <form [formGroup]="this.headerForm" (ngSubmit)="this.addHeader()">
+  <div class="add-header">
+    <h3>Create Headers:</h3>
+    <form [formGroup]="this.headerForm" (ngSubmit)="this.addHeader()">
+      <div class="w-33 pt-8">
+        <label for="">Header</label>
+        <input type="text" formControlName="header">
+      </div>
+      <div class="w-33 pt-8">
+        <label for="">Default value</label>
+        <input type="text" formControlName="defaultValue">
+      </div>
+      <div class="w-33">
+        <app-button-with-image type="submit" imageSource="assets/images/add.png" [imageText]="'Add Header'"></app-button-with-image>
+      </div>
+    </form>
+    @if (this.headers.length > 0) {
+      <div class="header-container">
+        @for (header of this.headers; track header; let index = $index) {
+          <div class="row">
             <div class="w-33 pt-8">
-                <label for="">Header</label>
-                <input type="text" formControlName="header">
+              {{ header.header }}
             </div>
             <div class="w-33 pt-8">
-                <label for="">Default value</label>
-                <input type="text" formControlName="defaultValue">
+              {{ header.defaultValue }}
             </div>
-            <div class="w-33">
-                <app-button-with-image type="submit" imageSource="assets/images/add.png" [imageText]="'Add Header'"></app-button-with-image>
+            <div>
+              <app-button-with-image type="submit" imageSource="assets/images/remove.png" [imageText]="'Remove Header'" (buttonAction)="this.removeHeader(index)"></app-button-with-image>
             </div>
-        </form>
-        <div class="header-container" *ngIf="this.headers.length > 0">
-            <div class="row" *ngFor="let header of this.headers; let index = index">
-                <div class="w-33 pt-8">
-                    {{ header.header }}
-                </div>
-                <div class="w-33 pt-8">
-                    {{ header.defaultValue }}
-                </div>
-                <div>
-                    <app-button-with-image type="submit" imageSource="assets/images/remove.png" [imageText]="'Remove Header'" (buttonAction)="this.removeHeader(index)"></app-button-with-image>
-                </div>
-            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+  @if (this.headers.length > 0) {
+    <div class="amount-of-records">
+      <h3>Set amount of Records:</h3>
+      <form [formGroup]="recordsForm" (ngSubmit)="this.createCsv()">
+        <div class="w-33 pt-8">
+          <label for="">Records</label>
+          <input type="number" formControlName="amount" min="1" value="1">
         </div>
+        <div class="w-33">
+          <app-button-with-image type="submit" imageSource="assets/images/ok_alt.png" [imageText]="'Create new CSV'"></app-button-with-image>
+        </div>
+      </form>
     </div>
-    <div class="amount-of-records" *ngIf="this.headers.length > 0">
-        <h3>Set amount of Records:</h3>
-        <form [formGroup]="recordsForm" (ngSubmit)="this.createCsv()">
-            <div class="w-33 pt-8">
-                <label for="">Records</label>
-                <input type="number" formControlName="amount" min="1" value="1">
-            </div>
-            <div class="w-33">
-                <app-button-with-image type="submit" imageSource="assets/images/ok_alt.png" [imageText]="'Create new CSV'"></app-button-with-image>
-            </div>
-        </form>
-    </div>
+  }
 </div>

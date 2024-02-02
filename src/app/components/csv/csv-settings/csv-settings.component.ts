@@ -1,6 +1,13 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
+	standalone: true,
+	imports: [
+		ButtonComponent,
+		ButtonWithImageComponent,
+	],
   selector: 'app-csv-settings',
   templateUrl: './csv-settings.component.html',
   styleUrls: ['./csv-settings.component.css']

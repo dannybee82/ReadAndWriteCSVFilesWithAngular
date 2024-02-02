@@ -1,56 +1,60 @@
 <div class="containerCsvApp">
-    <div class="csvMenuContainer">
-        <div class="csvMenuItem">
-            <app-open-file 
-                imageText="Open CSV File"
-                imageSource="assets/images/csv.png" 
-                (selectedFile)="getSelectedFile($event)"
-            >
-            </app-open-file>  
-        </div>  
-        <div class="csvMenuItem">
-            <app-csv-settings 
-                [csvSeparator]="this.csvSettings.separator" 
-                [csvEnclosing]="this.csvSettings.enclosing"
-                [csvFirstRowIsHeader]="this.csvSettings.firstRowIsHeader"
-                [csvIsUtf8]="this.csvSettings.isUtf8"        
-                (csvSeparatorChanged)="onSeparatorChanged($event)"
-                (csvEnclosingChanged)="onEnclosingChanged($event)"
-                (csvFirstRowIsHeaderChanged)="onFirstRowHeaderChanged($event)"
-                (csvIsUtf8Changed)="onIsUtf8Changed($event)"
-            >
-            </app-csv-settings>
-        </div>
-        <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvFileOpened()">
-            <app-button-with-image
-                imageText="Save CSV File"
-                imageSource="/assets/images/save.png"
-                (buttonAction)="save()"
-                [isDisabled]="!this.isCsvFileOpened()">        
-            </app-button-with-image> 
-        </div>
-        <div class="csvMenuItem">
-            <app-button-with-image
-                imageText="Create new CSV File"
-                imageSource="/assets/images/create_new.png"
-                (buttonAction)="createNew()"
-                [isDisabled]="this.isCsvFileOpened()">        
-            </app-button-with-image> 
-        </div>
-        <app-csv-view-mode *ngIf="this.isCsvFileOpened()"></app-csv-view-mode>
-        @if(isCsvFileOpened()) {
-            <div class="csvMenuItem" >
-                <app-button-with-image
-                imageText="Close File"
-                imageSource="/assets/images/close_file.png"
-                (buttonAction)="closeFile()">        
-            </app-button-with-image> 
-            </div>
-        }
+  <div class="csvMenuContainer">
+    <div class="csvMenuItem">
+      <app-open-file
+        imageText="Open CSV File"
+        imageSource="assets/images/csv.png"
+        (selectedFile)="getSelectedFile($event)"
+        >
+      </app-open-file>
     </div>
-    <div class="csvContent">
-        <app-csv-content></app-csv-content>
-        <app-csv-create-new *ngIf="this.createNewFile()"></app-csv-create-new>
-    </div>    
+    <div class="csvMenuItem">
+      <app-csv-settings
+        [csvSeparator]="this.csvSettings.separator"
+        [csvEnclosing]="this.csvSettings.enclosing"
+        [csvFirstRowIsHeader]="this.csvSettings.firstRowIsHeader"
+        [csvIsUtf8]="this.csvSettings.isUtf8"
+        (csvSeparatorChanged)="onSeparatorChanged($event)"
+        (csvEnclosingChanged)="onEnclosingChanged($event)"
+        (csvFirstRowIsHeaderChanged)="onFirstRowHeaderChanged($event)"
+        (csvIsUtf8Changed)="onIsUtf8Changed($event)"
+        >
+      </app-csv-settings>
+    </div>
+    <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvFileOpened()">
+      <app-button-with-image
+        imageText="Save CSV File"
+        imageSource="/assets/images/save.png"
+        (buttonAction)="save()"
+        [isDisabled]="!this.isCsvFileOpened()">
+      </app-button-with-image>
+    </div>
+    <div class="csvMenuItem">
+      <app-button-with-image
+        imageText="Create new CSV File"
+        imageSource="/assets/images/create_new.png"
+        (buttonAction)="createNew()"
+        [isDisabled]="this.isCsvFileOpened()">
+      </app-button-with-image>
+    </div>
+    @if (this.isCsvFileOpened()) {
+      <app-csv-view-mode></app-csv-view-mode>
+    }
+    @if(isCsvFileOpened()) {
+      <div class="csvMenuItem" >
+        <app-button-with-image
+          imageText="Close File"
+          imageSource="/assets/images/close_file.png"
+          (buttonAction)="closeFile()">
+        </app-button-with-image>
+      </div>
+    }
+  </div>
+  <div class="csvContent">
+    <app-csv-content></app-csv-content>
+    @if (this.createNewFile()) {
+      <app-csv-create-new></app-csv-create-new>
+    }
+  </div>
 </div>
 <app-scroll-to-top></app-scroll-to-top>

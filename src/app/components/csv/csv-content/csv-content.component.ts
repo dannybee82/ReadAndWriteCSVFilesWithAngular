@@ -5,8 +5,19 @@ import { CsvApplicationService } from 'src/app/services/csv-application.service'
 import { CsvDataInterface } from 'src/app/models/csv-data';
 import { CsvRecordsService } from 'src/app/services/csv-records.service';
 import { CsvShowRecord } from 'src/app/models/csv-show-record';
+import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
+import { CsvMenuNextPrevComponent } from 'src/app/components/csv/csv-menu-next-prev/csv-menu-next-prev.component';
+import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup/csv-change-popup.component';
 
 @Component({
+	standalone: true,
+	imports: [
+		ButtonComponent,
+		ButtonWithImageComponent,
+		CsvMenuNextPrevComponent,
+		CsvChangePopupComponent,
+	],
   selector: 'app-csv-content',
   templateUrl: './csv-content.component.html',
   styleUrls: ['./csv-content.component.css']

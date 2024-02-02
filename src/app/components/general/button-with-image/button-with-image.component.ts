@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
+	standalone: true,
   selector: 'app-button-with-image',
   templateUrl: './button-with-image.component.html',
   styleUrls: ['./button-with-image.component.css']

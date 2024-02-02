@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
+import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
+	standalone: true,
+	imports: [
+		ButtonComponent,
+		ButtonWithImageComponent,
+	],
   selector: 'app-csv-view-mode',
   templateUrl: './csv-view-mode.component.html',
   styleUrls: ['./csv-view-mode.component.css']

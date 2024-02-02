@@ -4,8 +4,19 @@ import { CsvHeaderInterface } from 'src/app/models/csv-headers';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
 import { CsvDataInterface } from 'src/app/models/csv-data';
 import { CsvErrors } from 'src/app/models/csv-errors';
+import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
+	standalone: true,
+	imports: [
+		ButtonComponent,
+		ButtonWithImageComponent,
+		FormsModule,
+		ReactiveFormsModule,
+	],
   selector: 'app-csv-create-new',
   templateUrl: './csv-create-new.component.html',
   styleUrl: './csv-create-new.component.css'
