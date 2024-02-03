@@ -25,8 +25,6 @@ export class CsvChangePopupComponent {
   @Output() callBackPopupIsClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() callBackValueChanged: EventEmitter<CsvChangeData> = new EventEmitter<CsvChangeData>();
 
-  constructor() {}
-
   showPopup(value: boolean) : void {    
     this.isPopupVisible = value;
     this.callBackPopupIsClosed.emit(value);

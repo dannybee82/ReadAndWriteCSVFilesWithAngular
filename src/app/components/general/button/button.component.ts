@@ -16,7 +16,4 @@ export class ButtonComponent {
   @Input() backgroundColor!: string;
   @Input() foregroundColor!: string;  
   @Output() buttonAction = new EventEmitter();
-
-  constructor() {}
-
 }

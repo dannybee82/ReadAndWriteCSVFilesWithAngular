@@ -1,4 +1,4 @@
-import { Component, Injectable, WritableSignal, signal } from '@angular/core';
+import { Component, WritableSignal, signal, inject, OnInit } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
@@ -22,10 +22,7 @@ import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup
   templateUrl: './csv-content.component.html',
   styleUrls: ['./csv-content.component.css']
 })
-
-@Injectable()
-
-export class CsvContentComponent {
+export class CsvContentComponent implements OnInit {
 
   public isCsvLoaded: WritableSignal<boolean> = signal(false);
   public isGridMode: WritableSignal<boolean> = signal(true);
@@ -45,10 +42,8 @@ export class CsvContentComponent {
   public changeDataColumn: string = '';
   public changeDataColumnDefault: string = ''; 
 
-  constructor(
-    private csvApplicationService: CsvApplicationService,
-    private csvRecordsService: CsvRecordsService
-  ) {}
+	private csvApplicationService = inject(CsvApplicationService);
+	private csvRecordsService = inject(CsvRecordsService);
 
   ngOnInit(): void {
     this.csvApplicationService.getAllData().subscribe({

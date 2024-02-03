@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { Component, OnInit, WritableSignal, signal, inject } from '@angular/core';
 import { LoadCsv } from '../../../methods/load-csv'
 import { CreateCsv } from '../../../methods/create-csv';
 import { CsvSettings } from '../../../models/csv-settings';
@@ -40,9 +40,7 @@ export class CsvMainComponent implements OnInit {
   private _loadCsv: LoadCsv = new LoadCsv();
   private _createCsv: CreateCsv = new CreateCsv();
 
-  constructor(
-    private csvApplicationService: CsvApplicationService
-  ) {}
+	private csvApplicationService = inject(CsvApplicationService);
 
   ngOnInit(): void {
     this.csvApplicationService.getSaveData().subscribe({

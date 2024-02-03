@@ -26,8 +26,6 @@ export class CsvSettingsComponent {
   @Output() csvFirstRowIsHeaderChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() csvIsUtf8Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() {}
-
   showMenu() : void {
     this.isMenuVisible = !this.isMenuVisible;
   }

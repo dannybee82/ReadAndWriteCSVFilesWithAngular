@@ -14,8 +14,6 @@ export class CsvApplicationService {
   private _saveData: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
   private _createNew: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
 
-  constructor() { }
-
   setCurrentMode(value: boolean) : void {
     this._updateGridOrListMode.next(value);
   }

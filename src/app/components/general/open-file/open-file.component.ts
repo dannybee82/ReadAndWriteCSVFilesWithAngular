@@ -12,9 +12,7 @@ export class OpenFileComponent {
   @Input() imageText?: string = '';
   
   @Output() selectedFile: EventEmitter<File> = new EventEmitter<File>();
-
-  constructor() {}
-
+  
   onFileSelected(event: Event) {
     const element: HTMLInputElement = event.currentTarget as HTMLInputElement;
     const fileList: FileList | null = element.files;

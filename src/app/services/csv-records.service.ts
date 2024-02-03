@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { CsvShowRecord } from '../models/csv-show-record';
 
 @Injectable({
@@ -9,8 +9,6 @@ export class CsvRecordsService {
 
   private _currentCsvRecords: BehaviorSubject<CsvShowRecord | null> = new BehaviorSubject<CsvShowRecord| null>(null);
   private _changeCsvRecord: BehaviorSubject<CsvShowRecord | null> = new BehaviorSubject<CsvShowRecord | null>(null);
-
-  constructor() { }
 
   setCurrentCsvRecords(value: CsvShowRecord) : void {
     this._currentCsvRecords.next(value);

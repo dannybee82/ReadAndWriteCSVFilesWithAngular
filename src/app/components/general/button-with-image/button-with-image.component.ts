@@ -13,7 +13,4 @@ export class ButtonWithImageComponent {
   @Input() isDisabled: boolean = false;
 
   @Output() buttonAction = new EventEmitter();
-
-  constructor() {}
-
 }

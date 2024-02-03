@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CsvRecordsService } from 'src/app/services/csv-records.service';
 import { CsvShowRecord } from 'src/app/models/csv-show-record';
 import { ButtonComponent } from 'src/app/components/general/button/button.component';
@@ -24,9 +24,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
   public disabledLastButton: boolean = false;  
   public disabledJumpToButton: boolean = false;
 
-  constructor(
-    private csvRecordsService: CsvRecordsService
-  ) {}
+	private csvRecordsService = inject(CsvRecordsService);
 
   ngOnInit() : void {
     this.csvRecordsService.getCurrentCsvRecords().subscribe({

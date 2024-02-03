@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { CsvHeaderInterface } from 'src/app/models/csv-headers';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
@@ -28,10 +28,8 @@ export class CsvCreateNewComponent implements OnInit {
 
   headers: CsvHeaderInterface[] = [];
 
-  constructor(
-    private fb: FormBuilder,
-    private csvApplicationService: CsvApplicationService
-  ) {}
+	private fb = inject(FormBuilder);
+	private csvApplicationService = inject(CsvApplicationService);
 
   ngOnInit(): void {
     this.headerForm = this.fb.group({
