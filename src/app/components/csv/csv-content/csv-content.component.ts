@@ -20,7 +20,7 @@ import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup
 	],
   selector: 'app-csv-content',
   templateUrl: './csv-content.component.html',
-  styleUrls: ['./csv-content.component.css']
+  styleUrls: ['./csv-content.component.scss']
 })
 export class CsvContentComponent implements OnInit {
 

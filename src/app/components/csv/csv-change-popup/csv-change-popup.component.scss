@@ -1,3 +1,7 @@
+@import '../../../../assets/styles/placeholders.scss';
+@import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
+
 .csvChangeContainer {
     display: block;
     position: fixed;
@@ -6,7 +10,7 @@
     z-index: 50;       
     width: 100%;
     height: 100%; 
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: $transparent-background;
 }
 
 .csvChangeContents {
@@ -18,17 +22,15 @@
     z-index: 55;
     width: 25%;
     height: auto;
-    background-color: #fff;
+    background-color: $dialog-background;
     border-radius: 5px;
-    border: 1px dashed yellow;
+    border: $yellow-border-1px-dashed;
     padding: 25px;
     opacity: 1;
 }
 
 .csvChangeCloseButton {
-    position: relative;
-    float: right;
-    clear: both;
+    @include floatRightClear($clear: both);
 }
 
 .csvChangeValues {
@@ -42,21 +44,17 @@
 }
 
 .csvChangeButtonContainer {
-    position: relative;
-    float:left;
+    @include floatLeftClear($clear: both);
     width: 100%;
-    clear: both;
     padding-top: 25px;
 }
 
 .csvChangeButtonLeft {
-    position: relative;
-    float: left;
+    @extend %position-relative-float-left;
 }
 
 .csvChangeButtonRight {
-    position: relative;
-    float: right;
+    @extend %position-relative-float-right;
 }
 
 .csvChangeValuesTextarea {

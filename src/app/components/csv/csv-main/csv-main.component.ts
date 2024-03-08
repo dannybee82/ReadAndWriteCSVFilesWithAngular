@@ -27,7 +27,7 @@ import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/s
 	],
   selector: 'app-csv-main',
   templateUrl: './csv-main.component.html',
-  styleUrls: ['./csv-main.component.css']
+  styleUrls: ['./csv-main.component.scss']
 })
 
 export class CsvMainComponent implements OnInit {  

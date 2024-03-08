@@ -19,7 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 	],
   selector: 'app-csv-create-new',
   templateUrl: './csv-create-new.component.html',
-  styleUrl: './csv-create-new.component.css'
+  styleUrl: './csv-create-new.component.scss'
 })
 export class CsvCreateNewComponent implements OnInit {
 

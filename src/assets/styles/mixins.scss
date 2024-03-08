@@ -1,0 +1,16 @@
+@import './placeholders.scss';
+
+@mixin floatLeftClear($clear: both) {
+    @extend %position-relative-float-left;
+    clear: $clear;
+}
+
+@mixin floatRightClear($clear: both) {
+    @extend %position-relative-float-left;
+    clear: $clear;
+}
+
+@mixin setVisibilityAndDisplay($visibility: visible, $display: block) {
+    visibility: $visibility;
+    display: $display;
+}

@@ -10,7 +10,7 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 	],
   selector: 'app-csv-settings',
   templateUrl: './csv-settings.component.html',
-  styleUrls: ['./csv-settings.component.css']
+  styleUrls: ['./csv-settings.component.scss']
 })
 
 export class CsvSettingsComponent {

@@ -1,0 +1,55 @@
+@import '../../../../assets/styles/placeholders.scss';
+@import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
+
+.csvSettingsContainer {
+    @extend %position-relative-float-left;
+}
+
+.csvSettingsButton {
+    @include floatLeftClear($clear: both);
+}
+
+.csvSettingsMenu {
+    position: absolute;
+    float: left;   
+    background: linear-gradient(to bottom, $csv-settings-first-color, $csv-settings-second-color);
+    padding: 25px;
+    z-index: 25;
+    margin-top:60px;    
+    width: 300px;
+    border-radius: 5px;
+    border: $black-border-1px;
+}
+
+.csvSettingsMenuVisible {
+    @include setVisibilityAndDisplay($visibility: visible, $display: block);
+}
+
+.csvSettingsMenuHidden {
+    @include setVisibilityAndDisplay($visibility: hidden, $display: none);
+}
+
+.csvSettingsItem {
+    @include floatLeftClear($clear: both);
+    margin-bottom: 15px; 
+    width: 100%;   
+}
+
+.csvSettingsItem input[type=text] {
+    width: 25px;
+    margin-left: 25px;
+    @extend %font-size-20-bold;
+}
+
+.csvSettingsItem label {
+    @extend %font-size-20-bold;
+}
+
+.csvItemLeft {
+    @extend %position-relative-float-left;
+}
+
+.csvItemRight {
+    @extend %position-relative-float-right;
+}

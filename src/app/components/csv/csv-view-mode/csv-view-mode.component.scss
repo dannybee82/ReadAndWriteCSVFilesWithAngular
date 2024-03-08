@@ -1,0 +1,16 @@
+@import '../../../../assets/styles/placeholders.scss';
+@import '../../../../assets/styles/variables.scss';
+
+.csvViewModeContainer {
+    @extend %position-relative-float-left;
+    margin-left: 50px;
+}
+
+.csvViewModeItem {
+    @extend %position-relative-float-left;
+    margin-left:25px;
+}
+
+.is-view-mode-selected {
+    border: 2px solid $selected-view-mode;
+}

@@ -12,7 +12,7 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 	],
   selector: 'app-csv-menu-next-prev',
   templateUrl: './csv-menu-next-prev.component.html',
-  styleUrls: ['./csv-menu-next-prev.component.css']
+  styleUrls: ['./csv-menu-next-prev.component.scss']
 })
 export class CsvMenuNextPrevComponent implements OnInit {
   public currentIndex: number = -1;

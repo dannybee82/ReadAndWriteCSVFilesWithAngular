@@ -1,26 +1,27 @@
+@import '../../../../assets/styles/placeholders.scss';
+@import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
+
 .main-container {
     width: 100%;
     position: relative;
 }
 
 .add-header {
+    @extend %position-relative-float-left;
     margin-top: 16px;
     width: 50%;
-    position: relative;
-    float: left;
 }
 
 .amount-of-records {
+    @extend %position-relative-float-left;
     margin-top: 16px;
     width: 40%;
-    position: relative;
-    float: left;
 }
 
 .w-33 {
+    @extend %position-relative-float-left;
     width: 33%;
-    position: relative;
-    float: left;
 }
 
 div.w-33 label {
@@ -32,11 +33,9 @@ div.w-33 label {
 }
 
 .header-container {
+    @include floatLeftClear($clear: left);
     padding-left: 8px;
     width: 50%;
-    position: relative;
-    float: left;
-    clear: left;
 }
 
 .row {
@@ -45,11 +44,11 @@ div.w-33 label {
 }
 
 .ng-invalid .ng-touched {
-    border: 1px solid red;
+    border: $red-border-1px;
 }
 
 input {
-    border: 1px dotted darkgrey;
+    border: $darkgrey-border-1px;
     border-radius: 5px;
     padding: 4px;
     height: 1.25rem;

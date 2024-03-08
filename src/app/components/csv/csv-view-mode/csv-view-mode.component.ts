@@ -11,7 +11,7 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 	],
   selector: 'app-csv-view-mode',
   templateUrl: './csv-view-mode.component.html',
-  styleUrls: ['./csv-view-mode.component.css']
+  styleUrls: ['./csv-view-mode.component.scss']
 })
 export class CsvViewModeComponent implements OnInit {
 

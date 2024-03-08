@@ -1,0 +1,119 @@
+@import '../../../../assets/styles/placeholders.scss';
+@import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
+
+.csvContainer {
+    @extend %position-relative-float-left;
+    width: 100%;
+    margin-left: 25px;
+    margin-top: 25px;
+    overflow-y: hidden;
+}
+
+.csvDataList {
+    @include floatLeftClear($clear: left);
+    width: 100%;
+}
+
+.csvDataBlockHeader {
+    @extend %position-relative-float-left;
+    background: linear-gradient(to right, $csv-content-first-color, $csv-content-second-color) ;
+    width: 30%;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    padding: 10px;
+    border: $black-border-1px-dashed;
+    border-radius: 5px;
+}
+
+.csvDataBlockHeader:hover {
+    cursor: default;
+}
+
+.csvDataBlockData {
+    @include floatLeftClear($clear: right);
+    width: 50%;
+    padding: 10px;
+    margin-left:5px;
+    margin-bottom: 5px;
+    border: $black-border-1px-dashed;   
+    min-height: 40px; 
+    border-radius: 5px;
+}
+
+.csvDataBlockData:hover {
+    cursor:pointer;
+    border: $yellow-border-1px; 
+    background-color: $hover-color;
+    border-radius: 5px;
+}
+
+.data-is-changed {
+    border: $green-border-1px;  
+    background: linear-gradient(to right, $changed-color-1, $changed-color-2, $changed-color-3, $changed-color-4);
+    border-radius: 5px;
+}
+
+.GridMode {
+    @include floatLeftClear($clear: both);
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.ListMode {
+    @include floatLeftClear($clear: both);
+    width: 70%;
+}
+
+.GridMode th {
+    background-color: $th-color;
+    border: $black-border-1px;
+    border-collapse: collapse;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.GridMode th:hover {
+    cursor: default;
+}
+
+.GridMode table {
+    display: block;
+    overflow-x: auto;
+    width: 95%;
+}
+
+.GridMode table, td  {
+    border: $grey-border-1px;
+    border-collapse: collapse;
+    padding: 5px;
+}
+
+.GridMode td:hover {
+    cursor: default;
+    border: $darkblue-border-1px; 
+    background: linear-gradient(to right, $td-hover-color-1, $td-hover-color-2);
+}
+
+.GridMode table tr:nth-child(odd) {
+    background-color: $tr-odd-color;
+}
+
+.GridMode table tr:nth-child(even) {
+    background-color: $tr-even-color;
+}
+
+.csvErrors {
+    @extend %position-relative-float-left;
+    @extend %error-colors;
+    font-size: 16px;
+    padding: 25px;
+    margin-top: 25px;
+    width: 80%;
+    text-align: justify;
+    border-radius: 5px;
+}
+
+.csvErrors h1 {
+    font-size: 20px;
+}

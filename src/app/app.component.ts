@@ -8,7 +8,7 @@ import { CsvMainComponent } from 'src/app/components/csv/csv-main/csv-main.compo
 	],
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
   title = 'angular-load-csv';

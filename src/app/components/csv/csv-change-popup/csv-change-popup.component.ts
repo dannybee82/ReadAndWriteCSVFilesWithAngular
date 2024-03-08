@@ -11,7 +11,7 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 	],
   selector: 'app-csv-change-popup',
   templateUrl: './csv-change-popup.component.html',
-  styleUrls: ['./csv-change-popup.component.css']
+  styleUrls: ['./csv-change-popup.component.scss']
 })
 
 export class CsvChangePopupComponent {
