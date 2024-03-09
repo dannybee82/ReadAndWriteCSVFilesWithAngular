@@ -5,6 +5,26 @@
     clear: $clear;
 }
 
+@mixin floatLeftMarginLeft($marginLeft: 25px) {
+    @extend %position-relative-float-left;
+    margin-left: $marginLeft;
+}
+
+@mixin floatLeftMarginRight($marginRight: 25px) {
+    @extend %position-relative-float-left;
+    margin-right: $marginRight;
+}
+
+@mixin floatLeftMarginTop($marginTop: 25px) {
+    @extend %position-relative-float-left;
+    margin-top: $marginTop;
+}
+
+@mixin floatLeftWidth($width: 100%) {
+    @extend %position-relative-float-left;
+    width: $width;
+}
+
 @mixin floatRightClear($clear: both) {
     @extend %position-relative-float-left;
     clear: $clear;

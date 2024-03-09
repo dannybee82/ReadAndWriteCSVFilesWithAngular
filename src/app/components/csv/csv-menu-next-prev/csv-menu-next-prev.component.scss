@@ -15,19 +15,16 @@
 }
 
 .prevButton {
-    @extend %position-relative-float-left;
-    margin-right:25px
+    @include floatLeftMarginRight($marginRight: 25px);
 }
 
 .currentItem {
-    @extend %position-relative-float-left;
-    margin-right: 5px;
-    width: 2ch;
+    @include floatLeftMarginRight($marginRight: 5px);
+    width: 3ch;
 }
 
 .totalItems {
-    @extend %position-relative-float-left;  
-    margin-left: 5px;
+    @include floatLeftMarginLeft($marginLeft: 5px);
 }
 
 .someSpacer {
@@ -39,19 +36,15 @@
 .spaceBetweenButtons {
     @extend %position-relative-float-left;
     width: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 3px;
-    padding-right: 3px;
+    padding: 20px 3px 20px 3px;
     border: $black-border-1px;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: $space-between-color;
     vertical-align: middle;
 }
 
 .nextButton {    
-    @extend %position-relative-float-left;
-    margin-left: 25px;
+    @include floatLeftMarginLeft($marginLeft: 25px);
 }
 
 .is-button-disabled {
@@ -78,6 +71,5 @@
 }
 
 .jumpToButton {
-    @extend %position-relative-float-left;
-    margin-left: 25px;
+    @include floatLeftMarginLeft($marginLeft: 25px);
 }

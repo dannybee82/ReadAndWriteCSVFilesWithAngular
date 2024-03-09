@@ -3,7 +3,7 @@
 @import '../../../../assets/styles/mixins.scss';
 
 .containerCsvApp {
-    width:95%;
+    width: 95%;
 }
 
 .csvMenuContainer {
@@ -17,8 +17,7 @@
 }
 
 .csvMenuItem {
-    @extend %position-relative-float-left;
-    margin-left: 25px;
+    @include floatLeftMarginLeft($marginLeft: 25px);
 }
 
 .csvContent {

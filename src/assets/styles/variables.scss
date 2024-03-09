@@ -5,9 +5,6 @@ $button-border-radius: 5px;
 
 $button-disabled: darkgrey;
 
-//View mode.
-$selected-view-mode: yellow;
-
 //Csv settings menu
 $csv-settings-first-color: lightblue;
 $csv-settings-second-color: cornflowerblue;
@@ -15,16 +12,20 @@ $csv-settings-second-color: cornflowerblue;
 //Borders
 $black-border-1px: 1px solid #000;
 $red-border-1px: 1px solid red;
-$darkgrey-border-1px: 1px dotted darkgrey;
-$grey-border-1px: 1px dotted grey;
-$black-border-1px-dashed: 1px dashed black;
 $yellow-border-1px: 1px solid yellow;
-$yellow-border-1px-dashed: 1px dashed yellow;
+$yellow-border-2px: 2px solid yellow;
 $green-border-1px: 1px solid green;
 $darkblue-border-1px: 1px solid darkblue;
 
+$darkgrey-border-1px-dotted: 1px dotted darkgrey;
+$grey-border-1px-dotted: 1px dotted grey;
+
+$black-border-1px-dashed: 1px dashed black;
+$yellow-border-1px-dashed: 1px dashed yellow;
+
 //Next and prev buttons
 $next-prev-backgorund: ivory;
+$space-between-color: #fff;
 
 //main menu
 $main-menu-first-color: lightblue;
@@ -53,3 +54,7 @@ $tr-even-color: #fff;
 $transparent-background: rgba(0, 0, 0, 0.8);
 
 $dialog-background: #fff;
+
+//Mouse cursors
+$cursor-pointer: pointer;
+$cursor-default: default;

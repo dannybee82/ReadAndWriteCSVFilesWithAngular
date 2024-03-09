@@ -1,16 +1,14 @@
-@import '../../../../assets/styles/placeholders.scss';
 @import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
 
 .csvViewModeContainer {
-    @extend %position-relative-float-left;
-    margin-left: 50px;
+    @include floatLeftMarginLeft($marginLeft: 50px);
 }
 
 .csvViewModeItem {
-    @extend %position-relative-float-left;
-    margin-left:25px;
+    @include floatLeftMarginLeft($marginLeft: 25px);
 }
 
 .is-view-mode-selected {
-    border: 2px solid $selected-view-mode;
+    border: $yellow-border-2px;
 }

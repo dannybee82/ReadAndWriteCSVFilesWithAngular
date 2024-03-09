@@ -8,6 +8,11 @@ button {
 }
 
 button:hover:enabled {
+    cursor: $cursor-pointer;
     background-color: $button-background;
     border-radius: $button-border-radius;
+}
+
+button:hover:disabled {
+    cursor: $cursor-default;
 }
