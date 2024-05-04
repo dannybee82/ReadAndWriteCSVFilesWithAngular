@@ -1,48 +1,57 @@
 import { CsvErrors } from '../models/csv-errors';
-import { Observable, of } from 'rxjs';
+import { Observable, from, map, of } from 'rxjs';
 import { CsvDataInterface } from '../models/csv-data';
 import { CsvSettings } from '../models/csv-settings';
 
 export class LoadCsv {
   
   public loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvDataInterface | null> {
-    return new Observable<CsvDataInterface | null>(
-      observer => {
-        let fileReader: FileReader = new FileReader();
-   
-        fileReader.onloadend = (e) => {
-          const testResult: any = fileReader.result?.toString();
+    const data$: Observable<string> = from(this.readFile(file, csvSettings.isUtf8));
+        
+    return data$.pipe(
+      map((data: string) => {
+        if(data === '') {
+          return null;
+        } else {          
+          const headers: string[] | null = this.getCsvHeaders(data, csvSettings.separator);
+          const columnLength: number = (headers != null) ? headers.length : this.getFirstLineLength(data, csvSettings.separator);
+          const columns: string[] = this.getColumns(data, csvSettings.separator, csvSettings.enclosing, csvSettings.firstRowIsHeader);
           
-          const headers: string[] | null = this.getCsvHeaders(testResult, csvSettings.separator);
-          const columnLength: number = (headers != null) ? headers.length : this.getFirstLineLength(testResult, csvSettings.separator);
-          const columns: string[] = this.getColumns(testResult, csvSettings.separator, csvSettings.enclosing, csvSettings.firstRowIsHeader);
-         
           const csvData : CsvDataInterface = {
             fileName: file.name,
-            totalLines: this.getAmountOfLines(testResult, csvSettings.firstRowIsHeader),
+            totalLines: this.getAmountOfLines(data, csvSettings.firstRowIsHeader),
             headers: headers,
             columns: columns,
             columnsDefault: columns,
             columnLength: columnLength,
-            errors: this.checkCsvData(testResult, columnLength, csvSettings.separator, csvSettings.enclosing)
+            errors: this.checkCsvData(data, columnLength, csvSettings.separator, csvSettings.enclosing)
           };
-    
-          observer.next(csvData);
-          observer.complete();
+
+          return csvData;
         }
-    
-        fileReader.onerror = () => {
-          observer.next(null);
-          observer.complete();
-        }
-    
-        if(csvSettings.isUtf8) {
-          fileReader.readAsText(file, "UTF-8");
-        } else {
-          fileReader.readAsText(file);
-        }
+      })
+    );
+  }
+
+  private readFile(file: File, isUtf8: boolean) : Promise<string> {
+    return new Promise((resolve) => {
+      let fileReader: FileReader = new FileReader();
+
+      fileReader.onloadend = (e) => {
+        const testResult: any = fileReader.result?.toString();
+        resolve(testResult);
       }
-    );    
+
+      fileReader.onerror = () => {
+         resolve('');
+      };
+
+      if (isUtf8) {
+        fileReader.readAsText(file, "UTF-8");
+      } else {
+        fileReader.readAsText(file);
+      }
+    });
   }
 
   private getCsvHeaders(content: string, separator: string) : string[] {
