@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, WritableSignal, signal } from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -9,14 +9,14 @@ import { Component, HostListener } from '@angular/core';
 
 export class ScrollToTopComponent {
 
-  isVisible: boolean = false;
+  isVisible: WritableSignal<boolean> = signal(false);
 
   @HostListener("window:scroll", ["$event"])
 
   onWindowScroll() : void {
     let pos: number = (document.documentElement.scrollTop || document.body.scrollTop) + document.documentElement.offsetHeight;
     let max = document.documentElement.scrollHeight;
-    this.isVisible = (pos - max > 1.0) ? true : false;
+    this.isVisible.set((pos - max > 1.0) ? true : false);
   }
 
   scrollToTop() : void {  

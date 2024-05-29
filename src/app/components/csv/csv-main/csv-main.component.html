@@ -10,10 +10,10 @@
     </div>
     <div class="csvMenuItem">
       <app-csv-settings
-        [csvSeparator]="this.csvSettings().separator"
-        [csvEnclosing]="this.csvSettings().enclosing"
-        [csvFirstRowIsHeader]="this.csvSettings().firstRowIsHeader"
-        [csvIsUtf8]="this.csvSettings().isUtf8"
+        [(csvSeparator)]="this.csvSettings().separator"
+        [(csvEnclosing)]="this.csvSettings().enclosing"
+        [(csvFirstRowIsHeader)]="this.csvSettings().firstRowIsHeader"
+        [(csvIsUtf8)]="this.csvSettings().isUtf8"
         >
       </app-csv-settings>
     </div>

@@ -24,8 +24,8 @@
                     >
                   </app-button-with-image>
                 </td>
-                @for (cell of this.getCellsToGenerate(row); track cell; let i = $index) {
-                  <td title="{{cell}}" [class.data-is-changed]="this.testDataChanged(row, i)">{{ this.limitStringLength(cell) }}</td>
+                @for (cell of this.getCellsToGenerate(row); track index; let index = $index) {
+                  <td title="{{cell}}" [class.data-is-changed]="this.testDataChanged(row, index)">{{ this.limitStringLength(cell) }}</td>
                 }
               </tr>
             }
@@ -34,7 +34,7 @@
       </div>
     } @else {
       <div class="ListMode">
-        @for (data of this.getCurrentDataPair(); track data; let index = $index) {
+        @for (data of this.getCurrentDataPair(); track index; let index = $index) {
           <div class="csvDataList">
             @if (this.csvHeaders != null) {
               <div class="csvDataBlockHeader">

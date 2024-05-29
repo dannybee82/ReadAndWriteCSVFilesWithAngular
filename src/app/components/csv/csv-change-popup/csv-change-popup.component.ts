@@ -1,4 +1,4 @@
-import { Component, Input, OutputEmitterRef, output, ModelSignal, model, InputSignal, input } from '@angular/core';
+import { Component, OutputEmitterRef, output, ModelSignal, model, InputSignal, input } from '@angular/core';
 import { CsvChangeData } from '../../../models/csv-change-data'
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
