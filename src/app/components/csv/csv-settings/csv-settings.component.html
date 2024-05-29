@@ -2,13 +2,13 @@
     <div class="csvSettingsButton">
         <app-button-with-image imageSource="assets/images/settings.png" imageText="Settings" (buttonAction)="showMenu()"></app-button-with-image>
     </div>
-    <div class="csvSettingsMenu" [class.csvSettingsMenuVisible]="this.isMenuVisible" [class.csvSettingsMenuHidden]="!this.isMenuVisible">
+    <div class="csvSettingsMenu" [class.csvSettingsMenuVisible]="this.isMenuVisible()" [class.csvSettingsMenuHidden]="!this.isMenuVisible()">        
         <div class="csvSettingsItem">
             <div class="csvItemLeft">
                 <label for="separator">Separator</label>
             </div>
             <div class="csvItemRight">
-                <input type="text" [value]="this.csvSeparator" name="separator" (change)="changeString(0, separator.value)" #separator />
+                <input type="text" [value]="this.csvSeparator()" name="separator" (change)="changeString(0, separator.value)" #separator />
             </div>
         </div>
         <div class="csvSettingsItem">
@@ -16,7 +16,7 @@
                 <label for="enclosing">Enclosing</label>
             </div>
             <div class="csvItemRight">
-                <input type="text" [value]="this.csvEnclosing" name="enclosing" (change)="changeString(1, enclosing.value)" #enclosing />
+                <input type="text" [value]="this.csvEnclosing()" name="enclosing" (change)="changeString(1, enclosing.value)" #enclosing />
             </div>
         </div>
         <div class="csvSettingsItem">
@@ -24,7 +24,7 @@
                 <label for="firstRowIsHeader">First Row is Header:</label>
             </div>
             <div class="csvItemRight">
-                <input type="checkbox" name="firstRowIsHeader" [checked]="this.csvFirstRowIsHeader" (change)="changeBoolean(0, firstRowHeader.checked)" #firstRowHeader/>
+                <input type="checkbox" name="firstRowIsHeader" [checked]="this.csvFirstRowIsHeader()" (change)="changeBoolean(0, firstRowHeader.checked)" #firstRowHeader/>
             </div>
         </div>
         <div class="csvSettingsItem">
@@ -32,8 +32,9 @@
                 <label for="parseCsvDataAsUtf8">Parse CSV Data as UTF-8:</label>
             </div>
             <div class="csvItemRight">
-                <input type="checkbox" name="parseCsvDataAsUtf8" [checked]="this.csvIsUtf8" (change)="changeBoolean(1, isUtf8.checked)" #isUtf8/>
+                <input type="checkbox" name="parseCsvDataAsUtf8" [checked]="this.csvIsUtf8()" (change)="changeBoolean(1, isUtf8.checked)" #isUtf8/>
             </div>
         </div>
     </div>
+
 </div>

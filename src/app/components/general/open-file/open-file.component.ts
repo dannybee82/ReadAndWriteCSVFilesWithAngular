@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, output, OutputEmitterRef, input, InputSignal } from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -8,10 +8,10 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class OpenFileComponent {
-  @Input() imageSource!: string;  
-  @Input() imageText?: string = '';
-  
-  @Output() selectedFile: EventEmitter<File> = new EventEmitter<File>();
+  imageSource: InputSignal<string> = input.required<string>();  
+  imageText: InputSignal<string> = input<string>('');
+
+  selectedFile: OutputEmitterRef<File> = output<File>();  
   
   onFileSelected(event: Event) {
     const element: HTMLInputElement = event.currentTarget as HTMLInputElement;

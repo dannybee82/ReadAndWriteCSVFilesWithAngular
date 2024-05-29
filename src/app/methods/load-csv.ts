@@ -5,7 +5,7 @@ import { CsvSettings } from '../models/csv-settings';
 
 export class LoadCsv {
   
-  public loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvDataInterface | null> {
+  loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvDataInterface | null> {
     const data$: Observable<string> = from(this.readFile(file, csvSettings.isUtf8));
         
     return data$.pipe(

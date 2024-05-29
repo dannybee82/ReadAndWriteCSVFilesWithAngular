@@ -9,7 +9,7 @@ import { Component, HostListener } from '@angular/core';
 
 export class ScrollToTopComponent {
 
-  public isVisible: boolean = false;
+  isVisible: boolean = false;
 
   @HostListener("window:scroll", ["$event"])
 

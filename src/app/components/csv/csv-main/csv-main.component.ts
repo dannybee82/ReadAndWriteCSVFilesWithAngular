@@ -6,7 +6,6 @@ import { CsvApplicationService } from 'src/app/services/csv-application.service'
 import { CsvDataInterface } from 'src/app/models/csv-data';
 import { OpenFileComponent } from 'src/app/components/general/open-file/open-file.component';
 import { CsvSettingsComponent } from 'src/app/components/csv/csv-settings/csv-settings.component';
-import { ButtonComponent } from 'src/app/components/general/button/button.component';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 import { CsvViewModeComponent } from 'src/app/components/csv/csv-view-mode/csv-view-mode.component';
 import { CsvContentComponent } from 'src/app/components/csv/csv-content/csv-content.component';
@@ -18,7 +17,6 @@ import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/s
 	imports: [
 		OpenFileComponent,
 		CsvSettingsComponent,
-		ButtonComponent,
 		ButtonWithImageComponent,
 		CsvViewModeComponent,
 		CsvContentComponent,
@@ -32,10 +30,10 @@ import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/s
 
 export class CsvMainComponent implements OnInit {  
   
-  public isCsvFileOpened: WritableSignal<boolean> = signal(false);
-  public createNewFile: WritableSignal<boolean> = signal(false); 
+  isCsvFileOpened: WritableSignal<boolean> = signal(false);
+  createNewFile: WritableSignal<boolean> = signal(false); 
 
-  public csvSettings: CsvSettings = new CsvSettings();
+  csvSettings: WritableSignal<CsvSettings> = signal(new CsvSettings());
 
   private _loadCsv: LoadCsv = new LoadCsv();
   private _createCsv: CreateCsv = new CreateCsv();
@@ -63,7 +61,7 @@ export class CsvMainComponent implements OnInit {
   getSelectedFile(file: File) : void {
     this.createNewFile.set(false);
 
-    this._loadCsv.loadCsvFile(file, this.csvSettings).subscribe({
+    this._loadCsv.loadCsvFile(file, this.csvSettings()).subscribe({
       next: (csvData) => {
         if(csvData) {          
           this.csvApplicationService.setCurrentMode(true);
@@ -83,22 +81,6 @@ export class CsvMainComponent implements OnInit {
     });
   }
 
-  onSeparatorChanged(separator: string) : void {
-    this.csvSettings.separator = separator;
-  }
-
-  onEnclosingChanged(enclosing: string) : void {
-    this.csvSettings.enclosing = enclosing;
-  }
-
-  onFirstRowHeaderChanged(firstRowIsHeader: boolean) : void {
-    this.csvSettings.firstRowIsHeader = firstRowIsHeader;
-  }
-
-  onIsUtf8Changed(isUtf8: boolean) : void {
-    this.csvSettings.isUtf8 = isUtf8;
-  }
-
   save() : void {
     this.csvApplicationService.setRequestDataToSave(true);
   }
@@ -114,11 +96,11 @@ export class CsvMainComponent implements OnInit {
   }
 
   private saveCsvFile(data: CsvDataInterface) : void {
-    let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings);
+    let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings());
 
     let file: Blob;
 
-    if(this.csvSettings.isUtf8) {
+    if(this.csvSettings().isUtf8) {
       file = new Blob([output], { type: 'text/csv;charset=utf-8' });      
     } else {
       file = new Blob([output], { type: 'text/csv' });

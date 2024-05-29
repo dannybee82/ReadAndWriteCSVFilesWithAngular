@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, InputSignal, OutputEmitterRef, input, output } from '@angular/core';
 
 @Component({
 	standalone: true,
@@ -8,9 +8,9 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class ButtonWithImageComponent {  
-  @Input() imageSource!: string;  
-  @Input() imageText?: string = '';
-  @Input() isDisabled: boolean = false;
+  imageSource: InputSignal<string> = input.required<string>();
+  imageText: InputSignal<string> = input<string>('');  
+  isDisabled: InputSignal<boolean> = input<boolean>(false);
 
-  @Output() buttonAction = new EventEmitter();
+  buttonAction: OutputEmitterRef<any> = output<any>();
 }

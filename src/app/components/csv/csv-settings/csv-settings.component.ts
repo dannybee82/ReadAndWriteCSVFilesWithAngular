@@ -1,11 +1,9 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { ButtonComponent } from 'src/app/components/general/button/button.component';
+import { Component, ModelSignal, model, signal, WritableSignal } from '@angular/core';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
 	standalone: true,
 	imports: [
-		ButtonComponent,
 		ButtonWithImageComponent,
 	],
   selector: 'app-csv-settings',
@@ -14,35 +12,30 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 })
 
 export class CsvSettingsComponent {
-  public isMenuVisible: boolean = false;
+  isMenuVisible: WritableSignal<boolean> = signal(false);
   
-  @Input() csvSeparator: string = '';
-  @Input() csvEnclosing: string = '';
-  @Input() csvFirstRowIsHeader: boolean = true;
-  @Input() csvIsUtf8: boolean = true;
-
-  @Output() csvSeparatorChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() csvEnclosingChanged: EventEmitter<string> = new EventEmitter<string>();
-  @Output() csvFirstRowIsHeaderChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() csvIsUtf8Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
+  csvSeparator: ModelSignal<string> = model('');
+  csvEnclosing: ModelSignal<string> = model('');
+  csvFirstRowIsHeader: ModelSignal<boolean> = model(true);
+  csvIsUtf8: ModelSignal<boolean> = model(true);
 
   showMenu() : void {
-    this.isMenuVisible = !this.isMenuVisible;
+    this.isMenuVisible.set(!this.isMenuVisible());
   }
 
   changeString(id: number, value: string) : void {
     if(id == 0) {
-      this.csvSeparatorChanged.emit(value);
+      this.csvSeparator.set(value);      
     } else {
-      this.csvEnclosingChanged.emit(value);
+      this.csvEnclosing.set(value);
     }
   }
 
   changeBoolean(id: number, value: boolean) : void {
     if(id == 0) {
-      this.csvFirstRowIsHeaderChanged.emit(value);
+      this.csvFirstRowIsHeader.set(value);      
     } else {
-      this.csvIsUtf8Changed.emit(value);
+      this.csvIsUtf8.set(value);      
     }
   }
 

@@ -5,7 +5,6 @@ import { CsvApplicationService } from 'src/app/services/csv-application.service'
 import { CsvDataInterface } from 'src/app/models/csv-data';
 import { CsvRecordsService } from 'src/app/services/csv-records.service';
 import { CsvShowRecord } from 'src/app/models/csv-show-record';
-import { ButtonComponent } from 'src/app/components/general/button/button.component';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 import { CsvMenuNextPrevComponent } from 'src/app/components/csv/csv-menu-next-prev/csv-menu-next-prev.component';
 import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup/csv-change-popup.component';
@@ -13,7 +12,6 @@ import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup
 @Component({
 	standalone: true,
 	imports: [
-		ButtonComponent,
 		ButtonWithImageComponent,
 		CsvMenuNextPrevComponent,
 		CsvChangePopupComponent,
@@ -24,23 +22,23 @@ import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup
 })
 export class CsvContentComponent implements OnInit {
 
-  public isCsvLoaded: WritableSignal<boolean> = signal(false);
-  public isGridMode: WritableSignal<boolean> = signal(true);
-  public errors: WritableSignal<string[]> = signal([]);
+  isCsvLoaded: WritableSignal<boolean> = signal(false);
+  isGridMode: WritableSignal<boolean> = signal(true);
+  errors: WritableSignal<string[]> = signal([]);
 
-  public csvHeaders: string[] | null = [];
-  public totalAmountOfLines: number = 0;
-  public allColumns: SingleCsvRecord[][] = [];
-  public currentPageIndex: number = 0;
+  csvHeaders: string[] | null = [];
+  totalAmountOfLines: number = 0;
+  allColumns: SingleCsvRecord[][] = [];
+  currentPageIndex: number = 0;
 
   private _workData: CsvDataInterface | null = null;
    
-  public isPopupVisible: boolean = false;
+  isPopupVisible: WritableSignal<boolean> = signal(false);
 
-  public changeDataId: number = -1;
-  public changeDataHeader: string = '';
-  public changeDataColumn: string = '';
-  public changeDataColumnDefault: string = ''; 
+  changeDataId: number = -1;
+  changeDataHeader: string = '';
+  changeDataColumn: string = '';
+  changeDataColumnDefault: string = ''; 
 
 	private csvApplicationService = inject(CsvApplicationService);
 	private csvRecordsService = inject(CsvRecordsService);
@@ -145,11 +143,11 @@ export class CsvContentComponent implements OnInit {
     this.changeDataColumn = column;
     this.changeDataColumnDefault = defaultValue;
 
-    this.isPopupVisible = true;
+    this.isPopupVisible.set(true);
   }
 
   changePopupVisibility(value: boolean) : void {
-    this.isPopupVisible = value;
+    this.isPopupVisible.set(value);
   }
 
   changeData(data: CsvChangeData) : void {

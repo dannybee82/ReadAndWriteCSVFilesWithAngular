@@ -1,4 +1,4 @@
-@if (this.isPopupVisible) {
+@if (this.isPopupVisible()) {
   <div class="csvChangeContainer">
     <div class="csvChangeContents">
       <div class="csvChangeCloseButton">
@@ -10,8 +10,8 @@
         </app-button-with-image>
       </div>
       <div class="csvChangeValues">
-        <label for="textarea">Change Value for: <b>{{ this.csvHeaderToApplyChangeOn }}</b></label>
-        <textarea class="csvChangeValuesTextarea" id="textarea" name="textarea" rows="5" cols="60" [value]="this.csvValueToChange" #currentTextarea autofocus></textarea>
+        <label for="textarea">Change Value for: <b>{{ this.csvHeaderToApplyChangeOn() }}</b></label>
+        <textarea class="csvChangeValuesTextarea" id="textarea" name="textarea" rows="5" cols="60" [value]="this.csvValueToChange()" #currentTextarea autofocus></textarea>
       </div>
       <div class="csvChangeButtonContainer">
         <div class="csvChangeButtonLeft">
@@ -34,7 +34,7 @@
           <app-button-with-image
             imageText="Restore default value."
             imageSource="assets/images/restore.png"
-            (buttonAction)="currentTextarea.value = this.csvValueDefault"
+            (buttonAction)="currentTextarea.value = this.csvValueDefault()"
             >
           </app-button-with-image>
         </div>

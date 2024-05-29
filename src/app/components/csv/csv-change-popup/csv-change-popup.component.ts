@@ -1,12 +1,10 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OutputEmitterRef, output, ModelSignal, model, InputSignal, input } from '@angular/core';
 import { CsvChangeData } from '../../../models/csv-change-data'
-import { ButtonComponent } from 'src/app/components/general/button/button.component';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
 	standalone: true,
 	imports: [
-		ButtonComponent,
 		ButtonWithImageComponent,
 	],
   selector: 'app-csv-change-popup',
@@ -15,27 +13,27 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 })
 
 export class CsvChangePopupComponent {
-  @Input() isPopupVisible: boolean = false;
+  isPopupVisible: ModelSignal<boolean> = model(false);
 
-  @Input() csvValueId: number = -1;
-  @Input() csvHeaderToApplyChangeOn: string = '';
-  @Input() csvValueToChange: string = '';
-  @Input() csvValueDefault: string = '';
+  csvValueId: InputSignal<number> = input(-1);
+  csvHeaderToApplyChangeOn: InputSignal<string> = input('');
+  csvValueToChange: InputSignal<string> = input('');
+  csvValueDefault: InputSignal<string> = input('');
   
-  @Output() callBackPopupIsClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() callBackValueChanged: EventEmitter<CsvChangeData> = new EventEmitter<CsvChangeData>();
+  callBackPopupIsClosed: OutputEmitterRef<boolean> = output<boolean>();
+  callBackValueChanged: OutputEmitterRef<CsvChangeData> = output<CsvChangeData>();
 
   showPopup(value: boolean) : void {    
-    this.isPopupVisible = value;
+    this.isPopupVisible.set(value);
     this.callBackPopupIsClosed.emit(value);
   }
 
   valueChanged(value: string) : void {
-    let csvChangeData: CsvChangeData = new CsvChangeData(this.csvValueId, value);
+    let csvChangeData: CsvChangeData = new CsvChangeData(this.csvValueId(), value);
 
     this.callBackValueChanged.emit(csvChangeData);
 
-    this.isPopupVisible = false;
+    this.isPopupVisible.set(false);
     this.callBackPopupIsClosed.emit(false);
   }
 

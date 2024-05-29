@@ -10,14 +10,10 @@
     </div>
     <div class="csvMenuItem">
       <app-csv-settings
-        [csvSeparator]="this.csvSettings.separator"
-        [csvEnclosing]="this.csvSettings.enclosing"
-        [csvFirstRowIsHeader]="this.csvSettings.firstRowIsHeader"
-        [csvIsUtf8]="this.csvSettings.isUtf8"
-        (csvSeparatorChanged)="onSeparatorChanged($event)"
-        (csvEnclosingChanged)="onEnclosingChanged($event)"
-        (csvFirstRowIsHeaderChanged)="onFirstRowHeaderChanged($event)"
-        (csvIsUtf8Changed)="onIsUtf8Changed($event)"
+        [csvSeparator]="this.csvSettings().separator"
+        [csvEnclosing]="this.csvSettings().enclosing"
+        [csvFirstRowIsHeader]="this.csvSettings().firstRowIsHeader"
+        [csvIsUtf8]="this.csvSettings().isUtf8"
         >
       </app-csv-settings>
     </div>

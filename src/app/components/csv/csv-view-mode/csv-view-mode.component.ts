@@ -1,12 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { ButtonComponent } from 'src/app/components/general/button/button.component';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
 	standalone: true,
 	imports: [
-		ButtonComponent,
 		ButtonWithImageComponent,
 	],
   selector: 'app-csv-view-mode',
@@ -15,21 +13,21 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
 })
 export class CsvViewModeComponent implements OnInit {
 
-  public isGridMode: boolean = true;
+  isGridMode: WritableSignal<boolean> = signal(true);
   
 	private csvApplicationService = inject(CsvApplicationService);
 
   ngOnInit(): void {
     this.csvApplicationService.getCurrentMode().subscribe({
       next: (result) => {
-        this.isGridMode = result;
+        this.isGridMode.set(result);
       }
     })
   }
 
   setViewMode(viewMode: boolean) : void {
-    this.isGridMode = viewMode;
-    this.csvApplicationService.setCurrentMode(this.isGridMode);
+    this.isGridMode.set(viewMode);
+    this.csvApplicationService.setCurrentMode(this.isGridMode());
   }
 
 }

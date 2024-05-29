@@ -52,7 +52,7 @@
       </div>
     }
     <app-csv-change-popup
-      [isPopupVisible]="this.isPopupVisible"
+      [isPopupVisible]="this.isPopupVisible()"
       (callBackPopupIsClosed)="changePopupVisibility($event)"
       [csvValueId]="this.changeDataId"
       [csvHeaderToApplyChangeOn]="this.changeDataHeader"
