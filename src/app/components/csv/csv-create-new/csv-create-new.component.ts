@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { CsvHeaderInterface } from 'src/app/models/csv-headers';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvDataInterface } from 'src/app/models/csv-data';
+import { CsvData } from 'src/app/models/csv-data.interface';
 import { CsvErrors } from 'src/app/models/csv-errors';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 import { FormsModule } from '@angular/forms';
@@ -66,7 +66,7 @@ export class CsvCreateNewComponent implements OnInit {
         return;
       }
 
-      const csvFile: CsvDataInterface = {
+      const csvFile: CsvData = {
         fileName: 'my_custom_csv.csv',
         totalLines: amount,
         headers: this.getHeaders(),

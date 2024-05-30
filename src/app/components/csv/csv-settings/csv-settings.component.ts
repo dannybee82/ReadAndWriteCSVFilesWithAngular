@@ -10,7 +10,6 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
   templateUrl: './csv-settings.component.html',
   styleUrls: ['./csv-settings.component.scss']
 })
-
 export class CsvSettingsComponent {
   isMenuVisible: WritableSignal<boolean> = signal(false);
   

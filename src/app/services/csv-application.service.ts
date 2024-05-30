@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CsvDataInterface } from '../models/csv-data';
+import { CsvData } from '../models/csv-data.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +10,9 @@ export class CsvApplicationService {
   private _updateGridOrListMode: Subject<boolean> = new Subject<boolean>();
   private _requestDataToSave: Subject<boolean> = new Subject<boolean>();
   private _errors: Subject<string[]> = new Subject<string[]>();
-  private _allData: Subject<CsvDataInterface | null> = new Subject<CsvDataInterface | null>();
-  private _saveData: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
-  private _createNew: Subject<CsvDataInterface> = new Subject<CsvDataInterface>();
+  private _allData: Subject<CsvData | null> = new Subject<CsvData | null>();
+  private _saveData: Subject<CsvData> = new Subject<CsvData>();
+  private _createNew: Subject<CsvData> = new Subject<CsvData>();
 
   setCurrentMode(value: boolean) : void {
     this._updateGridOrListMode.next(value);
@@ -22,19 +22,19 @@ export class CsvApplicationService {
     return this._updateGridOrListMode;
   }
 
-  setAllData(data: CsvDataInterface | null) : void {
+  setAllData(data: CsvData | null) : void {
     this._allData.next(data);
   }
   
-  getAllData() : Subject<CsvDataInterface | null> {
+  getAllData() : Subject<CsvData | null> {
     return this._allData;
   }
 
-  setSaveData(data: CsvDataInterface) : void {
+  setSaveData(data: CsvData) : void {
     this._saveData.next(data);
   }
   
-  getSaveData() : Subject<CsvDataInterface> {
+  getSaveData() : Subject<CsvData> {
     return this._saveData;
   }
   
@@ -54,11 +54,11 @@ export class CsvApplicationService {
     return this._errors;
   }
 
-  setCreatenew(data: CsvDataInterface) : void {
+  setCreatenew(data: CsvData) : void {
     this._createNew.next(data);
   }
 
-  getCreateNew() : Subject<CsvDataInterface> {
+  getCreateNew() : Subject<CsvData> {
     return this._createNew;
   }
 

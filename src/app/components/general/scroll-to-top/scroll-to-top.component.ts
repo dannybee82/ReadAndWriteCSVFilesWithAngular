@@ -6,7 +6,6 @@ import { Component, HostListener, WritableSignal, signal } from '@angular/core';
   templateUrl: './scroll-to-top.component.html',
   styleUrls: ['./scroll-to-top.component.scss']
 })
-
 export class ScrollToTopComponent {
 
   isVisible: WritableSignal<boolean> = signal(false);

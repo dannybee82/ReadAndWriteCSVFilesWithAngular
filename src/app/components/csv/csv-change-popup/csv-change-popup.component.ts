@@ -1,5 +1,5 @@
 import { Component, OutputEmitterRef, output, ModelSignal, model, InputSignal, input } from '@angular/core';
-import { CsvChangeData } from '../../../models/csv-change-data'
+import { CsvChangeData } from '../../../models/csv-change-data.interface'
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
@@ -11,7 +11,6 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
   templateUrl: './csv-change-popup.component.html',
   styleUrls: ['./csv-change-popup.component.scss']
 })
-
 export class CsvChangePopupComponent {
   isPopupVisible: ModelSignal<boolean> = model(false);
 
@@ -29,7 +28,10 @@ export class CsvChangePopupComponent {
   }
 
   valueChanged(value: string) : void {
-    let csvChangeData: CsvChangeData = new CsvChangeData(this.csvValueId(), value);
+    let csvChangeData: CsvChangeData = {
+      id: this.csvValueId(),
+      changedValue: value
+    };
 
     this.callBackValueChanged.emit(csvChangeData);
 

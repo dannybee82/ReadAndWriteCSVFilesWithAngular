@@ -4,9 +4,8 @@ import { Component, output, OutputEmitterRef, input, InputSignal } from '@angula
 	standalone: true,
   selector: 'app-open-file',
   templateUrl: './open-file.component.html',
-  styleUrls: ['./open-file.component.css']
+  styleUrls: ['./open-file.component.scss']
 })
-
 export class OpenFileComponent {
   imageSource: InputSignal<string> = input.required<string>();  
   imageText: InputSignal<string> = input<string>('');

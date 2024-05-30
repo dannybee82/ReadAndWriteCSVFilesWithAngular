@@ -3,7 +3,7 @@ import { LoadCsv } from '../../../methods/load-csv'
 import { CreateCsv } from '../../../methods/create-csv';
 import { CsvSettings } from '../../../models/csv-settings';
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvDataInterface } from 'src/app/models/csv-data';
+import { CsvData } from 'src/app/models/csv-data.interface';
 import { OpenFileComponent } from 'src/app/components/general/open-file/open-file.component';
 import { CsvSettingsComponent } from 'src/app/components/csv/csv-settings/csv-settings.component';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
@@ -27,7 +27,6 @@ import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/s
   templateUrl: './csv-main.component.html',
   styleUrls: ['./csv-main.component.scss']
 })
-
 export class CsvMainComponent implements OnInit {  
   
   isCsvFileOpened: WritableSignal<boolean> = signal(false);
@@ -95,7 +94,7 @@ export class CsvMainComponent implements OnInit {
     this.createNewFile.set(true);    
   }
 
-  private saveCsvFile(data: CsvDataInterface) : void {
+  private saveCsvFile(data: CsvData) : void {
     let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings());
 
     let file: Blob;

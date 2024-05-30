@@ -1,8 +1,8 @@
 import { Component, WritableSignal, signal, inject, OnInit } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
-import { CsvChangeData } from '../../../models/csv-change-data'
+import { CsvChangeData } from '../../../models/csv-change-data.interface'
 import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvDataInterface } from 'src/app/models/csv-data';
+import { CsvData } from 'src/app/models/csv-data.interface';
 import { CsvRecordsService } from 'src/app/services/csv-records.service';
 import { CsvShowRecord } from 'src/app/models/csv-show-record';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
@@ -31,7 +31,7 @@ export class CsvContentComponent implements OnInit {
   allColumns: SingleCsvRecord[][] = [];
   currentPageIndex: number = 0;
 
-  private _workData: CsvDataInterface | null = null;
+  private _workData: CsvData | null = null;
    
   isPopupVisible: WritableSignal<boolean> = signal(false);
 

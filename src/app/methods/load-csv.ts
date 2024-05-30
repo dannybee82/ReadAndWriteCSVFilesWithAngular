@@ -1,11 +1,11 @@
 import { CsvErrors } from '../models/csv-errors';
 import { Observable, from, map, of } from 'rxjs';
-import { CsvDataInterface } from '../models/csv-data';
+import { CsvData } from '../models/csv-data.interface';
 import { CsvSettings } from '../models/csv-settings';
 
 export class LoadCsv {
   
-  loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvDataInterface | null> {
+  loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvData | null> {
     const data$: Observable<string> = from(this.readFile(file, csvSettings.isUtf8));
         
     return data$.pipe(
@@ -17,7 +17,7 @@ export class LoadCsv {
           const columnLength: number = (headers != null) ? headers.length : this.getFirstLineLength(data, csvSettings.separator);
           const columns: string[] = this.getColumns(data, csvSettings.separator, csvSettings.enclosing, csvSettings.firstRowIsHeader);
           
-          const csvData : CsvDataInterface = {
+          const csvData : CsvData = {
             fileName: file.name,
             totalLines: this.getAmountOfLines(data, csvSettings.firstRowIsHeader),
             headers: headers,

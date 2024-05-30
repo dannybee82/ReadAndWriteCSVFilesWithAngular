@@ -1,6 +1,6 @@
 import { CsvErrors } from "./csv-errors";
 
-export interface CsvDataInterface {
+export interface CsvData {
     fileName: string;
     totalLines: number;
     headers: string[] | null;
