@@ -3,7 +3,6 @@ import { CsvChangeData } from '../../../models/csv-change-data.interface'
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		ButtonWithImageComponent,
 	],

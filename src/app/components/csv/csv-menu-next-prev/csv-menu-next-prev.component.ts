@@ -4,7 +4,6 @@ import { CsvShowRecord } from 'src/app/models/csv-show-record';
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		ButtonWithImageComponent,
 	],

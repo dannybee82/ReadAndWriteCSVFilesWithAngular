@@ -13,7 +13,6 @@ import { CsvCreateNewComponent } from 'src/app/components/csv/csv-create-new/csv
 import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/scroll-to-top.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		OpenFileComponent,
 		CsvSettingsComponent,

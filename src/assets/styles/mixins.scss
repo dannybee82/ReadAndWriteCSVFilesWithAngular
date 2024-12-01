@@ -1,4 +1,4 @@
-@import './placeholders.scss';
+@use './placeholders.scss';
 
 @mixin floatLeftClear($clear: both) {
     @extend %position-relative-float-left;

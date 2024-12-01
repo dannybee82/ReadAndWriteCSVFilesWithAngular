@@ -10,7 +10,6 @@ import { CsvMenuNextPrevComponent } from 'src/app/components/csv/csv-menu-next-p
 import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup/csv-change-popup.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		ButtonWithImageComponent,
 		CsvMenuNextPrevComponent,

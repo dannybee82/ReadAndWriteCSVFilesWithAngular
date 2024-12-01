@@ -2,7 +2,6 @@ import { Component, ModelSignal, model, signal, WritableSignal } from '@angular/
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		ButtonWithImageComponent,
 	],

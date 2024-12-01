@@ -3,7 +3,6 @@ import { CsvApplicationService } from 'src/app/services/csv-application.service'
 import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
 
 @Component({
-	standalone: true,
 	imports: [
 		ButtonWithImageComponent,
 	],
