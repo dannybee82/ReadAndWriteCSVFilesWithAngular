@@ -1,27 +1,23 @@
-# AngularLoadCsv
+# Angular Read and Write CSC Files
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
+Read, modify and save simple CSV (Comma Separated Values) files in the browser. See the root in folder for example images. It is possible to change some settings like of the CSV-file: separator, enclosing, first row is header, read/save as UTF-8 or Unicode.
 
-## Development server
+\- Angular 19 application (with [Angular CLI](https://github.com/angular/angular-cli) version 19.0.2)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+\- Sample CSV-files in the folder: src\\assets\\sample-data\\
 
-## Code scaffolding
+**Command to install**
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+_npm install_
 
-## Build
+or shorter:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+_npm i_
 
-## Running unit tests
+**Command to run the application:**
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+_ng serve --open_
 
-## Running end-to-end tests
+or shorter:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+_ng s --o_
