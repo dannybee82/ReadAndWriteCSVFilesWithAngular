@@ -3,7 +3,7 @@ import { CsvSettings } from "../models/csv-settings";
 export class CreateCsv {
     
     create(headers: string[] | null, columns: string[], useLength: number, csvSettings: CsvSettings) : string {
-        let headerLength = useLength;
+        let headerLength: number = useLength;
 
         let output: string = '';
         let counter: number = 0;
@@ -21,7 +21,7 @@ export class CreateCsv {
         }
 
         for(let i = 0; i < columns.length; i++) {
-            let currentColumn =  (columns[i] != null) ? columns[i].toString() : 'null';
+            let currentColumn: string =  (columns[i] != null) ? columns[i].toString() : 'null';
             currentColumn = this.removeLineBreaks(currentColumn);
 
             if(currentColumn.indexOf(csvSettings.separator) > -1) {

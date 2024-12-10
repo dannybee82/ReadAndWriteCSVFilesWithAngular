@@ -1,5 +1,5 @@
 import { CsvErrors } from '../models/csv-errors';
-import { Observable, from, map, of } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { CsvData } from '../models/csv-data.interface';
 import { CsvSettings } from '../models/csv-settings';
 
@@ -55,8 +55,8 @@ export class LoadCsv {
   }
 
   private getCsvHeaders(content: string, separator: string) : string[] {
-    let allTextLines = content.split(/\r|\n|\r/);
-    let firstLine = allTextLines[0];
+    let allTextLines: string[] = content.split(/\r|\n|\r/);
+    let firstLine: string = allTextLines[0];
     
     let allHeaders: string[] = firstLine.split(separator);
 
@@ -79,8 +79,8 @@ export class LoadCsv {
   }
 
   private getFirstLineLength(content: string, separator: string) : number {
-    let allTextLines = content.split(/\r|\n|\r/);
-    let firstLine = allTextLines[0];
+    let allTextLines: string[] = content.split(/\r|\n|\r/);
+    let firstLine: string = allTextLines[0];
     
     let lineSplitted: string[] = firstLine.split(separator);
 
@@ -114,8 +114,17 @@ export class LoadCsv {
   private checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
     let errors: string[] = [];
 
-    let allTextLines = content.split(/\r|\n|\r/);
-    allTextLines.pop();
+    let allTextLines: string[] = content.split(/\r|\n|\r/);
+
+    if(allTextLines.length > 0) {
+      let lastIndex: number = allTextLines.length - 1;
+
+      if(lastIndex >= 0) {
+        if(allTextLines[lastIndex].trim() === '') {
+          allTextLines.pop();
+        }
+      }
+    }    
 
     let errorFound: number = 0;
 
