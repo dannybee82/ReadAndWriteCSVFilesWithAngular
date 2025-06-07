@@ -14,51 +14,51 @@ export class CsvApplicationService {
   private _saveData: Subject<CsvData> = new Subject<CsvData>();
   private _createNew: Subject<CsvData> = new Subject<CsvData>();
 
-  setCurrentMode(value: boolean) : void {
+  setCurrentMode(value: boolean): void {
     this._updateGridOrListMode.next(value);
   }
 
-  getCurrentMode() : Subject<boolean> {
+  getCurrentMode(): Subject<boolean> {
     return this._updateGridOrListMode;
   }
 
-  setAllData(data: CsvData | null) : void {
+  setAllData(data: CsvData | null): void {
     this._allData.next(data);
   }
   
-  getAllData() : Subject<CsvData | null> {
+  getAllData(): Subject<CsvData | null> {
     return this._allData;
   }
 
-  setSaveData(data: CsvData) : void {
+  setSaveData(data: CsvData): void {
     this._saveData.next(data);
   }
   
-  getSaveData() : Subject<CsvData> {
+  getSaveData(): Subject<CsvData> {
     return this._saveData;
   }
   
-  setRequestDataToSave(value: boolean) : void {
+  setRequestDataToSave(value: boolean): void {
     this._requestDataToSave.next(value);
   }
 
-  getRequestDataToSave() : Subject<boolean> {
+  getRequestDataToSave(): Subject<boolean> {
     return this._requestDataToSave;
   }
 
-  setErrors(errors: string[]) : void {
+  setErrors(errors: string[]): void {
     this._errors.next(errors);
   }
 
-  getErrors() : Subject<string[]> {
+  getErrors(): Subject<string[]> {
     return this._errors;
   }
 
-  setCreatenew(data: CsvData) : void {
+  setCreatenew(data: CsvData): void {
     this._createNew.next(data);
   }
 
-  getCreateNew() : Subject<CsvData> {
+  getCreateNew(): Subject<CsvData> {
     return this._createNew;
   }
 

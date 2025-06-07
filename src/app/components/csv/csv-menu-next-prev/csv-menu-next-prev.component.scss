@@ -1,6 +1,4 @@
-@import '../../../../assets/styles/placeholders.scss';
-@import '../../../../assets/styles/variables.scss';
-@import '../../../../assets/styles/mixins.scss';
+@use '../../../../assets/styles/all_imports.scss' as *;
 
 .csvMenuPrevNextContainer {
     position: fixed;
@@ -9,7 +7,7 @@
     width: auto;
     height: auto;
     padding: 25px;
-    background-color: $next-prev-backgorund;
+    background-color: $next-prev-background;
     border-radius: 5px;
     border: $black-border-1px;
 }

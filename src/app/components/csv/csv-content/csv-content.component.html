@@ -3,11 +3,11 @@
     @if(isGridMode()) {
       <div class="GridMode">
         <table>
-          @if (this.csvHeaders != null) {
+          @if (this.csvHeaders() != null) {
             <thead>
               <tr>
                 <th></th>
-                @for (header of this.csvHeaders; track header) {
+                @for (header of this.csvHeaders(); track header) {
                   <th>{{ header }}</th>
                 }
               </tr>
@@ -36,7 +36,7 @@
       <div class="ListMode">
         @for (data of this.getCurrentDataPair(); track index; let index = $index) {
           <div class="csvDataList">
-            @if (this.csvHeaders != null) {
+            @if (this.csvHeaders() != null) {
               <div class="csvDataBlockHeader">
                 {{ data.header }}
               </div>
@@ -54,10 +54,10 @@
     <app-csv-change-popup
       [isPopupVisible]="this.isPopupVisible()"
       (callBackPopupIsClosed)="changePopupVisibility($event)"
-      [csvValueId]="this.changeDataId"
-      [csvHeaderToApplyChangeOn]="this.changeDataHeader"
-      [csvValueToChange]="this.changeDataColumn"
-      [csvValueDefault]="this.changeDataColumnDefault"
+      [csvValueId]="this.changeDataId()"
+      [csvHeaderToApplyChangeOn]="this.changeDataHeader()"
+      [csvValueToChange]="this.changeDataColumn()"
+      [csvValueDefault]="this.changeDataColumnDefault()"
       (callBackValueChanged)="this.changeData($event)"
       >
     </app-csv-change-popup>

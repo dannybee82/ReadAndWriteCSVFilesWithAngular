@@ -1,5 +1,4 @@
-@import '../../../../assets/styles/variables.scss';
-@import '../../../../assets/styles/mixins.scss';
+@use '../../../../assets/styles/all_imports.scss' as *;
 
 .csvViewModeContainer {
     @include floatLeftMarginLeft($marginLeft: 50px);

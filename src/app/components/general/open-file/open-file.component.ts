@@ -6,10 +6,10 @@ import { Component, output, OutputEmitterRef, input, InputSignal } from '@angula
   styleUrls: ['./open-file.component.scss']
 })
 export class OpenFileComponent {
-  imageSource: InputSignal<string> = input.required<string>();  
-  imageText: InputSignal<string> = input<string>('');
+  readonly imageSource: InputSignal<string> = input.required<string>();  
+  readonly imageText: InputSignal<string> = input<string>('');
 
-  selectedFile: OutputEmitterRef<File> = output<File>();  
+  readonly selectedFile: OutputEmitterRef<File> = output<File>();  
   
   onFileSelected(event: Event) {
     const element: HTMLInputElement = event.currentTarget as HTMLInputElement;

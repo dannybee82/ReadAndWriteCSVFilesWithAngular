@@ -2,15 +2,15 @@ import { Component, OnInit, WritableSignal, signal, inject } from '@angular/core
 import { LoadCsv } from '../../../methods/load-csv'
 import { CreateCsv } from '../../../methods/create-csv';
 import { CsvSettings } from '../../../models/csv-settings';
-import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvData } from 'src/app/models/csv-data.interface';
-import { OpenFileComponent } from 'src/app/components/general/open-file/open-file.component';
-import { CsvSettingsComponent } from 'src/app/components/csv/csv-settings/csv-settings.component';
-import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
-import { CsvViewModeComponent } from 'src/app/components/csv/csv-view-mode/csv-view-mode.component';
-import { CsvContentComponent } from 'src/app/components/csv/csv-content/csv-content.component';
-import { CsvCreateNewComponent } from 'src/app/components/csv/csv-create-new/csv-create-new.component';
-import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/scroll-to-top.component';
+import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvData } from '../../../models/csv-data.interface';
+import { OpenFileComponent } from '../../general/open-file/open-file.component';
+import { CsvSettingsComponent } from '../csv-settings/csv-settings.component';
+import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
+import { CsvViewModeComponent } from '../csv-view-mode/csv-view-mode.component';
+import { CsvContentComponent } from '../csv-content/csv-content.component';
+import { CsvCreateNewComponent } from '../csv-create-new/csv-create-new.component';
+import { ScrollToTopComponent } from '../../general/scroll-to-top/scroll-to-top.component';
 
 @Component({
 	imports: [
@@ -28,10 +28,10 @@ import { ScrollToTopComponent } from 'src/app/components/general/scroll-to-top/s
 })
 export class CsvMainComponent implements OnInit {  
   
-  isCsvFileOpened: WritableSignal<boolean> = signal(false);
-  createNewFile: WritableSignal<boolean> = signal(false); 
+  protected isCsvFileOpened: WritableSignal<boolean> = signal(false);
+  protected createNewFile: WritableSignal<boolean> = signal(false); 
 
-  csvSettings: WritableSignal<CsvSettings> = signal(new CsvSettings());
+  protected csvSettings: WritableSignal<CsvSettings> = signal(new CsvSettings());
 
   private _loadCsv: LoadCsv = new LoadCsv();
   private _createCsv: CreateCsv = new CreateCsv();
@@ -56,12 +56,14 @@ export class CsvMainComponent implements OnInit {
     });
   }
 
-  getSelectedFile(file: File) : void {
+  getSelectedFile(file: File): void {
     this.createNewFile.set(false);
 
     this._loadCsv.loadCsvFile(file, this.csvSettings()).subscribe({
       next: (csvData) => {
         if(csvData) {          
+          console.log(this.csvSettings());
+
           this.csvApplicationService.setCurrentMode(true);
       
           if(!csvData.errors.hasErrors) {
@@ -79,21 +81,21 @@ export class CsvMainComponent implements OnInit {
     });
   }
 
-  save() : void {
+  save(): void {
     this.csvApplicationService.setRequestDataToSave(true);
   }
 
-  closeFile() : void {    
+  closeFile(): void {    
     this.csvApplicationService.setAllData(null);
     this.csvApplicationService.setErrors([]);
     this.isCsvFileOpened.set(false);
   }
 
-  createNew() : void {
+  createNew(): void {
     this.createNewFile.set(true);    
   }
 
-  private saveCsvFile(data: CsvData) : void {
+  private saveCsvFile(data: CsvData): void {
     let output: string = this._createCsv.create(data.headers, data.columns, data.columnLength, this.csvSettings());
 
     let file: Blob;

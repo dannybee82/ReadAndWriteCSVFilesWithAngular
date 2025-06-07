@@ -5,7 +5,7 @@ import { CsvSettings } from '../models/csv-settings';
 
 export class LoadCsv {
   
-  loadCsvFile(file: File, csvSettings: CsvSettings) : Observable<CsvData | null> {
+  loadCsvFile(file: File, csvSettings: CsvSettings): Observable<CsvData | null> {
     const data$: Observable<string> = from(this.readFile(file, csvSettings.isUtf8));
         
     return data$.pipe(
@@ -33,13 +33,18 @@ export class LoadCsv {
     );
   }
 
-  private readFile(file: File, isUtf8: boolean) : Promise<string> {
+  private readFile(file: File, isUtf8: boolean): Promise<string> {
     return new Promise((resolve) => {
       let fileReader: FileReader = new FileReader();
 
       fileReader.onloadend = (e) => {
-        const testResult: any = fileReader.result?.toString();
-        resolve(testResult);
+        const testResult: string | undefined = fileReader.result?.toString();
+
+        if(testResult) {
+          resolve(testResult);
+        } else {
+          resolve('');
+        }        
       }
 
       fileReader.onerror = () => {
@@ -54,7 +59,7 @@ export class LoadCsv {
     });
   }
 
-  private getCsvHeaders(content: string, separator: string) : string[] {
+  private getCsvHeaders(content: string, separator: string): string[] {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
     let firstLine: string = allTextLines[0];
     
@@ -63,7 +68,7 @@ export class LoadCsv {
     return allHeaders;
   }
 
-  private getAmountOfLines(content: string, firstRowIsHeader: boolean) : number {
+  private getAmountOfLines(content: string, firstRowIsHeader: boolean): number {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
 
     let startIndex: number = (firstRowIsHeader) ? 1 : 0;
@@ -78,7 +83,7 @@ export class LoadCsv {
      return count;
   }
 
-  private getFirstLineLength(content: string, separator: string) : number {
+  private getFirstLineLength(content: string, separator: string): number {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
     let firstLine: string = allTextLines[0];
     
@@ -87,7 +92,7 @@ export class LoadCsv {
     return lineSplitted.length;
   }
 
-  private getColumns(content: string, separator: string, enclosing: string, firstLineIsHeader: boolean) : string[] {
+  private getColumns(content: string, separator: string, enclosing: string, firstLineIsHeader: boolean): string[] {
     let allTextLines: string[] = content.split(/\r|\n|\r/);
 
     let startIndex: number = (firstLineIsHeader) ? 1 : 0;
@@ -111,7 +116,7 @@ export class LoadCsv {
     return allCoumns;
   }
 
-  private checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string) : CsvErrors {
+  private checkCsvData(content: string, expectedLength: number, separator: string, enclosing: string): CsvErrors {
     let errors: string[] = [];
 
     let allTextLines: string[] = content.split(/\r|\n|\r/);
@@ -153,7 +158,7 @@ export class LoadCsv {
     return new CsvErrors(false, errors);
   }
   
-  private getIndicesOfSeparator(currentLine: string, separator: string, enclosing: string) : number[] {
+  private getIndicesOfSeparator(currentLine: string, separator: string, enclosing: string): number[] {
     let indices: number[] = [];
     indices.push(0);
      let ignoreCommas: boolean = false;  
@@ -191,7 +196,7 @@ export class LoadCsv {
     return indices;
   }
   
-  private getDataFromStringAsArray(currentLine: string, indices: number[], enclosing: string) : string[] {
+  private getDataFromStringAsArray(currentLine: string, indices: number[], enclosing: string): string[] {
     let columns: string[] = [];
     
     for(let i = 0; i < indices.length - 1; i++) {
@@ -210,7 +215,7 @@ export class LoadCsv {
     return this.removeEnclosingFromData(columns, enclosing);
   }
 
-  private removeEnclosingFromData(data: string[], enclosing: string) : string[]  {
+  private removeEnclosingFromData(data: string[], enclosing: string): string[]  {
     for(let i = 0; i < data.length - 1; i++) {
       let currentLine: string = data[i];
       

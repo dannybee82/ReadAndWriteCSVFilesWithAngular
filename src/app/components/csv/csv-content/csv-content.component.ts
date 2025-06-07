@@ -1,13 +1,13 @@
 import { Component, WritableSignal, signal, inject, OnInit } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data.interface'
-import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvData } from 'src/app/models/csv-data.interface';
-import { CsvRecordsService } from 'src/app/services/csv-records.service';
-import { CsvShowRecord } from 'src/app/models/csv-show-record';
-import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
-import { CsvMenuNextPrevComponent } from 'src/app/components/csv/csv-menu-next-prev/csv-menu-next-prev.component';
-import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup/csv-change-popup.component';
+import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvData } from '../../../models/csv-data.interface';
+import { CsvRecordsService } from '../../../services/csv-records.service';
+import { CsvShowRecord } from '../../../models/csv-show-record';
+import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
+import { CsvMenuNextPrevComponent } from '../csv-menu-next-prev/csv-menu-next-prev.component';
+import { CsvChangePopupComponent } from '../csv-change-popup/csv-change-popup.component';
 
 @Component({
 	imports: [
@@ -21,23 +21,23 @@ import { CsvChangePopupComponent } from 'src/app/components/csv/csv-change-popup
 })
 export class CsvContentComponent implements OnInit {
 
-  isCsvLoaded: WritableSignal<boolean> = signal(false);
-  isGridMode: WritableSignal<boolean> = signal(true);
-  errors: WritableSignal<string[]> = signal([]);
+  protected isCsvLoaded: WritableSignal<boolean> = signal(false);
+  protected isGridMode: WritableSignal<boolean> = signal(true);
+  protected errors: WritableSignal<string[]> = signal([]);
 
-  csvHeaders: string[] | null = [];
-  totalAmountOfLines: number = 0;
-  allColumns: SingleCsvRecord[][] = [];
-  currentPageIndex: number = 0;
+  protected csvHeaders: WritableSignal<string[] | null> = signal([]);
+  protected totalAmountOfLines: WritableSignal<number> = signal(0);
+  protected allColumns: WritableSignal<SingleCsvRecord[][]> = signal([]);
+  protected currentPageIndex: WritableSignal<number> = signal(0);
 
   private _workData: CsvData | null = null;
    
-  isPopupVisible: WritableSignal<boolean> = signal(false);
+  protected isPopupVisible: WritableSignal<boolean> = signal(false);
 
-  changeDataId: number = -1;
-  changeDataHeader: string = '';
-  changeDataColumn: string = '';
-  changeDataColumnDefault: string = ''; 
+  protected changeDataId: WritableSignal<number> = signal(-1);
+  protected changeDataHeader: WritableSignal<string> = signal('');
+  protected changeDataColumn: WritableSignal<string> = signal('');
+  protected changeDataColumnDefault: WritableSignal<string> = signal(''); 
 
 	private csvApplicationService = inject(CsvApplicationService);
 	private csvRecordsService = inject(CsvRecordsService);
@@ -47,20 +47,20 @@ export class CsvContentComponent implements OnInit {
       next: (result) => {
         if(result) {
           this.setAllColumns(result.columns, result.headers, result.columnLength);
-          this.totalAmountOfLines = result.totalLines;
-          this.csvHeaders = result.headers;
-          this.isCsvLoaded.set(true);
+          this.totalAmountOfLines.set(result.totalLines);
+          this.csvHeaders.set(result.headers);
           this._workData = result;
 
           const currentIndex: CsvShowRecord = {
-            currentIndex: this.currentPageIndex,
+            currentIndex: this.currentPageIndex(),
             totalItems: result.totalLines
           }
-          this.csvRecordsService.setCurrentCsvRecords(currentIndex);
+          this.csvRecordsService.setCurrentCsvRecords(currentIndex);          
+          this.isCsvLoaded.set(true);
         } else {
-          this.allColumns = [];
-          this.totalAmountOfLines = 0;
-          this.csvHeaders = null;
+          this.allColumns.set([]);
+          this.totalAmountOfLines.set(0);
+          this.csvHeaders.set(null);
           this.isCsvLoaded.set(false);
         }
       }
@@ -90,21 +90,21 @@ export class CsvContentComponent implements OnInit {
     this.csvRecordsService.getChangeCsvRecord().subscribe({
       next: (data) => {
         if(data) {
-          this.currentPageIndex = data.currentIndex;
+          this.currentPageIndex.set(data.currentIndex);
           this.getCurrentDataPair();
         }        
       }
     });
   }
 
-  getCurrentDataPair() : SingleCsvRecord[] {
-    return this.allColumns[this.currentPageIndex];
+  getCurrentDataPair(): SingleCsvRecord[] {
+    return this.allColumns()[this.currentPageIndex()];
   }
 
   getRowsToGenerate(): number[] {
     let n: number[] = [];
 
-    for(let i = 0; i < this.allColumns.length; i++) {
+    for(let i = 0; i < this.allColumns().length; i++) {
       n.push(i);
     }
 
@@ -114,7 +114,7 @@ export class CsvContentComponent implements OnInit {
   getCellsToGenerate(index: number): string[] {
     let cells: string[] = [];
 
-    let currentData: SingleCsvRecord[] = this.allColumns[index];
+    let currentData: SingleCsvRecord[] = this.allColumns()[index];
 
     currentData.forEach(item => {
       cells.push(item.column);
@@ -123,39 +123,39 @@ export class CsvContentComponent implements OnInit {
     return cells;
   }
   
-  gotoRecord(recordNumber: number) : void {    
-    this.currentPageIndex = recordNumber;
+  gotoRecord(recordNumber: number): void {    
+    this.currentPageIndex.set(recordNumber);
     this.getCurrentDataPair();
     this.csvApplicationService.setCurrentMode(false);
 
     const data: CsvShowRecord = {
       currentIndex: recordNumber,
-      totalItems: this.totalAmountOfLines
+      totalItems: this.totalAmountOfLines()
     };
     
     this.csvRecordsService.setCurrentCsvRecords(data);
   }
 
-  showPopupWithDetails(id: number, header: string, column: string, defaultValue: string) : void {
-    this.changeDataId = id;
-    this.changeDataHeader = header;
-    this.changeDataColumn = column;
-    this.changeDataColumnDefault = defaultValue;
+  showPopupWithDetails(id: number, header: string, column: string, defaultValue: string): void {
+    this.changeDataId.set(id);
+    this.changeDataHeader.set(header);
+    this.changeDataColumn.set(column);
+    this.changeDataColumnDefault.set(defaultValue);
 
     this.isPopupVisible.set(true);
   }
 
-  changePopupVisibility(value: boolean) : void {
+  changePopupVisibility(value: boolean): void {
     this.isPopupVisible.set(value);
   }
 
-  changeData(data: CsvChangeData) : void {
+  changeData(data: CsvChangeData): void {
     let index: number = data.id;
-    let currentData: SingleCsvRecord[] = this.allColumns[this.currentPageIndex];
+    let currentData: SingleCsvRecord[] = this.allColumns()[this.currentPageIndex()];
     currentData[index].column = data.changedValue;
   }
 
-  limitStringLength(subject: string) : string {
+  limitStringLength(subject: string): string {
     if(subject.length > 50) {
       return subject.substring(0, 46) + " ...";
     }    
@@ -163,8 +163,8 @@ export class CsvContentComponent implements OnInit {
     return subject;
   }
 
-  testDataChanged(index: number, column: number) : boolean {
-    let currentData: SingleCsvRecord[] = this.allColumns[index];
+  testDataChanged(index: number, column: number): boolean {
+    let currentData: SingleCsvRecord[] = this.allColumns()[index];
 
     if(currentData[column].column !== currentData[column].defaultValue) {
       return true;
@@ -173,8 +173,8 @@ export class CsvContentComponent implements OnInit {
     return false;
   }
 
-  private setAllColumns(columns: string[], headers: string[] | null, columnLength: number) : void {
-    this.allColumns = [];
+  private setAllColumns(columns: string[], headers: string[] | null, columnLength: number): void {
+    this.allColumns.set([]);
     let index: number = 0;
     let row: SingleCsvRecord[] = [];
 
@@ -189,15 +189,15 @@ export class CsvContentComponent implements OnInit {
 
       if(index == columnLength) {
         index = 0;
-        this.allColumns.push(row);
+        this.allColumns().push(row);
       }
     }
   }
 
-  private getAllColumns() : string[] {
+  private getAllColumns(): string[] {
     let data: string[] = [];
 
-    this.allColumns.forEach(element => {
+    this.allColumns().forEach(element => {
       let currentColumn: SingleCsvRecord[] = element;
 
       for(let i = 0; i < currentColumn.length; i++) {

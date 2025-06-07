@@ -1,7 +1,7 @@
 import { Component, OnInit, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { CsvRecordsService } from 'src/app/services/csv-records.service';
-import { CsvShowRecord } from 'src/app/models/csv-show-record';
-import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
+import { CsvRecordsService } from '../../../services/csv-records.service';
+import { CsvShowRecord } from '../../../models/csv-show-record';
+import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
 
 @Component({
 	imports: [
@@ -12,18 +12,18 @@ import { ButtonWithImageComponent } from 'src/app/components/general/button-with
   styleUrls: ['./csv-menu-next-prev.component.scss']
 })
 export class CsvMenuNextPrevComponent implements OnInit {
-  currentIndex: WritableSignal<number> = signal(-1);
-  totalItems: WritableSignal<number> = signal(-1);
+  protected currentIndex: WritableSignal<number> = signal(-1);
+  protected totalItems: WritableSignal<number> = signal(-1);
   
-  disabledPrevButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() - 1 >= 0) ? false : true);
-  disabledNextButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() + 1 < this.totalItems()) ? false : true);
-  disabledFirstButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() - 1 >= 0) ? false : true);
-  disabledLastButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() + 1 < this.totalItems()) ? false : true);
-  disabledJumpToButton: Signal<boolean> = computed<boolean>(() => (this.totalItems() <= 1) ? true : false);
+  protected disabledPrevButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() - 1 >= 0) ? false : true);
+  protected disabledNextButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() + 1 < this.totalItems()) ? false : true);
+  protected disabledFirstButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() - 1 >= 0) ? false : true);
+  protected disabledLastButton: Signal<boolean> = computed<boolean>(() => (this.currentIndex() + 1 < this.totalItems()) ? false : true);
+  protected disabledJumpToButton: Signal<boolean> = computed<boolean>(() => (this.totalItems() <= 1) ? true : false);
 
 	private csvRecordsService = inject(CsvRecordsService);
 
-  ngOnInit() : void {
+  ngOnInit(): void {
     this.csvRecordsService.getCurrentCsvRecords().subscribe({
       next: (data) => {
         if(data) {
@@ -34,7 +34,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
     });
   }
 
-  previousOrNext(isPrevious: boolean) : void {
+  previousOrNext(isPrevious: boolean): void {
     if(isPrevious) {
       this.currentIndex.set(this.currentIndex() - 1);
     } else {
@@ -49,7 +49,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
     this.csvRecordsService.setChangeCsvRecord(data);
   }
 
-  firstOrLast(isFirst: boolean) : void {
+  firstOrLast(isFirst: boolean): void {
     if(isFirst) {
       this.currentIndex.set(0);
     } else {
@@ -64,7 +64,7 @@ export class CsvMenuNextPrevComponent implements OnInit {
     this.csvRecordsService.setChangeCsvRecord(data);
   }
 
-  jumpToRecord(value: string) : void {
+  jumpToRecord(value: string): void {
     let parsed: number = parseInt(value) - 1;
 
     if(parsed >= 0 && parsed <= (this.totalItems() - 1)) {

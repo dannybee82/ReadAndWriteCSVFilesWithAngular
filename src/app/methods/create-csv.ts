@@ -2,7 +2,7 @@ import { CsvSettings } from "../models/csv-settings";
 
 export class CreateCsv {
     
-    create(headers: string[] | null, columns: string[], useLength: number, csvSettings: CsvSettings) : string {
+    create(headers: string[] | null, columns: string[], useLength: number, csvSettings: CsvSettings): string {
         let headerLength: number = useLength;
 
         let output: string = '';
@@ -45,7 +45,7 @@ export class CreateCsv {
         return output;
     }
 
-    private removeLineBreaks(subject: string) : string {
+    private removeLineBreaks(subject: string): string {
         return subject.replace(/\n|\r/g, " ");
     }
 

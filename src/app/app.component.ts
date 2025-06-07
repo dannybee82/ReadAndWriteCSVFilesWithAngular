@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CsvMainComponent } from 'src/app/components/csv/csv-main/csv-main.component';
+import { CsvMainComponent } from './components/csv/csv-main/csv-main.component';
 
 @Component({
 	imports: [

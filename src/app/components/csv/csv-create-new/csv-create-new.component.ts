@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
-import { CsvHeaderInterface } from 'src/app/models/csv-headers';
-import { CsvApplicationService } from 'src/app/services/csv-application.service';
-import { CsvData } from 'src/app/models/csv-data.interface';
-import { CsvErrors } from 'src/app/models/csv-errors';
-import { ButtonWithImageComponent } from 'src/app/components/general/button-with-image/button-with-image.component';
+import { CsvHeaderInterface } from '../../../models/csv-headers';
+import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvData } from '../../../models/csv-data.interface';
+import { CsvErrors } from '../../../models/csv-errors';
+import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -20,10 +20,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CsvCreateNewComponent implements OnInit {
 
-  headerForm: UntypedFormGroup = new FormGroup({});
-  recordsForm: UntypedFormGroup = new FormGroup({});
+  protected headerForm: UntypedFormGroup = new FormGroup({});
+  protected recordsForm: UntypedFormGroup = new FormGroup({});
 
-  headers: CsvHeaderInterface[] = [];
+  protected headers: CsvHeaderInterface[] = [];
 
 	private fb = inject(FormBuilder);
 	private csvApplicationService = inject(CsvApplicationService);
@@ -39,7 +39,7 @@ export class CsvCreateNewComponent implements OnInit {
     });
   }
 
-  addHeader() : void {
+  addHeader(): void {
     if(this.headerForm.valid) {
       let header: CsvHeaderInterface = {
         header: this.headerForm.get('header')?.value, 
@@ -52,11 +52,11 @@ export class CsvCreateNewComponent implements OnInit {
     }
   }
 
-  removeHeader(index: number) : void {
+  removeHeader(index: number): void {
     this.headers.splice(index, 1);
   }
 
-  createCsv() : void {
+  createCsv(): void {
     if(this.recordsForm.valid && this.headers.length > 0) {
       const amount = parseInt(this.recordsForm.get('amount')?.value ?? 0);
 
@@ -81,7 +81,7 @@ export class CsvCreateNewComponent implements OnInit {
     }
   }
 
-  private getHeaders() : string[] {
+  private getHeaders(): string[] {
     let arr: string[] = [];
 
     this.headers.forEach(item => arr.push(item.header));
@@ -89,7 +89,7 @@ export class CsvCreateNewComponent implements OnInit {
     return arr;
   }
 
-  private getColumns(amount: number) : string[] {
+  private getColumns(amount: number): string[] {
     let arr: string[] = [];
 
     for(let i = 0; i < amount; i++) {

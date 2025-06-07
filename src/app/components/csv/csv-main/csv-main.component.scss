@@ -1,6 +1,4 @@
-@import '../../../../assets/styles/placeholders.scss';
-@import '../../../../assets/styles/variables.scss';
-@import '../../../../assets/styles/mixins.scss';
+@use '../../../../assets/styles/all_imports.scss' as *;
 
 .containerCsvApp {
     width: 95%;

@@ -3,12 +3,12 @@ import { Component, InputSignal, OutputEmitterRef, input, output } from '@angula
 @Component({
   selector: 'app-button-with-image',
   templateUrl: './button-with-image.component.html',
-  styleUrls: ['./button-with-image.component.css']
+  styleUrls: ['./button-with-image.component.scss']
 })
 export class ButtonWithImageComponent {  
-  imageSource: InputSignal<string> = input.required<string>();
-  imageText: InputSignal<string> = input<string>('');  
-  isDisabled: InputSignal<boolean> = input<boolean>(false);
+  readonly imageSource: InputSignal<string> = input.required<string>();
+  readonly imageText: InputSignal<string> = input<string>('');  
+  readonly isDisabled: InputSignal<boolean> = input<boolean>(false);
 
-  buttonAction: OutputEmitterRef<any> = output<any>();
+  readonly buttonAction: OutputEmitterRef<boolean> = output<boolean>();
 }
