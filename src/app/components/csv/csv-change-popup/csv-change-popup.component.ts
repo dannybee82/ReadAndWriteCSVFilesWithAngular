@@ -11,8 +11,7 @@ import { ButtonWithImageComponent } from '../../general/button-with-image/button
   styleUrls: ['./csv-change-popup.component.scss']
 })
 export class CsvChangePopupComponent {
-  isPopupVisible: ModelSignal<boolean> = model(false);
-
+  readonly isPopupVisible: ModelSignal<boolean> = model(false);
   readonly csvValueId: InputSignal<number> = input(-1);
   readonly csvHeaderToApplyChangeOn: InputSignal<string> = input('');
   readonly csvValueToChange: InputSignal<string> = input('');

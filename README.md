@@ -30,7 +30,7 @@ _June 2025_
 
 \- Using the keyword **protected** for properties that are only accessible in the template.
 
-\- Using the keyword **readonly** for properties initialized by Angular.
+\- Using the keyword **readonly** for properties initialized by Angular (input(), output(), model()).
 
 \- Changed some paths of files.
 

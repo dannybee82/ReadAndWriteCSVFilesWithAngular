@@ -61,9 +61,7 @@ export class CsvMainComponent implements OnInit {
 
     this._loadCsv.loadCsvFile(file, this.csvSettings()).subscribe({
       next: (csvData) => {
-        if(csvData) {          
-          console.log(this.csvSettings());
-
+        if(csvData) {
           this.csvApplicationService.setCurrentMode(true);
       
           if(!csvData.errors.hasErrors) {
