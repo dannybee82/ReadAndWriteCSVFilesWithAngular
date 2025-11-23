@@ -14,9 +14,9 @@
         <app-button-with-image type="submit" imageSource="assets/images/add.png" [imageText]="'Add Header'"></app-button-with-image>
       </div>
     </form>
-    @if (this.headers.length > 0) {
+    @if (this.headers().length > 0) {
       <div class="header-container">
-        @for (header of this.headers; track header; let index = $index) {
+        @for (header of this.headers(); track header; let index = $index) {
           <div class="row">
             <div class="w-33 pt-8">
               {{ header.header }}
@@ -32,7 +32,7 @@
       </div>
     }
   </div>
-  @if (this.headers.length > 0) {
+  @if (this.headers().length > 0) {
     <div class="amount-of-records">
       <h3>Set amount of Records:</h3>
       <form [formGroup]="recordsForm" (ngSubmit)="this.createCsv()">

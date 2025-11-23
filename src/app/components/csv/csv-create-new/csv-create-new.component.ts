@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { CsvHeaderInterface } from '../../../models/csv-headers';
 import { CsvApplicationService } from '../../../services/csv-application.service';
@@ -23,7 +23,7 @@ export class CsvCreateNewComponent implements OnInit {
   protected headerForm: UntypedFormGroup = new FormGroup({});
   protected recordsForm: UntypedFormGroup = new FormGroup({});
 
-  protected headers: CsvHeaderInterface[] = [];
+  protected headers: WritableSignal<CsvHeaderInterface[]> = signal([]);
 
 	private fb = inject(FormBuilder);
 	private csvApplicationService = inject(CsvApplicationService);
@@ -46,18 +46,18 @@ export class CsvCreateNewComponent implements OnInit {
         defaultValue: this.headerForm.get('defaultValue')?.value 
       };
 
-      this.headers.push(header);
+      this.headers().push(header);
     } else {
       this.headerForm.markAllAsTouched();
     }
   }
 
   removeHeader(index: number): void {
-    this.headers.splice(index, 1);
+    this.headers().splice(index, 1);
   }
 
   createCsv(): void {
-    if(this.recordsForm.valid && this.headers.length > 0) {
+    if(this.recordsForm.valid && this.headers().length > 0) {
       const amount = parseInt(this.recordsForm.get('amount')?.value ?? 0);
 
       if(amount == 0) {
@@ -84,7 +84,7 @@ export class CsvCreateNewComponent implements OnInit {
   private getHeaders(): string[] {
     let arr: string[] = [];
 
-    this.headers.forEach(item => arr.push(item.header));
+    this.headers().forEach(item => arr.push(item.header));
 
     return arr;
   }
@@ -93,7 +93,7 @@ export class CsvCreateNewComponent implements OnInit {
     let arr: string[] = [];
 
     for(let i = 0; i < amount; i++) {
-      this.headers.forEach(item => arr.push(item.defaultValue));
+      this.headers().forEach(item => arr.push(item.defaultValue));
     }
 
     return arr;

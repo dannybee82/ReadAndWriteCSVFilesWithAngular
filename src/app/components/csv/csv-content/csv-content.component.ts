@@ -30,7 +30,7 @@ export class CsvContentComponent implements OnInit {
   protected allColumns: WritableSignal<SingleCsvRecord[][]> = signal([]);
   protected currentPageIndex: WritableSignal<number> = signal(0);
 
-  private _workData: CsvData | null = null;
+  private _workData: WritableSignal<CsvData | null> = signal(null);
    
   protected isPopupVisible: WritableSignal<boolean> = signal(false);
 
@@ -49,7 +49,7 @@ export class CsvContentComponent implements OnInit {
           this.setAllColumns(result.columns, result.headers, result.columnLength);
           this.totalAmountOfLines.set(result.totalLines);
           this.csvHeaders.set(result.headers);
-          this._workData = result;
+          this._workData.set(result);
 
           const currentIndex: CsvShowRecord = {
             currentIndex: this.currentPageIndex(),
@@ -68,9 +68,9 @@ export class CsvContentComponent implements OnInit {
 
     this.csvApplicationService.getRequestDataToSave().subscribe({
       next: (result) => {
-        if(this._workData) {
-          this._workData.columns = this.getAllColumns();
-          this.csvApplicationService.setSaveData(this._workData);
+        if(this._workData()) {
+          this._workData()!.columns = this.getAllColumns();
+          this.csvApplicationService.setSaveData(this._workData()!);
         }
       }
     });

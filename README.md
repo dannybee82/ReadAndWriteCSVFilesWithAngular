@@ -2,7 +2,7 @@
 
 Read, modify and save simple CSV (Comma Separated Values) files in the browser. See the root in folder for example images. It is possible to change some settings like of the CSV-file: separator, enclosing, first row is header, read/save as UTF-8 or Unicode.
 
-\- Angular 19 application (with [Angular CLI](https://github.com/angular/angular-cli) version 20.0.1)
+\- Angular 21 application (with [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0)
 
 \- Sample CSV-files in the folder: src\\assets\\sample-data\\
 
@@ -23,6 +23,21 @@ or shorter:
 _ng s --o_
 
 ### **Changelog:**
+
+_November 2025_
+
+\- Upgrade to Anguar 21.
+
+*   Removed deprecated _Karma_ and installed _Vitest._
+*   Migrated _Jasmine_ tests to _Vitest_ tests for future use (command: **ng generate refactor-jasmine-vitest**).
+
+\- Removed package _@angular/animations_
+
+\- Migration to _Zoneless_ application (Without _Zone.js_ - removed package _zone.js_).
+
+\- Added more _Angular signals_.
+
+\- Various minor changes.
 
 _June 2025_
 
