@@ -4,34 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "angular-load-csv": {
-      "projectType": "application",
-      "schematics": {
-        "@schematics/angular:class": {
-          "skipTests": true
-        },
-        "@schematics/angular:component": {
-          "skipTests": true,
-          "style": "scss"
-        },
-        "@schematics/angular:directive": {
-          "skipTests": true
-        },
-        "@schematics/angular:guard": {
-          "skipTests": true
-        },
-        "@schematics/angular:interceptor": {
-          "skipTests": true
-        },
-        "@schematics/angular:pipe": {
-          "skipTests": true
-        },
-        "@schematics/angular:service": {
-          "skipTests": true
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
+      "projectType": "application",      
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -107,20 +80,9 @@
           }
         },
         "test": {
-          "builder": "@angular/build:vitest",
-          "options": {
-            "polyfills": [],
-            "tsConfig": "tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets"
-              }
-            ],
-            "styles": [
-              "src/styles.scss"
-            ]
+          "builder": "@angular/build:unit-test",
+          "options": {            
+            "tsConfig": "tsconfig.spec.json"            
           }
         }
       }

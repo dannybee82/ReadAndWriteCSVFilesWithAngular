@@ -1,24 +1,24 @@
 import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
 import { CsvHeaderInterface } from '../../../models/csv-headers';
-import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvApplication } from '../../../services/csv-application';
 import { CsvData } from '../../../models/csv-data.interface';
 import { CsvErrors } from '../../../models/csv-errors';
-import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
+import { ButtonWithImage } from '../../general/button-with-image/button-with-image';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
 	imports: [
-		ButtonWithImageComponent,
+		ButtonWithImage,
 		FormsModule,
 		ReactiveFormsModule,
 	],
   selector: 'app-csv-create-new',
-  templateUrl: './csv-create-new.component.html',
-  styleUrl: './csv-create-new.component.scss'
+  templateUrl: './csv-create-new.html',
+  styleUrl: './csv-create-new.scss'
 })
-export class CsvCreateNewComponent implements OnInit {
+export class CsvCreateNew implements OnInit {
 
   protected headerForm: UntypedFormGroup = new FormGroup({});
   protected recordsForm: UntypedFormGroup = new FormGroup({});
@@ -26,7 +26,7 @@ export class CsvCreateNewComponent implements OnInit {
   protected headers: WritableSignal<CsvHeaderInterface[]> = signal([]);
 
 	private fb = inject(FormBuilder);
-	private csvApplicationService = inject(CsvApplicationService);
+	private csvApplicationService = inject(CsvApplication);
 
   ngOnInit(): void {
     this.headerForm = this.fb.group({

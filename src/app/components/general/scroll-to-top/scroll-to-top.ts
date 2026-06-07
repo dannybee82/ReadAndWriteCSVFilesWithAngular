@@ -3,10 +3,10 @@ import { Component, HostListener, WritableSignal, inject, signal } from '@angula
 
 @Component({
   selector: 'app-scroll-to-top',
-  templateUrl: './scroll-to-top.component.html',
-  styleUrls: ['./scroll-to-top.component.scss']
+  templateUrl: './scroll-to-top.html',
+  styleUrls: ['./scroll-to-top.scss']
 })
-export class ScrollToTopComponent {
+export class ScrollToTop {
 
   protected isVisible: WritableSignal<boolean> = signal(false);
 

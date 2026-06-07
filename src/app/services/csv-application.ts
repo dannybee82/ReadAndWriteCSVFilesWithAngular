@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { Subject } from 'rxjs';
 import { CsvData } from '../models/csv-data.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CsvApplicationService {
+@Service()
+export class CsvApplication {
 
   private _updateGridOrListMode: Subject<boolean> = new Subject<boolean>();
   private _requestDataToSave: Subject<boolean> = new Subject<boolean>();

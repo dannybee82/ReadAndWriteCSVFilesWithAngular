@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CsvShowRecord } from '../models/csv-show-record';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CsvRecordsService {
+@Service()
+export class CsvRecords {
 
   private _currentCsvRecords: BehaviorSubject<CsvShowRecord | null> = new BehaviorSubject<CsvShowRecord | null>(null);
   private _changeCsvRecord: BehaviorSubject<CsvShowRecord | null> = new BehaviorSubject<CsvShowRecord | null>(null);

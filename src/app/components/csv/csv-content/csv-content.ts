@@ -1,25 +1,25 @@
 import { Component, WritableSignal, signal, inject, OnInit } from '@angular/core';
 import { SingleCsvRecord } from '../../../models/single-csv-record';
 import { CsvChangeData } from '../../../models/csv-change-data.interface'
-import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvApplication } from '../../../services/csv-application';
 import { CsvData } from '../../../models/csv-data.interface';
-import { CsvRecordsService } from '../../../services/csv-records.service';
+import { CsvRecords } from '../../../services/csv-records';
 import { CsvShowRecord } from '../../../models/csv-show-record';
-import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
-import { CsvMenuNextPrevComponent } from '../csv-menu-next-prev/csv-menu-next-prev.component';
-import { CsvChangePopupComponent } from '../csv-change-popup/csv-change-popup.component';
+import { ButtonWithImage } from '../../general/button-with-image/button-with-image';
+import { CsvMenuNextPrev } from '../csv-menu-next-prev/csv-menu-next-prev';
+import { CsvChangePopup } from '../csv-change-popup/csv-change-popup';
 
 @Component({
 	imports: [
-		ButtonWithImageComponent,
-		CsvMenuNextPrevComponent,
-		CsvChangePopupComponent,
+		ButtonWithImage,
+		CsvMenuNextPrev,
+		CsvChangePopup,
 	],
   selector: 'app-csv-content',
-  templateUrl: './csv-content.component.html',
-  styleUrls: ['./csv-content.component.scss']
+  templateUrl: './csv-content.html',
+  styleUrls: ['./csv-content.scss']
 })
-export class CsvContentComponent implements OnInit {
+export class CsvContent implements OnInit {
 
   protected isCsvLoaded: WritableSignal<boolean> = signal(false);
   protected isGridMode: WritableSignal<boolean> = signal(true);
@@ -39,8 +39,8 @@ export class CsvContentComponent implements OnInit {
   protected changeDataColumn: WritableSignal<string> = signal('');
   protected changeDataColumnDefault: WritableSignal<string> = signal(''); 
 
-	private csvApplicationService = inject(CsvApplicationService);
-	private csvRecordsService = inject(CsvRecordsService);
+	private csvApplicationService = inject(CsvApplication);
+	private csvRecordsService = inject(CsvRecords);
 
   ngOnInit(): void {
     this.csvApplicationService.getAllData().subscribe({

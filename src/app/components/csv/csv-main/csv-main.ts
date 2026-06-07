@@ -2,31 +2,31 @@ import { Component, OnInit, WritableSignal, signal, inject } from '@angular/core
 import { LoadCsv } from '../../../methods/load-csv'
 import { CreateCsv } from '../../../methods/create-csv';
 import { CsvSettings } from '../../../models/csv-settings';
-import { CsvApplicationService } from '../../../services/csv-application.service';
+import { CsvApplication } from '../../../services/csv-application';
 import { CsvData } from '../../../models/csv-data.interface';
-import { OpenFileComponent } from '../../general/open-file/open-file.component';
-import { CsvSettingsComponent } from '../csv-settings/csv-settings.component';
-import { ButtonWithImageComponent } from '../../general/button-with-image/button-with-image.component';
-import { CsvViewModeComponent } from '../csv-view-mode/csv-view-mode.component';
-import { CsvContentComponent } from '../csv-content/csv-content.component';
-import { CsvCreateNewComponent } from '../csv-create-new/csv-create-new.component';
-import { ScrollToTopComponent } from '../../general/scroll-to-top/scroll-to-top.component';
+import { OpenFile } from '../../general/open-file/open-file';
+import { CsvProperties } from '../csv-properties/csv-properties';
+import { ButtonWithImage } from '../../general/button-with-image/button-with-image';
+import { CsvViewMode } from '../csv-view-mode/csv-view-mode';
+import { CsvContent } from '../csv-content/csv-content';
+import { CsvCreateNew } from '../csv-create-new/csv-create-new';
+import { ScrollToTop } from '../../general/scroll-to-top/scroll-to-top';
 
 @Component({
 	imports: [
-		OpenFileComponent,
-		CsvSettingsComponent,
-		ButtonWithImageComponent,
-		CsvViewModeComponent,
-		CsvContentComponent,
-		CsvCreateNewComponent,
-		ScrollToTopComponent,
+		OpenFile,
+		CsvProperties,
+		ButtonWithImage,    
+		CsvViewMode,
+		CsvContent,
+		CsvCreateNew,
+		ScrollToTop,
 	],
   selector: 'app-csv-main',
-  templateUrl: './csv-main.component.html',
-  styleUrls: ['./csv-main.component.scss']
+  templateUrl: './csv-main.html',
+  styleUrls: ['./csv-main.scss']
 })
-export class CsvMainComponent implements OnInit {  
+export class CsvMain implements OnInit {  
   
   protected isCsvFileOpened: WritableSignal<boolean> = signal(false);
   protected createNewFile: WritableSignal<boolean> = signal(false); 
@@ -36,7 +36,7 @@ export class CsvMainComponent implements OnInit {
   private _loadCsv: LoadCsv = new LoadCsv();
   private _createCsv: CreateCsv = new CreateCsv();
 
-	private csvApplicationService = inject(CsvApplicationService);
+	private csvApplicationService = inject(CsvApplication);
 
   ngOnInit(): void {
     this.csvApplicationService.getSaveData().subscribe({

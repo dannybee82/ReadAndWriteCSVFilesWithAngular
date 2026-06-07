@@ -1,0 +1,39 @@
+<div class="csvSettingsContainer">
+    <div class="csvSettingsButton">
+        <app-button-with-image imageSource="assets/images/settings.png" imageText="Settings" (buttonAction)="isMenuVisible.set(!isMenuVisible())"></app-button-with-image>
+    </div>
+    <div class="csvSettingsMenu" [class.csvSettingsMenuVisible]="isMenuVisible()" [class.csvSettingsMenuHidden]="!isMenuVisible()">        
+        <div class="csvSettingsItem">
+            <div class="csvItemLeft">
+                <label for="separator">Separator</label>
+            </div>
+            <div class="csvItemRight">
+                <input type="text" [value]="csvSeparator()" name="separator" (change)="csvSeparator.set(separatorElement.value)" #separatorElement />
+            </div>
+        </div>
+        <div class="csvSettingsItem">
+            <div class="csvItemLeft">
+                <label for="enclosing">Enclosing</label>
+            </div>
+            <div class="csvItemRight">
+                <input type="text" [value]="csvEnclosing()" name="enclosing" (change)="csvEnclosing.set(enclosingElement.value)" #enclosingElement />
+            </div>
+        </div>
+        <div class="csvSettingsItem">
+            <div class="csvItemLeft">
+                <label for="firstRowIsHeader">First Row is Header:</label>
+            </div>
+            <div class="csvItemRight">
+                <input type="checkbox" name="firstRowIsHeader" [checked]="csvFirstRowIsHeader()" (change)="csvFirstRowIsHeader.set(firstRowHeaderElement.checked ? true : false)" #firstRowHeaderElement />
+            </div>
+        </div>
+        <div class="csvSettingsItem">
+            <div class="csvItemLeft">
+                <label for="parseCsvDataAsUtf8">Parse CSV Data as UTF-8:</label>
+            </div>
+            <div class="csvItemRight">
+                <input type="checkbox" name="parseCsvDataAsUtf8" [checked]="csvIsUtf8()" (change)="csvIsUtf8.set(isUtf8Element.checked ? true : false)" #isUtf8Element/>
+            </div>
+        </div>
+    </div>
+</div>

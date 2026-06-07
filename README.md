@@ -2,11 +2,13 @@
 
 Read, modify and save simple CSV (Comma Separated Values) files in the browser. See the root in folder for example images. It is possible to change some settings like of the CSV-file: separator, enclosing, first row is header, read/save as UTF-8 or Unicode.
 
-\- Angular 21 application (with [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0)
+\- Angular 22 application (with [Angular CLI](https://github.com/angular/angular-cli) version 22.0.0)
 
 \- Sample CSV-files in the folder: src\\assets\\sample-data\\
 
 **Command to install**
+
+**Angular 22** needs a **Node.js** version of at least _22.22.3_
 
 _npm install_
 
@@ -23,6 +25,18 @@ or shorter:
 _ng s --o_
 
 ### **Changelog:**
+
+_June 2026_
+
+\- Upgrade to _Angular 22_ and upgraded other packages.
+
+\- Migrated _@Injectable_ to _@Service_.
+
+\- Using the default: _ChangeDetectionStrategy.OnPush_ in stead of _ChangeDetectionStrategy.Eager_.
+
+\- Using the latest file naming conventions - and deleting the old schematics from _angular.json_
+
+\- Various changes in the templates.
 
 _November 2025_
 

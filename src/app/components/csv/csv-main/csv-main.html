@@ -9,20 +9,20 @@
       </app-open-file>
     </div>
     <div class="csvMenuItem">
-      <app-csv-settings
-        [(csvSeparator)]="this.csvSettings().separator"
-        [(csvEnclosing)]="this.csvSettings().enclosing"
-        [(csvFirstRowIsHeader)]="this.csvSettings().firstRowIsHeader"
-        [(csvIsUtf8)]="this.csvSettings().isUtf8"
+      <app-csv-properties
+        [(csvSeparator)]="csvSettings().separator"
+        [(csvEnclosing)]="csvSettings().enclosing"
+        [(csvFirstRowIsHeader)]="csvSettings().firstRowIsHeader"
+        [(csvIsUtf8)]="csvSettings().isUtf8"
         >
-      </app-csv-settings>
+      </app-csv-properties>
     </div>
-    <div class="csvMenuItem" [class.is-save-button-disabled]="!this.isCsvFileOpened()">
+    <div class="csvMenuItem" [class.is-save-button-disabled]="!isCsvFileOpened()">
       <app-button-with-image
         imageText="Save CSV File"
         imageSource="/assets/images/save.png"
         (buttonAction)="save()"
-        [isDisabled]="!this.isCsvFileOpened()">
+        [isDisabled]="!isCsvFileOpened()">
       </app-button-with-image>
     </div>
     <div class="csvMenuItem">
@@ -30,10 +30,10 @@
         imageText="Create new CSV File"
         imageSource="/assets/images/create_new.png"
         (buttonAction)="createNew()"
-        [isDisabled]="this.isCsvFileOpened()">
+        [isDisabled]="isCsvFileOpened()">
       </app-button-with-image>
     </div>
-    @if (this.isCsvFileOpened()) {
+    @if (isCsvFileOpened()) {
       <app-csv-view-mode></app-csv-view-mode>
     }
     @if(isCsvFileOpened()) {
@@ -48,7 +48,7 @@
   </div>
   <div class="csvContent">
     <app-csv-content></app-csv-content>
-    @if (this.createNewFile()) {
+    @if (createNewFile()) {
       <app-csv-create-new></app-csv-create-new>
     }
   </div>

@@ -1,7 +1,7 @@
 <div class="main-container">
   <div class="add-header">
     <h3>Create Headers:</h3>
-    <form [formGroup]="this.headerForm" (ngSubmit)="this.addHeader()">
+    <form [formGroup]="headerForm" (ngSubmit)="addHeader()">
       <div class="w-33 pt-8">
         <label for="">Header</label>
         <input type="text" formControlName="header">
@@ -14,9 +14,9 @@
         <app-button-with-image type="submit" imageSource="assets/images/add.png" [imageText]="'Add Header'"></app-button-with-image>
       </div>
     </form>
-    @if (this.headers().length > 0) {
+    @if (headers().length > 0) {
       <div class="header-container">
-        @for (header of this.headers(); track header; let index = $index) {
+        @for (header of headers(); track header; let index = $index) {
           <div class="row">
             <div class="w-33 pt-8">
               {{ header.header }}
@@ -25,17 +25,17 @@
               {{ header.defaultValue }}
             </div>
             <div>
-              <app-button-with-image type="submit" imageSource="assets/images/remove.png" [imageText]="'Remove Header'" (buttonAction)="this.removeHeader(index)"></app-button-with-image>
+              <app-button-with-image type="submit" imageSource="assets/images/remove.png" [imageText]="'Remove Header'" (buttonAction)="removeHeader(index)"></app-button-with-image>
             </div>
           </div>
         }
       </div>
     }
   </div>
-  @if (this.headers().length > 0) {
+  @if (headers().length > 0) {
     <div class="amount-of-records">
       <h3>Set amount of Records:</h3>
-      <form [formGroup]="recordsForm" (ngSubmit)="this.createCsv()">
+      <form [formGroup]="recordsForm" (ngSubmit)="createCsv()">
         <div class="w-33 pt-8">
           <label for="">Records</label>
           <input type="number" formControlName="amount" min="1" value="1">

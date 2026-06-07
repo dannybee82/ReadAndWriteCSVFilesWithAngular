@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { CsvMainComponent } from './components/csv/csv-main/csv-main.component';
+import { CsvMain } from './components/csv/csv-main/csv-main';
 
 @Component({
 	imports: [
-		CsvMainComponent,
+		CsvMain,
 	],
   selector: 'app-root',
   template: `<app-csv-main />`
 })
-export class AppComponent {
+export class App {
   title = 'angular-load-csv';
 }
